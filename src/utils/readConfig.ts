@@ -10,7 +10,8 @@ interface Config {
   token: string;
   prefix: string;
   botName: string;
-  colors: ColorResolvable[]
+  colors: ColorResolvable[];
+  hypixelApiKey: string;
 }
 
 const config = readConfig();

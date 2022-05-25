@@ -2,5 +2,6 @@
   "token": "",
   "prefix": "+",
   "botName": "Barely Awake's Bot",
-  "colors": []
+  "colors": [],
+  "hypixelApiKey": ""
 }
