@@ -4,7 +4,6 @@ import { DescriptionTypes } from './_example.js';
 import config from '../../utils/readConfig.js';
 
 export default async function (message: Message, args: string[]) {
-  await message.delete();
   const helpEmbed = new MessageEmbed;
   helpEmbed
     .setTitle(`${config.botName || message?.client?.user?.username || 'Bot'} Help`)
