@@ -5,7 +5,7 @@ import config from '../../utils/readConfig.js';
 export default async function (message: Message, args: string[]) {
   const infoEmbed = new MessageEmbed()
     .setTitle(`Information on ${config.botName}`)
-    .setColor('#9b027f')
+    .setColor(config.colors[1])
     .setAuthor({
       name: 'Barely Awake',
       url: 'https://github.com/barely-awake',
@@ -17,10 +17,9 @@ export default async function (message: Message, args: string[]) {
       `members, ${config.botName} features a lot of random commands. Currently there isn't a real direction besides ` +
       `just being a useful bot.`,
     )
-
     .setFooter({
       text: 'Made with love & discord.js',
-      iconURL: 'https://catboymaid.club/LiEuSJKxG50p/direct',
+      iconURL: 'https://cdn.discordapp.com/emojis/979073032549171200.png?size=240&quality=lossless',
     });
 
   message.channel.send({embeds: [infoEmbed]});
