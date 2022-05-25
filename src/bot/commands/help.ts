@@ -17,7 +17,7 @@ export default async function (message: Message, args: string[]) {
   let totalCommands = 0;
 
   async function fileLoop(pathAdditions: string = '') {
-    const files = readdirSync('./dist/commands' + pathAdditions);
+    const files = readdirSync('./dist/bot/commands' + pathAdditions);
 
     for (const file of files) {
       if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js')))
