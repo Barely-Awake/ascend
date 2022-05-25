@@ -2,6 +2,17 @@ import { Client, Collection, Intents } from 'discord.js';
 import config from './utils/readConfig.js';
 import commandAdder from './bot/commandAdder.js';
 import eventHandler from './bot/eventHandler.js';
+import pkg from 'canvas';
+
+const {registerFont} = pkg;
+
+registerFont('assets/fonts/sonus-light.ttf', {family: 'Sonus'});
+registerFont('assets/fonts/sonus-bold.ttf', {family: 'Sonus Bold'});
+
+registerFont('assets/fonts/minecraft.otf', {family: 'Minecraft'});
+registerFont('assets/fonts/minecraft-bold.otf', {family: 'Minecraft Bold'});
+registerFont('assets/fonts/minecraft-italic.otf', {family: 'Minecraft Italic'});
+registerFont('assets/fonts/minecraft-bold-italic.otf', {family: 'Minecraft Bold Italic'});
 
 const intents = new Intents();
 intents.add(Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES);
