@@ -1,12 +1,12 @@
 import clientCollections from '../../index.js';
-import * as Discord from 'discord.js';
+import { Message } from 'discord.js';
 import config from '../../utils/readConfig.js';
 
-export default async function (message: Discord.Message) {
+export default async function (message: Message) {
   commandHandler(message);
 }
 
-function commandHandler(message: Discord.Message) {
+function commandHandler(message: Message) {
   if (!message.content.startsWith(config.prefix))
     return;
 

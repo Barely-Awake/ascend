@@ -1,15 +1,15 @@
-import * as Discord from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js';
 import { readdirSync } from 'fs';
 import { DescriptionTypes } from './_example.js';
 import config from '../../utils/readConfig.js';
 
-export default async function (message: Discord.Message, args: string[]) {
+export default async function (message: Message, args: string[]) {
   await message.delete();
-  const helpEmbed = new Discord.MessageEmbed;
+  const helpEmbed = new MessageEmbed;
   helpEmbed
     .setTitle(`${config.botName || message?.client?.user?.username || 'Bot'} Help`)
     .setDescription(`<> = Required Argument\n[] = Optional Argument\n${config.prefix} = Prefix`)
-    .setColor('#00ff22');
+    .setColor('#9b027f');
 
   let commandFields: { [index: string]: any[] } = {
     0: [],

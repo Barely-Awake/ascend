@@ -1,6 +1,6 @@
-import * as Discord from 'discord.js';
+import { Message } from 'discord.js';
 
-export default async function (message: Discord.Message, args: string[]) {
+export default async function (message: Message, args: string[]) {
   return;
 }
 
