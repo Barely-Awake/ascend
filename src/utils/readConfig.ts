@@ -1,3 +1,4 @@
+import { ColorResolvable } from 'discord.js'
 import { readFileSync } from 'fs';
 
 export function readConfig(): Config {
@@ -9,6 +10,7 @@ interface Config {
   token: string;
   prefix: string;
   botName: string;
+  colors: ColorResolvable[]
 }
 
 const config = readConfig();
