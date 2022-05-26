@@ -16,7 +16,7 @@ export default async function (message: Discord.Message, args: string[]) {
   let player = args[0];
 
   if (!args[0])
-    return message.channel.send('Please provide a player.')
+    return message.channel.send('Please provide a player.');
 
   if (player.length !== 32 && player.length !== 36)
     player = await getPlayerUuid(player);
@@ -171,7 +171,7 @@ function drawSecondCanvas(playerStats: playerStatsTypes) {
 
 const statsText =
   `Winstreak: §#F8A619§l$winStreak
-Win Rate: §#F8A619§l$winRate
+Win Rate: §#F8A619§l$winRate%
 
 Wins: §#41B07C§l$wins
 Losses: §#EA4645§l$losses
@@ -233,8 +233,8 @@ function fillModeStats(
         (playerStats.bedWars.winStreak[mode] || 0).toLocaleString() :
         '?')
     .replace('$winRate',
-      Number((playerStats.bedWars.winRate[mode] || 0)
-        .toLocaleString('en-US', {maximumFractionDigits: 2})) * 100 + '%')
+      ((playerStats.bedWars.winRate[mode] || 0) * 100)
+        .toLocaleString('en-US', {maximumFractionDigits: 2}))
 
     .replace('$wins', (playerStats.bedWars.wins[mode] || 0).toLocaleString())
     .replace('$losses', (playerStats.bedWars.losses[mode] || 0).toLocaleString())
