@@ -11,6 +11,7 @@ interface Config {
   prefix: string;
   botName: string;
   colors: ColorResolvable[];
+  footerIcon: string;
   hypixelApiKey: string;
 }
 
