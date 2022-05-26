@@ -1,5 +1,5 @@
-import playerStatsTypes from './playerStatsTypes.js';
-import { Player } from './hypixelResponseTypes.js';
+import playerStatsTypes from '../../types/playerStatsTypes.js';
+import { Player } from '../../types/hypixelResponseTypes.js';
 import tagCalc from './rankUtils.js';
 
 export default function (playerStats: Player): playerStatsTypes {

@@ -8,7 +8,7 @@ import { getFormattedLevel } from '../../utils/minecraft/getFormattedLevel.js';
 import formatPlayerStats from '../../utils/minecraft/formatPlayerStats.js';
 import fillColoredText from '../../utils/canvas/fillColoredText.js';
 import pkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
-import playerStatsTypes from '../../utils/minecraft/playerStatsTypes.js';
+import playerStatsTypes from '../../types/playerStatsTypes.js';
 
 const {createCanvas} = pkg;
 

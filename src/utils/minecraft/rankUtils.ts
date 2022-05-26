@@ -1,4 +1,4 @@
-import { Player } from './hypixelResponseTypes.js';
+import { Player } from '../../types/hypixelResponseTypes.js';
 
 const ranks: { [index: string]: any } = {
   'ADMIN': [
