@@ -1,6 +1,6 @@
 import { Message, MessageEmbed } from 'discord.js';
-import { DescriptionTypes } from './_example.js';
-import config from '../../utils/readConfig.js';
+import { DescriptionTypes } from '../_example.js';
+import config from '../../../utils/readConfig.js';
 
 export default async function (message: Message, args: string[]) {
   const infoEmbed = new MessageEmbed()
@@ -19,7 +19,7 @@ export default async function (message: Message, args: string[]) {
     )
     .setFooter({
       text: 'Made with love & discord.js',
-      iconURL: 'https://cdn.discordapp.com/emojis/979073032549171200.png?size=240&quality=lossless',
+      iconURL: config.footerIcon,
     });
 
   message.channel.send({embeds: [infoEmbed]});
