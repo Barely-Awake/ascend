@@ -27,10 +27,20 @@ export default async function (message: Message, args: string[]) {
   const body: any = await res.json();
 
   if (body.time.unpublished !== undefined)
-    return error(`The npm package \`${query}\` was unpublished`, description.name, message)
+    return error(`The npm package \`${query}\` was unpublished`, description.name, message);
 
   let timeCreated = unixToSeconds(Date.parse(body.time.created));
   let timeModified = unixToSeconds(Date.parse(body.time.modified));
+  let repositoryUrl = body.repository?.url;
+
+  if (typeof repositoryUrl !== 'string')
+    repositoryUrl = 'Unknown';
+  else if (repositoryUrl.includes('+'))
+    repositoryUrl = repositoryUrl?.split('+');
+  else if (repositoryUrl.startsWith('git://'))
+    repositoryUrl = repositoryUrl.replace('git://', 'https://');
+
+  repositoryUrl = repositoryUrl.replace('.git', '');
 
   const embed = new MessageEmbed()
     .setColor(config.colors[1])
@@ -47,10 +57,10 @@ export default async function (message: Message, args: string[]) {
         `${messageTimeStamp(timeModified)} (${messageTimeStamp(timeModified, 'R')})` :
         `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`
       , false)
-    .addField('Repository', body.repository ?
-        `[Click!](${body.repository?.url?.split('+')[1].replace('.git', '')})` :
-        'Unknown'
-      , false)
+    .addField('Repository', repositoryUrl !== 'Unknown' ?
+        `[Click!](${repositoryUrl})` :
+        'Unknown',
+      false)
     .addField('Maintainers', body.maintainers?.map((user: any) => user.name).join(', ') || 'Unknown');
 
   message.channel.send({embeds: [embed]});
