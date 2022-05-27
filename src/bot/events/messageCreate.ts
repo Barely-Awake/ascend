@@ -1,6 +1,7 @@
 import clientCollections from '../../index.js';
 import { Message } from 'discord.js';
 import config from '../../utils/readConfig.js';
+import error from '../responses/error.js';
 
 export default async function (message: Message) {
   commandHandler(message);
@@ -21,7 +22,12 @@ function commandHandler(message: Message) {
   if (!command || typeof command !== 'function')
     return;
 
-  command(message, args);
+  try {
+    command(message, args);
+  } catch (err) {
+    error('Unknown Error. Logs have been send to developers.', commandName, message);
+    console.error(`Error with command ${commandName}:\n${err}`);
+  }
 }
 
 export const settings = {
