@@ -34,7 +34,7 @@ export default async function (message: Message, args: string[]) {
       `${config.botName} features a lot of random commands. Currently there isn't a real direction besides just ` +
       `being a useful bot.`,
     )
-    .addField(`${config.botName} Version`, `\`${process.env.npm_package_version}\`` || '`Unknown`')
+    .addField(`${config.botName} Version`, `\`${process.env.npm_package_version || 'Unknown'}\``)
     .addField('Ping', `\`${message.client.ws.ping}\` ms`)
     .addField('Up Since', typeof clientUptime !== 'string' ?
       messageTimeStamp(clientUptime, 'R') :
