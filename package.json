@@ -10,7 +10,7 @@
     "build": "rm -rf dist && node_modules/.bin/tsc"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=16 <17"
   },
   "author": "https://github.com/Barely-Awake",
   "license": "ISC",
