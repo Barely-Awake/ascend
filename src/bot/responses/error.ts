@@ -8,7 +8,6 @@ export default function error(error: string, commandName: string, message: Messa
     .setDescription(error)
     .setFooter({
       text: `Sent by ${config.botName}`,
-      iconURL: config.footerIcon,
     });
 
   return message.channel.send({embeds: [embed]});
