@@ -35,8 +35,8 @@ export default async function (message: Message, args: string[]) {
 
   if (typeof repositoryUrl !== 'string')
     repositoryUrl = 'Unknown';
-  else if (repositoryUrl.includes('+'))
-    repositoryUrl = repositoryUrl?.split('+');
+  else if (repositoryUrl.includes('+') && !repositoryUrl.endsWith('+'))
+    repositoryUrl = repositoryUrl?.split('+')[1];
   else if (repositoryUrl.startsWith('git://'))
     repositoryUrl = repositoryUrl.replace('git://', 'https://');
 
