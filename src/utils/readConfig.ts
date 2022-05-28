@@ -1,23 +1,18 @@
-import { ColorResolvable } from 'discord.js';
-import { readFileSync } from 'fs';
+import 'dotenv/config';
 
 export function readConfig(): Config {
-  const configFile = readFileSync('config.json');
-  return JSON.parse(configFile.toString());
+  return <Config>{
+    token: process.env['TOKEN'],
+    prefix: process.env['PREFIX'],
+    botName: process.env['BOT_NAME'],
+    hypixelApiKey: process.env['HYPIXEL_API_KEY'],
+  };
 }
 
 interface Config {
   token: string;
   prefix: string;
   botName: string;
-  colors: ColorResolvable[];
-  emojis: {
-    online: string;
-    idle: string;
-    dnd: string;
-    offline: string;
-  };
-  footerIcon: string;
   hypixelApiKey: string;
 }
 
