@@ -6,6 +6,7 @@ import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import * as GitHubTypes from '@saber2pr/types-github-api';
 import botColors from '../../../utils/discord/botColors.js';
+import sharp from 'sharp';
 
 export default async function (message: Message, args: string[]) {
   if (!args[0])
@@ -28,7 +29,7 @@ export default async function (message: Message, args: string[]) {
   let timeCreated = unixToSeconds(Date.parse(userData.created_at));
   let timeUpdated = unixToSeconds(Date.parse(userData.updated_at));
 
-  const embed = new MessageEmbed()
+  let embed = new MessageEmbed()
     .setTitle(`GitHub User \`${userData.login}\`${userData.name ? ` (${userData.name})` : ''}`)
     .setColor(botColors[1])
     .setThumbnail(userData.avatar_url)
@@ -43,7 +44,34 @@ export default async function (message: Message, args: string[]) {
     .addField('Followers', String(userData.followers))
     .addField('Following', String(userData.following));
 
-  message.channel.send({embeds: [embed]});
+  let contributionGraph;
+  try {
+    const response = await fetch(`https://ghchart.rshah.org/5865F2/${userData.login.toLocaleLowerCase()}`);
+
+    if (response.ok)
+      contributionGraph = Buffer.from(await response.arrayBuffer()); // Converts response to svg file buffer
+    else
+      contributionGraph = false;
+  } catch {
+    contributionGraph = false;
+  }
+  if (typeof contributionGraph === 'boolean')
+    return message.channel.send({
+      embeds: [embed],
+    });
+
+  // Sets the embed image to the provided attachment on the message.
+  embed = embed.setImage(`attachment://${userData.login.toLocaleLowerCase()}-graph.png`);
+
+  message.channel.send({
+    embeds: [embed],
+    files: [
+      {
+        name: `${userData.login.toLocaleLowerCase()}-graph.png`,
+        attachment: sharp(contributionGraph).png(), // Converts svg to png
+      },
+    ],
+  });
 }
 
 export const description: DescriptionTypes = {
