@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node .",
     "watch": "rm -rf dist && tsc -w",
-    "compile": "node_modules/.bin/tsc"
+    "compile": "rm -rf dist && node_modules/.bin/tsc"
   },
   "author": "",
   "license": "ISC",
