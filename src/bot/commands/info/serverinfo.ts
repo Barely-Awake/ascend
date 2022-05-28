@@ -5,15 +5,13 @@ import error from '../../responses/error.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import premiumTiers from '../../../utils/discord/premiumTiers.js';
-import config from '../../../utils/readConfig.js';
+import botEmojis from '../../../utils/discord/botEmojis.js';
 
 export default async function (message: Message, args: string[]) {
   const server = await getTargetGuild(message, args[0]);
 
   if (typeof server === 'boolean')
     return error('Couldn\'t find a valid server', description.name, message);
-
-  const emojis = config.emojis;
 
   const guildRoles = server.roles.cache.sort((a, b) => b.position - a.position).map(role => role.toString()),
     guildMembers = server.members.cache,
@@ -61,10 +59,10 @@ export default async function (message: Message, args: string[]) {
     )
     .addField('Activity',
       [
-        `Online ${emojis.online}: ${statusCounts[0]}`,
-        `Idle ${emojis.idle}: ${statusCounts[1]}`,
-        `Do Not Disturb ${emojis.dnd}: ${statusCounts[2]}`,
-        `Offline ${emojis.offline}: ${server.memberCount - (statusCounts[0] + statusCounts[1] + statusCounts[2])}`,
+        `Online ${botEmojis.online}: ${statusCounts[0]}`,
+        `Idle ${botEmojis.idle}: ${statusCounts[1]}`,
+        `Do Not Disturb ${botEmojis.dnd}: ${statusCounts[2]}`,
+        `Offline ${botEmojis.offline}: ${server.memberCount - (statusCounts[0] + statusCounts[1] + statusCounts[2])}`,
 
       ].join('\n'));
 

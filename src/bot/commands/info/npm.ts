@@ -1,10 +1,10 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import config from '../../../utils/readConfig.js';
 import error from '../../responses/error.js';
 import fetch from 'node-fetch';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
+import botColors from '../../../utils/discord/botColors.js';
 
 export default async function (message: Message, args: string[]) {
   let query = args.join(' ');
@@ -43,7 +43,7 @@ export default async function (message: Message, args: string[]) {
   repositoryUrl = repositoryUrl.replace('.git', '');
 
   const embed = new MessageEmbed()
-    .setColor(config.colors[1])
+    .setColor(botColors[1])
     .setTitle(`Information on \`${body.name}\``)
     .setURL(`https://www.npmjs.com/package/${body.name}`)
     .setDescription(body.description !== undefined ? String(body.description) : '')

@@ -3,6 +3,7 @@ import { DescriptionTypes } from '../_example.js';
 import config from '../../../utils/readConfig.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
+import botColors from '../../../utils/discord/botColors.js';
 
 export default async function (message: Message, args: string[]) {
   let clientApplication = await message.client.application?.fetch();
@@ -23,7 +24,7 @@ export default async function (message: Message, args: string[]) {
 
   const infoEmbed = new MessageEmbed()
     .setTitle(`Information on ${config.botName}`)
-    .setColor(config.colors[1])
+    .setColor(botColors[1])
     .setAuthor({
       name: 'Barely Awake',
       url: 'https://github.com/barely-awake',
@@ -46,7 +47,6 @@ export default async function (message: Message, args: string[]) {
     .addField('Discord.js Version', version)
     .setFooter({
       text: 'Made with love & discord.js',
-      iconURL: config.footerIcon,
     });
 
   message.channel.send({embeds: [infoEmbed]});

@@ -2,10 +2,10 @@ import { Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
 import error from '../../responses/error.js';
 import fetch from 'node-fetch';
-import config from '../../../utils/readConfig.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import * as GitHubTypes from '@saber2pr/types-github-api';
+import botColors from '../../../utils/discord/botColors.js';
 
 export default async function (message: Message, args: string[]) {
   if (!args[0])
@@ -30,7 +30,7 @@ export default async function (message: Message, args: string[]) {
 
   const embed = new MessageEmbed()
     .setTitle(`GitHub User \`${userData.login}\`${userData.name ? ` (${userData.name})` : ''}`)
-    .setColor(config.colors[1])
+    .setColor(botColors[1])
     .setThumbnail(userData.avatar_url)
     .setDescription(userData.bio || 'Unknown')
     .setURL(userData.html_url)
