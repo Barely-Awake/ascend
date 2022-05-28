@@ -1,4 +1,4 @@
-import { ColorResolvable } from 'discord.js'
+import { ColorResolvable } from 'discord.js';
 import { readFileSync } from 'fs';
 
 export function readConfig(): Config {
@@ -11,6 +11,12 @@ interface Config {
   prefix: string;
   botName: string;
   colors: ColorResolvable[];
+  emojis: {
+    online: string;
+    idle: string;
+    dnd: string;
+    offline: string;
+  };
   footerIcon: string;
   hypixelApiKey: string;
 }
