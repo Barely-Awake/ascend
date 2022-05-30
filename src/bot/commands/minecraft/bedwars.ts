@@ -1,14 +1,14 @@
 import * as Discord from 'discord.js';
-import { DescriptionTypes } from './_example.js';
-import getPlayerUuid from '../../utils/minecraft/getPlayerUuid.js';
-import getPlayerStats from '../../utils/minecraft/getPlayerStats.js';
-import drawRoundedRectangle from '../../utils/canvas/drawRoundedRectangle.js';
-import calculateBedWarsLevel from '../../utils/minecraft/calculateBedWarsLevel.js';
-import { getFormattedLevel } from '../../utils/minecraft/getFormattedLevel.js';
-import formatPlayerStats from '../../utils/minecraft/formatPlayerStats.js';
-import fillColoredText from '../../utils/canvas/fillColoredText.js';
+import { DescriptionTypes } from '../_example.js';
+import getPlayerUuid from '../../../utils/minecraft/getPlayerUuid.js';
+import getPlayerStats from '../../../utils/minecraft/getPlayerStats.js';
+import drawRoundedRectangle from '../../../utils/canvas/drawRoundedRectangle.js';
+import calculateBedWarsLevel from '../../../utils/minecraft/calculateBedWarsLevel.js';
+import { getFormattedLevel } from '../../../utils/minecraft/getFormattedLevel.js';
+import formatPlayerStats from '../../../utils/minecraft/formatPlayerStats.js';
+import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import pkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
-import playerStatsTypes from '../../types/playerStatsTypes.js';
+import playerStatsTypes from '../../../types/playerStatsTypes.js';
 
 const {createCanvas} = pkg;
 
