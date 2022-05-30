@@ -31,18 +31,15 @@ export default async function (message: Message, args: string[]) {
   }
 
   let embed = new MessageEmbed()
-    .setTitle(`${mojangData.name}`)
+    .setTitle(`${mojangData.name}'s skin`)
     .setThumbnail(`https://crafatar.com/avatars/${mojangData.uuid}?overlay`)
-    .setImage(`https://visage.surgeplay.com/full/${mojangData.uuid}?tilt=0`)
-    .addField('NameMC', `[Click!](https://namemc.com/search?q=${mojangData.uuid})`)
-    .addField('UUID', mojangData.uuid);
+    .setImage(`https://visage.surgeplay.com/full/${mojangData.uuid}?tilt=0`);
 
   message.channel.send({embeds: [embed]});
 }
 
 export const description: DescriptionTypes = {
-  name: 'minecraft',
-  aliases: ['mc', 'mcinfo', 'minecraftinfo'],
-  description: 'Shows a player\'s minecraft profile.',
+  name: 'skin',
+  description: 'Shows a player\'s minecraft skin.',
   usage: '<player>',
 };
