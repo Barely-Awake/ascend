@@ -9,6 +9,7 @@ import formatPlayerStats from '../../../utils/minecraft/formatPlayerStats.js';
 import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import pkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
 import playerStatsTypes from '../../../types/playerStatsTypes.js';
+import error from '../../responses/error.js';
 
 const {createCanvas} = pkg;
 
@@ -18,16 +19,19 @@ export default async function (message: Discord.Message, args: string[]) {
   if (!args[0])
     return message.channel.send('Please provide a player.');
 
-  if (player.length !== 32 && player.length !== 36)
-    player = await getPlayerUuid(player);
+  if (player.length !== 32 && player.length !== 36) {
+    let mojangData = await getPlayerUuid(player);
 
-  if (!player)
-    return message.channel.send('Player not found.');
+    if (typeof mojangData === 'boolean')
+      return error('Couldn\'t retrieve player uuid', description.name, message);
+
+    player = mojangData.id;
+  }
 
   const hypixelApiResponse = await getPlayerStats(player);
 
   if (hypixelApiResponse === false || hypixelApiResponse === undefined)
-    return message.channel.send('Hypixel API error or Invalid player.');
+    return error('Couldn\'t retrieve player\'s Hypixel stats', description.name, message);
 
   const playerStats = formatPlayerStats(hypixelApiResponse);
 
