@@ -35,8 +35,9 @@ export default async function (message: Message, args: string[]) {
         break;
     }
   });
+  console.log(server.iconURL, 'h');
 
-  const embed = new MessageEmbed()
+  let embed = new MessageEmbed()
     .setTitle(`Server info on \`${server.name}\``)
     .setDescription(server.description ? server.description : '')
     .addField('General',
@@ -65,6 +66,12 @@ export default async function (message: Message, args: string[]) {
         `Offline ${botEmojis.offline}: ${server.memberCount - (statusCounts[0] + statusCounts[1] + statusCounts[2])}`,
 
       ].join('\n'));
+
+  let iconUrl = server.iconURL({dynamic: true});
+
+  if (iconUrl !== null && iconUrl !== undefined)
+    embed = embed
+      .setThumbnail(iconUrl);
 
   message.channel.send({embeds: [embed]});
 }
