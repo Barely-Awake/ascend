@@ -10,7 +10,7 @@ export default function (stringWithColorCodes: string, ctx: CanvasRenderingConte
     orderedColors.push(value.charAt(0).toLocaleLowerCase());
     value = value.substring(1);
     textContent += value;
-  })
+  });
 
   const textWidth = ctx.measureText(textContent).width;
   textContent = '';
@@ -64,7 +64,7 @@ export default function (stringWithColorCodes: string, ctx: CanvasRenderingConte
         textContent.length : 0), textPosY);
 
     textContent += value;
-  })
+  });
 
   ctx.font = startingFont;
   ctx.fillStyle = startingFillStyle;
