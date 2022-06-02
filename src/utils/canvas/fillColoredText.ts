@@ -4,17 +4,17 @@ import { colors } from '../minecraft/getFormattedLevel.js';
 export default function (stringWithColorCodes: string, ctx: CanvasRenderingContext2D, textPosX: number, textPosY: number, textAlign = 'center'): void {
   const levelArray = ('§r' + stringWithColorCodes).split(/§/g);
   let textContent = '';
-  const orderedColors = [];
+  const orderedColors: (string | number)[] = [];
 
-  for (const i in levelArray) {
-    orderedColors.push(levelArray[i].charAt(0).toLocaleLowerCase());
-    levelArray[i] = levelArray[i].substring(1);
-    textContent += levelArray[i];
-  }
+  levelArray.forEach(value => {
+    orderedColors.push(value.charAt(0).toLocaleLowerCase());
+    value = value.substring(1);
+    textContent += value;
+  })
 
   const textWidth = ctx.measureText(textContent).width;
   textContent = '';
-  let trueTextPosX;
+  let trueTextPosX: number;
   if (textAlign === 'center')
     trueTextPosX = textPosX - textWidth / 2;
   else
@@ -24,14 +24,14 @@ export default function (stringWithColorCodes: string, ctx: CanvasRenderingConte
   const startingFont = ctx.font;
   const startingFillStyle = ctx.fillStyle;
 
-  for (const i in levelArray) {
-    const fillStyle = colors[orderedColors[i]];
+  levelArray.forEach((value, index) => {
+    const fillStyle = colors[orderedColors[index]];
     let boldCompensate = false;
 
     switch (fillStyle) {
       case 'hex':
-        ctx.fillStyle = '#' + levelArray[i].substring(0, 6);
-        levelArray[i] = levelArray[i].slice(6);
+        ctx.fillStyle = '#' + value.substring(0, 6);
+        value = value.slice(6);
         break;
       case 'bold':
         boldCompensate = true;
@@ -59,12 +59,12 @@ export default function (stringWithColorCodes: string, ctx: CanvasRenderingConte
         break;
     }
 
-    ctx.fillText(levelArray[i],
+    ctx.fillText(value,
       trueTextPosX + ctx.measureText(textContent).width - (boldCompensate ?
         textContent.length : 0), textPosY);
 
-    textContent += levelArray[i];
-  }
+    textContent += value;
+  })
 
   ctx.font = startingFont;
   ctx.fillStyle = startingFillStyle;
