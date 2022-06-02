@@ -5,11 +5,11 @@ import error from '../../responses/error.js';
 import getPlayerNames from '../../../utils/minecraft/getPlayerNames.js';
 
 export default async function (message: Message, args: string[]) {
-  let player = args[0].replace(/-/g, '');
+  const player = args[0].replace(/-/g, '');
 
   let mojangData;
   if (player.length !== 32) {
-    let data = await getPlayerUuid(player);
+    const data = await getPlayerUuid(player);
 
     if (typeof data === 'boolean')
       return error(`Couldn't fetch player's uuid`, description.name, message);
@@ -19,7 +19,7 @@ export default async function (message: Message, args: string[]) {
       name: data.name,
     };
   } else {
-    let data = await getPlayerNames(player);
+    const data = await getPlayerNames(player);
 
     if (typeof data === 'boolean')
       return error(`Couldn't fetch player's names`, description.name, message);
@@ -30,7 +30,7 @@ export default async function (message: Message, args: string[]) {
     };
   }
 
-  let embed = new MessageEmbed()
+  const embed = new MessageEmbed()
     .setTitle(`${mojangData.name}'s skin`)
     .setThumbnail(`https://crafatar.com/avatars/${mojangData.uuid}?overlay`)
     .setImage(`https://visage.surgeplay.com/full/4096/${mojangData.uuid}?tilt=0`);

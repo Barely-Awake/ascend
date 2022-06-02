@@ -18,7 +18,7 @@ export default async function (message: Message, args: string[]) {
 
   const userInvites = allInvites?.filter((value: Invite) => value.inviter?.id === message.author.id);
 
-  let userInvitesCount = 0;
+  const userInvitesCount = 0;
   let userInviteCodes;
 
   if (userInvites !== undefined) {

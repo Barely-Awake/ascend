@@ -14,7 +14,7 @@ export default async function eventHandler(client: Client, pathAdditions = '') {
 
     const event = await import(`./events${pathAdditions}/${file}`);
 
-    let eventName = file.split('.')[0];
+    const eventName = file.split('.')[0];
     if (event.settings.once)
       client.once(eventName, (...args: string[]) => event.default(...args));
     else

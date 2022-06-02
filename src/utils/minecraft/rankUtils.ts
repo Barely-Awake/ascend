@@ -131,10 +131,10 @@ function calcTag(player: Player) {
     let packageRank: string | undefined | null = player.packageRank;
     let newPackageRank: string | undefined | null = player.newPackageRank;
     let monthlyPackageRank: string | undefined | null = player.monthlyPackageRank;
-    let rankPlusColor = player.rankPlusColor;
-    let monthlyRankColor = player.monthlyRankColor;
+    const rankPlusColor = player.rankPlusColor;
+    const monthlyRankColor = player.monthlyRankColor;
     let rank: string | undefined | null = player.rank;
-    let prefix = player.prefix;
+    const prefix = player.prefix;
 
     if (rank === 'NORMAL')
       rank = null; // Don't care about normies
@@ -172,15 +172,15 @@ function getString(rank: string[][]) {
  */
 function parseMinecraftTag(tag: string) {
   if (tag) {
-    let newRank: any[] = [];
+    const newRank: any[] = [];
 
     // Even indexes should be formatting codes, odd indexes should be text
-    let splitTag = tag.split(/§([a-f\d])/);
+    const splitTag = tag.split(/§([a-f\d])/);
     splitTag.unshift('f'); // Beginning is always going to be white (typically empty though)
 
     for (let i = 0; i < splitTag.length; i++) {
-      let j = Math.floor(i / 2); // First index
-      let k = i % 2; // Second index
+      const j = Math.floor(i / 2); // First index
+      const k = i % 2; // Second index
 
       if (!newRank[j])
         newRank[j] = [];
@@ -210,7 +210,7 @@ function replaceCustomColors(rank: any, p: string | any[] | null | undefined, r:
     return rank;
 
   // Deep copy the rank
-  let newRank = JSON.parse(JSON.stringify(rank));
+  const newRank = JSON.parse(JSON.stringify(rank));
 
   // Set defaults
   if (!p || typeof p !== 'string' || p.length > 1)

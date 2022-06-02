@@ -10,7 +10,7 @@ export default async function (message: Message, args: string[]) {
     .setDescription(`<> = Required Argument\n[] = Optional Argument\n${config.prefix} = Prefix`)
     .setColor('#9b027f');
 
-  let commandFields: { [index: string]: any[] } = {
+  const commandFields: { [index: string]: any[] } = {
     0: [],
   };
   let totalCommands = 0;
@@ -33,12 +33,12 @@ export default async function (message: Message, args: string[]) {
       else
         importedFile = await import('.' + pathAdditions + '/' + file);
 
-      let fileDescription: DescriptionTypes = importedFile.description;
+      const fileDescription: DescriptionTypes = importedFile.description;
 
       if (!fileDescription)
         continue;
 
-      let commandInfo = {
+      const commandInfo = {
         name: `${config.prefix}${fileDescription.name} ${fileDescription.usage}`,
         value: `${fileDescription.description}`,
         inline: false,
@@ -57,7 +57,7 @@ export default async function (message: Message, args: string[]) {
 
   await fileLoop();
 
-  let embedsArray = [];
+  const embedsArray = [];
 
   if (totalCommands <= 25) {
     embedsArray.push(helpEmbed);
@@ -65,7 +65,7 @@ export default async function (message: Message, args: string[]) {
       helpEmbed.addField(field.name, field.value, field.inline);
   } else {
     for (let i = 0; i <= Math.floor(totalCommands / 3); i++) {
-      let copy = helpEmbed;
+      const copy = helpEmbed;
       copy.title += ` (Page ${i})`;
       for (const field of commandFields[i])
         copy.addField(field.name, field.value, field.inline);

@@ -2,17 +2,17 @@ import { CanvasRenderingContext2D } from 'canvas';
 import { colors } from '../minecraft/getFormattedLevel.js';
 
 export default function (stringWithColorCodes: string, ctx: CanvasRenderingContext2D, textPosX: number, textPosY: number, textAlign = 'center') {
-  let levelArray = ('§r' + stringWithColorCodes).split(/§/g);
+  const levelArray = ('§r' + stringWithColorCodes).split(/§/g);
   let textContent = '';
-  let orderedColors = [];
+  const orderedColors = [];
 
-  for (let i in levelArray) {
+  for (const i in levelArray) {
     orderedColors.push(levelArray[i].charAt(0).toLocaleLowerCase());
     levelArray[i] = levelArray[i].substring(1);
     textContent += levelArray[i];
   }
 
-  let textWidth = ctx.measureText(textContent).width;
+  const textWidth = ctx.measureText(textContent).width;
   textContent = '';
   let trueTextPosX;
   if (textAlign === 'center')
@@ -24,7 +24,7 @@ export default function (stringWithColorCodes: string, ctx: CanvasRenderingConte
   const startingFont = ctx.font;
   const startingFillStyle = ctx.fillStyle;
 
-  for (let i in levelArray) {
+  for (const i in levelArray) {
     const fillStyle = colors[orderedColors[i]];
     let boldCompensate = false;
 
