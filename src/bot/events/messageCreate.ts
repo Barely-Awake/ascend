@@ -3,7 +3,7 @@ import { Message } from 'discord.js';
 import config from '../../utils/readConfig.js';
 import error from '../responses/error.js';
 
-export default function (message: Message) {
+export default function (message: Message): void  {
   commandHandler(message);
 }
 
