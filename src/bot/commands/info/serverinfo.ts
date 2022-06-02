@@ -21,7 +21,7 @@ export default async function (message: Message, args: string[]) {
 
   const guildCreationDate = unixToSeconds(server.createdTimestamp);
 
-  let statusCounts = [0, 0, 0];
+  const statusCounts = [0, 0, 0];
   guildPresences.forEach((v) => {
     switch (v.status) {
       case 'online':
@@ -67,7 +67,7 @@ export default async function (message: Message, args: string[]) {
 
       ].join('\n'));
 
-  let iconUrl = server.iconURL({dynamic: true});
+  const iconUrl = server.iconURL({dynamic: true});
 
   if (iconUrl !== null && iconUrl !== undefined)
     embed = embed

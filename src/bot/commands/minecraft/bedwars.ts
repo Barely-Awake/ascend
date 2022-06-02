@@ -20,7 +20,7 @@ export default async function (message: Discord.Message, args: string[]) {
     return message.channel.send('Please provide a player.');
 
   if (player.length !== 32 && player.length !== 36) {
-    let mojangData = await getPlayerUuid(player);
+    const mojangData = await getPlayerUuid(player);
 
     if (typeof mojangData === 'boolean')
       return error('Couldn\'t retrieve player uuid', description.name, message);
@@ -60,7 +60,7 @@ function drawFirstCanvas(playerStats: playerStatsTypes) {
   ctx.textAlign = 'center';
 
   // Draw the user's display name
-  let playerBedWarsLevel = getFormattedLevel(calculateBedWarsLevel(playerStats.bedWars.experience));
+  const playerBedWarsLevel = getFormattedLevel(calculateBedWarsLevel(playerStats.bedWars.experience));
   fillColoredText(`${playerBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`, ctx, canvas.width / 2, 60);
 
   ctx.fillStyle = '#36393f';
@@ -89,7 +89,7 @@ function drawFirstCanvas(playerStats: playerStatsTypes) {
   ctx.fillStyle = '#999999';
   ctx.font = '26px Sonus';
 
-  for (let i in includedOrderedModes) {
+  for (const i in includedOrderedModes) {
     let mode: string;
     switch (includedOrderedModes[i]) {
       case 'Overall':
@@ -152,7 +152,7 @@ function drawSecondCanvas(playerStats: playerStatsTypes) {
   ctx.fillStyle = '#999999';
   ctx.font = '26px Sonus';
 
-  for (let i in includedOrderedModes) {
+  for (const i in includedOrderedModes) {
     let mode: string;
     switch (includedOrderedModes[i]) {
       case 'Threes':
@@ -231,7 +231,7 @@ function fillModeStats(
   textPositions: number[],
   initialYPos: number,
 ) {
-  let textToFill = statsText
+  const textToFill = statsText
     .replace('$winStreak',
       playerStats.bedWars.winStreak[mode] !== null ?
         (playerStats.bedWars.winStreak[mode] || 0).toLocaleString() :

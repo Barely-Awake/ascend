@@ -33,7 +33,7 @@ export default function drawRoundedRectangle(
   } else {
     const defaultRadius: { [index: string]: number | undefined } = {tl: 0, tr: 0, br: 0, bl: 0};
 
-    for (let side in defaultRadius) {
+    for (const side in defaultRadius) {
       radius[side] = radius[side] || defaultRadius[side];
     }
   }

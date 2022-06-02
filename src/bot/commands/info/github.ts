@@ -12,7 +12,7 @@ export default async function (message: Message, args: string[]) {
   if (!args[0])
     return error('No user provided', description.name, message);
 
-  let user = args.join('-');
+  const user = args.join('-');
 
   let userData: GitHubTypes.User;
   try {
@@ -26,8 +26,8 @@ export default async function (message: Message, args: string[]) {
     return error('Error while fetching user data', description.name, message);
   }
 
-  let timeCreated = unixToSeconds(Date.parse(userData.created_at));
-  let timeUpdated = unixToSeconds(Date.parse(userData.updated_at));
+  const timeCreated = unixToSeconds(Date.parse(userData.created_at));
+  const timeUpdated = unixToSeconds(Date.parse(userData.updated_at));
 
   let embed = new MessageEmbed()
     .setTitle(`GitHub User \`${userData.login}\`${userData.name ? ` (${userData.name})` : ''}`)

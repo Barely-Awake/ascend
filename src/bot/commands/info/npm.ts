@@ -7,7 +7,7 @@ import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import botColors from '../../../utils/discord/botColors.js';
 
 export default async function (message: Message, args: string[]) {
-  let query = args.join(' ');
+  const query = args.join(' ');
   if (!query)
     return;
 
@@ -29,8 +29,8 @@ export default async function (message: Message, args: string[]) {
   if (body.time.unpublished !== undefined)
     return error(`The npm package \`${query}\` was unpublished`, description.name, message);
 
-  let timeCreated = unixToSeconds(Date.parse(body.time.created));
-  let timeModified = unixToSeconds(Date.parse(body.time.modified));
+  const timeCreated = unixToSeconds(Date.parse(body.time.created));
+  const timeModified = unixToSeconds(Date.parse(body.time.modified));
   let repositoryUrl = body.repository?.url;
 
   if (typeof repositoryUrl !== 'string')
