@@ -24,7 +24,18 @@ intents.add(
   Intents.FLAGS.DIRECT_MESSAGES,
 );
 
-const client = new Client({intents: intents});
+const client = new Client({
+  intents: intents,
+  presence: {
+    status: 'idle',
+    activities: [
+      {
+        name: 'Happy pride month!',
+        type: 'PLAYING',
+      },
+    ],
+  }
+});
 const clientCollections = {
   commands: new Collection(),
 };
