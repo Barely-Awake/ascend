@@ -89,9 +89,9 @@ function drawFirstCanvas(playerStats: playerStatsTypes) {
   ctx.fillStyle = '#999999';
   ctx.font = '26px Sonus';
 
-  for (const i in includedOrderedModes) {
+  includedOrderedModes.forEach((value, index) => {
     let mode: string;
-    switch (includedOrderedModes[i]) {
+    switch (value) {
       case 'Overall':
         mode = 'overAll';
         break;
@@ -104,8 +104,8 @@ function drawFirstCanvas(playerStats: playerStatsTypes) {
       default:
         mode = 'overAll';
     }
-    fillModeStats(mode, playerStats, Number(i), ctx, textPositions, 125);
-  }
+    fillModeStats(mode, playerStats, Number(index), ctx, textPositions, 125);
+  });
 
   return canvas.toBuffer();
 }
@@ -152,9 +152,9 @@ function drawSecondCanvas(playerStats: playerStatsTypes) {
   ctx.fillStyle = '#999999';
   ctx.font = '26px Sonus';
 
-  for (const i in includedOrderedModes) {
+  includedOrderedModes.forEach((value, index) => {
     let mode: string;
-    switch (includedOrderedModes[i]) {
+    switch (value) {
       case 'Threes':
         mode = 'four_three';
         break;
@@ -167,8 +167,8 @@ function drawSecondCanvas(playerStats: playerStatsTypes) {
       default:
         mode = 'four_three';
     }
-    fillModeStats(mode, playerStats, Number(i), ctx, textPositions, 50);
-  }
+    fillModeStats(mode, playerStats, Number(index), ctx, textPositions, 50);
+  });
 
   return canvas.toBuffer();
 }
