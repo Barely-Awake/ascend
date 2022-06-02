@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 
-export default async function (message: Message, args: string[]) {
+export default function (message: Message, args: string[]) {
   return;
 }
 
