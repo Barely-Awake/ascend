@@ -10,7 +10,7 @@ export default async function (message: Message, args: string[]) {
     .setDescription(`<> = Required Argument\n[] = Optional Argument\n${config.prefix} = Prefix`)
     .setColor('#9b027f');
 
-  const commandFields: { [index: string]: any[] } = {
+  const commandFields: { [index: string]: {name: string, value: string, inline: boolean}[] } = {
     0: [],
   };
   let totalCommands = 0;
