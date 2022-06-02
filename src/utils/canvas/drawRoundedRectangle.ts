@@ -25,8 +25,8 @@ export default function drawRoundedRectangle(
   width: number,
   height: number,
   radius: radiusParamTypes | number = 5,
-  fill: boolean = false,
-  stroke: boolean = true,
+  fill = false,
+  stroke = true,
 ) {
   if (typeof radius === 'number') {
     radius = {tl: radius, tr: radius, br: radius, bl: radius};
@@ -58,10 +58,10 @@ export default function drawRoundedRectangle(
 }
 
 interface radiusParamTypes {
-  [index: string]: number | undefined;
-
   tl: number;
   tr: number;
   br: number;
   bl: number;
+
+  [index: string]: number | undefined;
 }
