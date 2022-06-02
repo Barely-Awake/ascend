@@ -156,7 +156,7 @@ function calcTag(player: Player) {
   return replaceCustomColors(ranks.DEFAULT, null, null);
 }
 
-function getString(rank: string[][]) {
+function getString(rank: string[][]): string  {
   let rankString = '';
   rank.forEach((arr: string[]) => {
     rankString = rankString + '&' + arr[0] + arr[1];

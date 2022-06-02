@@ -1,7 +1,7 @@
 import { CanvasRenderingContext2D } from 'canvas';
 import { colors } from '../minecraft/getFormattedLevel.js';
 
-export default function (stringWithColorCodes: string, ctx: CanvasRenderingContext2D, textPosX: number, textPosY: number, textAlign = 'center') {
+export default function (stringWithColorCodes: string, ctx: CanvasRenderingContext2D, textPosX: number, textPosY: number, textAlign = 'center'): void  {
   let levelArray = ('§r' + stringWithColorCodes).split(/§/g);
   let textContent = '';
   let orderedColors = [];
