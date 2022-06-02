@@ -27,7 +27,7 @@ export default function drawRoundedRectangle(
   radius: radiusParamTypes | number = 5,
   fill = false,
   stroke = true,
-) {
+): void  {
   if (typeof radius === 'number') {
     radius = {tl: radius, tr: radius, br: radius, bl: radius};
   } else {
