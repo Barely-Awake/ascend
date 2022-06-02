@@ -25,8 +25,12 @@ function commandHandler(message: Message) {
   try {
     command(message, args);
   } catch (err) {
-    error('Unknown Error. Logs have been send to developers.', commandName, message);
-    console.error(`Error with command ${commandName}:\n${err}`);
+    error(
+      'An unknown error occurred with the command: \`${commandName}\`. Logs have been send to developers.',
+      commandName,
+      message,
+    );
+    console.error(`An unknown error occurred with the command: ${commandName}. Error:\n`, err);
   }
 }
 
