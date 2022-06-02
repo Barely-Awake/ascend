@@ -1,7 +1,7 @@
 import { Client } from 'discord.js';
 import { readdir } from 'fs/promises';
 
-export default async function eventHandler(client: Client, pathAdditions: string = '') {
+export default async function eventHandler(client: Client, pathAdditions = '') {
   const eventFiles = await readdir('./dist/bot/events' + pathAdditions);
 
   for (const file of eventFiles) {
