@@ -6,11 +6,11 @@ export default function (stringWithColorCodes: string, ctx: CanvasRenderingConte
   let textContent = '';
   const orderedColors: (string | number)[] = [];
 
-  levelArray.forEach(value => {
-    orderedColors.push(value.charAt(0).toLocaleLowerCase());
-    value = value.substring(1);
-    textContent += value;
-  });
+  for (let i = 0; i < levelArray.length; i++) {
+    orderedColors.push(levelArray[i].charAt(0).toLocaleLowerCase());
+    levelArray[i] = levelArray[i].substring(1);
+    textContent += levelArray[i];
+  }
 
   const textWidth = ctx.measureText(textContent).width;
   textContent = '';
@@ -24,14 +24,14 @@ export default function (stringWithColorCodes: string, ctx: CanvasRenderingConte
   const startingFont = ctx.font;
   const startingFillStyle = ctx.fillStyle;
 
-  levelArray.forEach((value, index) => {
-    const fillStyle = colors[orderedColors[index]];
+  for (let i = 0; i < levelArray.length; i++) {
+    const fillStyle = colors[orderedColors[i]];
     let boldCompensate = false;
 
     switch (fillStyle) {
       case 'hex':
-        ctx.fillStyle = '#' + value.substring(0, 6);
-        value = value.slice(6);
+        ctx.fillStyle = '#' + levelArray[i].substring(0, 6);
+        levelArray[i] = levelArray[i].slice(6);
         break;
       case 'bold':
         boldCompensate = true;
@@ -59,12 +59,12 @@ export default function (stringWithColorCodes: string, ctx: CanvasRenderingConte
         break;
     }
 
-    ctx.fillText(value,
+    ctx.fillText(levelArray[i],
       trueTextPosX + ctx.measureText(textContent).width - (boldCompensate ?
         textContent.length : 0), textPosY);
 
-    textContent += value;
-  });
+    textContent += levelArray[i];
+  }
 
   ctx.font = startingFont;
   ctx.fillStyle = startingFillStyle;
