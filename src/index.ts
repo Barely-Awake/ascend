@@ -30,8 +30,8 @@ const client = new Client({
     status: 'idle',
     activities: [
       {
-        name: 'Happy pride month!',
-        type: 'PLAYING',
+        name: `${config.prefix}help | Happy pride month!`,
+        type: 'WATCHING',
       },
     ],
   }
