@@ -3,6 +3,7 @@ import commandAdder from './bot/commandAdder.js';
 import eventHandler from './bot/eventHandler.js';
 import config from './utils/readConfig.js';
 import pkg from 'canvas';
+import { connect } from 'mongoose';
 
 const {registerFont} = pkg;
 
@@ -41,6 +42,7 @@ const clientCollections = {
 };
 
 export { clientCollections as default };
+export const mongo = connect(config.mongo.url);
 
 commandAdder(clientCollections.commands);
 eventHandler(client);
