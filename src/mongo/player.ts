@@ -1,10 +1,17 @@
-import { model, Schema } from 'mongoose';
+import pkg from 'mongoose';
 
-const PlayerSchema = new Schema({
+const {model, Schema} = pkg;
+
+interface IPlayer {
+  discordId: string;
+  playerUuid: string;
+}
+
+const PlayerSchema = new Schema<IPlayer>({
   discordId: String,
   playerUuid: String,
 }, {timestamps: true});
 
-const playerModel = model('Player', PlayerSchema);
+const Player = model<IPlayer>('Player', PlayerSchema);
 
-export { playerModel as default };
+export { Player as default };
