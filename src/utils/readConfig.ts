@@ -6,14 +6,7 @@ export function readConfig(): Config {
     prefix: process.env['PREFIX'],
     botName: process.env['BOT_NAME'],
     hypixelApiKey: process.env['HYPIXEL_API_KEY'],
-    mongo: {
-      host: process.env['MONGO_HOST'],
-      port: process.env['MONGO_PORT'],
-      userName: process.env['MONGO_USER'],
-      password: process.env['MONGO_PASSWORD'],
-      url: `mongodb://${process.env['MONGO_USER']}:${process.env['MONGO_PASSWORD']}@\
-      ${process.env['MONGO_HOST']}:${process.env['MONGO_PORT']}`,
-    },
+    mongoUrl: process.env['MONGO_URL'],
   };
 }
 
@@ -22,13 +15,7 @@ interface Config {
   prefix: string;
   botName: string;
   hypixelApiKey: string;
-  mongo: {
-    host: string;
-    port: string;
-    userName: string;
-    password: string;
-    url: string;
-  };
+  mongoUrl: string;
 }
 
 const config = readConfig();
