@@ -24,7 +24,7 @@ export default async function (message: Message, args: string[]) {
       'Unknown')
     .addField('Memory Usage', `\`${Math.floor(process.memoryUsage().heapUsed / 1024 / 1024)}\` MB`);
 
-  perfMsg.edit({content: '', embeds: [embed]})
+  perfMsg.edit({content: 'Client Performance', embeds: [embed]})
 }
 
 export const description: DescriptionTypes = {
