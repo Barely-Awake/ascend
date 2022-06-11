@@ -3,8 +3,9 @@ import commandAdder from './bot/commandAdder.js';
 import eventHandler from './bot/eventHandler.js';
 import config from './utils/readConfig.js';
 import pkg from 'canvas';
-import { connect } from 'mongoose';
+import mPkg from 'mongoose';
 
+const {connect} = mPkg;
 const {registerFont} = pkg;
 
 registerFont('assets/fonts/sonus-light.ttf', {family: 'Sonus'});
@@ -35,14 +36,14 @@ const client = new Client({
         type: 'WATCHING',
       },
     ],
-  }
+  },
 });
 const clientCollections = {
   commands: new Collection(),
 };
 
 export { clientCollections as default };
-export const mongo = connect(config.mongo.url);
+export const mongo = connect(config.mongoUrl);
 
 commandAdder(clientCollections.commands);
 eventHandler(client);
