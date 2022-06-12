@@ -14,6 +14,15 @@ export default function (playerStats: Player): playerStatsTypes {
     lastLogIn: playerStats.lastLogin || null,
     lastLogOut: playerStats.lastLogout || null,
 
+    socialMedia: {
+      hypixel: playerStats.socialMedia?.links?.HYPIXEL,
+      discord: playerStats.socialMedia?.links?.DISCORD,
+      twitch: playerStats.socialMedia?.links?.TWITCH,
+      instagram: playerStats.socialMedia?.links?.INSTAGRAM,
+      youtube: playerStats.socialMedia?.links?.YOUTUBE,
+      twitter: playerStats.socialMedia?.links?.TWITTER,
+    },
+
     bedWars: {
       experience: bedWarsStats?.Experience || 0,
 
