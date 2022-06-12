@@ -26,6 +26,15 @@ export default function (playerStats: Player): playerStatsTypes {
     bedWars: {
       experience: bedWarsStats?.Experience || 0,
 
+      winStreakApiOn: function (this) {
+        for (const mode in this.winStreak) {
+          if (this.winStreak[mode] === null && this.wins[mode] !== 0)
+            return false;
+        }
+
+        return true;
+      },
+
       gamesPlayed: {
         overAll: bedWarsStats?.games_played_bedwars || 0,
         eight_one: bedWarsStats?.eight_one_games_played_bedwars || 0,
