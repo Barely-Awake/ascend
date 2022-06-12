@@ -8,6 +8,7 @@ export function readConfig(): Config {
     prefix: process.env['PREFIX'],
     botName: process.env['BOT_NAME'],
     hypixelApiKey: process.env['HYPIXEL_API_KEY'],
+    keathizApiKey: process.env['KEATHIZ_API_KEY'],
     mongoUrl: process.env['MONGO_URL'],
   };
 }
@@ -19,6 +20,7 @@ interface Config {
   prefix: string;
   botName: string;
   hypixelApiKey: string;
+  keathizApiKey: string;
   mongoUrl: string;
 }
 
