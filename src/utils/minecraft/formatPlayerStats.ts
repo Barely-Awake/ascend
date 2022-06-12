@@ -15,12 +15,12 @@ export default function (playerStats: Player): playerStatsTypes {
     lastLogOut: playerStats.lastLogout || null,
 
     socialMedia: {
-      hypixel: playerStats.socialMedia?.links?.HYPIXEL,
-      discord: playerStats.socialMedia?.links?.DISCORD,
-      twitch: playerStats.socialMedia?.links?.TWITCH,
-      instagram: playerStats.socialMedia?.links?.INSTAGRAM,
-      youtube: playerStats.socialMedia?.links?.YOUTUBE,
-      twitter: playerStats.socialMedia?.links?.TWITTER,
+      hypixel: playerStats.socialMedia?.links?.HYPIXEL || null,
+      discord: playerStats.socialMedia?.links?.DISCORD || null,
+      twitch: playerStats.socialMedia?.links?.TWITCH || null,
+      instagram: playerStats.socialMedia?.links?.INSTAGRAM || null,
+      youtube: playerStats.socialMedia?.links?.YOUTUBE || null,
+      twitter: playerStats.socialMedia?.links?.TWITTER || null,
     },
 
     bedWars: {
