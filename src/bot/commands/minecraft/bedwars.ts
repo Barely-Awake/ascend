@@ -10,16 +10,29 @@ import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import pkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
 import playerStatsTypes from '../../../types/playerStatsTypes.js';
 import error from '../../responses/error.js';
+import playerModel from '../../../mongo/player.js';
 
 const {createCanvas} = pkg;
 
 export default async function (message: Discord.Message, args: string[]) {
-  let player = args[0];
+  let player = (args[0] || '').replace(/-/g, '');
 
-  if (!args[0])
-    return message.channel.send('Please provide a player.');
+  if (!args[0]) {
+    let dataBaseInfo;
+    try {
+      dataBaseInfo = await playerModel.findOne({discordId: message.author.id});
+    } catch {
+      dataBaseInfo = null;
+    }
 
-  if (player.length !== 32 && player.length !== 36) {
+    if (dataBaseInfo === null)
+      return error('You must be linked to not have to provide a player name. ' +
+        'To see how to do that please view this image (https://catboymaid.club/Z96boeByYUZd) ', description.name, message);
+
+    player = dataBaseInfo.playerUuid;
+  }
+
+  if (player.length !== 32) {
     const mojangData = await getPlayerUuid(player);
 
     if (typeof mojangData === 'boolean')
