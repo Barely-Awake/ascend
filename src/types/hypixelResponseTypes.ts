@@ -8882,7 +8882,6 @@ export interface SpeedUHC {
   wins_mastery_berserk?: number;
   losses_mastery_berserk?: number;
   deaths_mastery_berserk?: number;
-  '§fSplashPotionofHeal(4❤)_drop'?: number;
   mastery_huntsman?: number;
   wins_mastery_huntsman?: number;
   kills_mastery_huntsman?: number;
@@ -10327,9 +10326,15 @@ export interface DayHOrAllTime {
 
 export interface SocialMedia {
   links?: Links;
+  prompt?: boolean;
 }
 
 export interface Links {
+  HYPIXEL?: string;
+  DISCORD?: string;
+  TWITCH?: string;
+  INSTAGRAM?: string;
+  YOUTUBE?: string;
   TWITTER?: string;
 }
 
