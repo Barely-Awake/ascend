@@ -22,7 +22,7 @@ interface SocialMedia {
 interface BedWarsStats {
   experience: number;
 
-  winStreakApiOn: Function;
+  winStreakApiOn: WinStreakApiOn;
 
   gamesPlayed: GenericStats;
   winStreak: GenericStats;
@@ -41,6 +41,10 @@ interface BedWarsStats {
   bedBreakLossRatio: GenericStats;
 
   [key: string]: GenericStats | number | Function;
+}
+
+interface WinStreakApiOn {
+  (): boolean
 }
 
 interface GenericStats {
