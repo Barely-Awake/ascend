@@ -10,7 +10,7 @@ import getPlayerNames from '../../../utils/minecraft/getPlayerNames.js';
 export default async function (message: Message, args: string[]) {
   const existingDiscordData = await Player.find({discordId: message.author.id});
 
-  if (existingDiscordData !== null)
+  if (existingDiscordData.length !== 0)
     return error('You have already linked on this discord account. Please use the unlink command and then try ' +
       'linking again.', description.name, message);
 
@@ -41,10 +41,10 @@ export default async function (message: Message, args: string[]) {
       name: nameHistory[nameHistory.length - 1].name,
     };
   }
-  const existingMinecraftData = await Player.findOne({playerUuid: playerUuid});
+  const existingMinecraftData = await Player.find({playerUuid: playerUuid});
 
-  if (existingMinecraftData !== null)
-    return error(`That minecraft account has already been linked to by <@${existingMinecraftData.discordId}>. ` +
+  if (existingMinecraftData.length !== 0)
+    return error(`That minecraft account has already been linked with another discord account. ` +
       `Please use the unlink command on that account and then try linking again.`, description.name, message);
 
   const hypixelData = await getPlayerStats(playerUuid);
@@ -69,7 +69,7 @@ export default async function (message: Message, args: string[]) {
   });
   await playerData.save();
 
-  return;
+  return message.channel.send(`Successfully linked \`${message.author.tag}\` to \`${mojangData.name}\``);
 }
 
 export const description: DescriptionTypes = {
