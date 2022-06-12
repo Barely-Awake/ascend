@@ -12,7 +12,7 @@ export default async function (playerUuid: string) {
     if (!data.success)
       return false;
 
-    return data.player;
+    return data.player || false;
   } catch (error) {
     return false;
   }
