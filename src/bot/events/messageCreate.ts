@@ -3,7 +3,7 @@ import { Message } from 'discord.js';
 import config from '../../utils/readConfig.js';
 import error from '../responses/error.js';
 
-export default function (message: Message): void  {
+export default function (message: Message): void {
   commandHandler(message);
 }
 
@@ -26,7 +26,7 @@ function commandHandler(message: Message) {
     command(message, args);
   } catch (err) {
     error(
-      'An unknown error occurred with the command: \`${commandName}\`. Logs have been send to developers.',
+      `An unknown error occurred with the command: \`${commandName}\`. Logs have been send to developers.`,
       commandName,
       message,
     );
