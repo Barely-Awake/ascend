@@ -11,8 +11,11 @@ import pkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
 import playerStatsTypes from '../../../types/playerStatsTypes.js';
 import error from '../../responses/error.js';
 import playerModel from '../../../mongo/player.js';
+import getWinStreakEstimates from '../../../utils/minecraft/getWinStreakEstimates.js';
 
 const {createCanvas} = pkg;
+
+let winStreakApiOn: boolean;
 
 export default async function (message: Discord.Message, args: string[]) {
   let player = (args[0] || '').replace(/-/g, '');
@@ -47,6 +50,14 @@ export default async function (message: Discord.Message, args: string[]) {
     return error('Couldn\'t retrieve player\'s Hypixel stats', description.name, message);
 
   const playerStats = formatPlayerStats(hypixelApiResponse);
+
+  winStreakApiOn = playerStats.bedWars.winStreakApiOn();
+  if (!winStreakApiOn) {
+    const keathizWinStreakData = await getWinStreakEstimates(player);
+
+    if (typeof keathizWinStreakData !== 'boolean')
+      playerStats.bedWars.winStreak = keathizWinStreakData;
+  }
 
   const firstFile = drawFirstCanvas(playerStats);
   const secondFile = drawSecondCanvas(playerStats);
@@ -246,9 +257,9 @@ function fillModeStats(
 ) {
   const textToFill = statsText
     .replace('$winStreak',
-      playerStats.bedWars.winStreak[mode] !== null ?
-        (playerStats.bedWars.winStreak[mode] || 0).toLocaleString() :
-        '?')
+      !winStreakApiOn ?
+        (playerStats.bedWars.winStreak[mode] || 0).toLocaleString() + '?' :
+        (playerStats.bedWars.winStreak[mode] || 0).toLocaleString())
     .replace('$winRate',
       ((playerStats.bedWars.winRate[mode] || 0) * 100)
         .toLocaleString('en-US', {maximumFractionDigits: 2}))
