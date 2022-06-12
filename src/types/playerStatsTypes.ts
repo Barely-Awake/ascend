@@ -5,40 +5,48 @@ export default interface playerStatsTypes {
   lastLogIn: number | null;
   lastLogOut: number | null;
 
-  bedWars: {
-    experience: number
+  socialMedia: SocialMedia;
 
-    [key: string]: genericStats | number;
-    gamesPlayed: genericStats
-
-    winStreak: genericStats
-    winRate: genericStats
-
-    finalKills: genericStats
-    finalDeaths: genericStats
-    finalKillDeathRatio: genericStats
-
-    wins: genericStats
-    losses: genericStats
-    winLossRatio: genericStats
-
-    kills: genericStats
-    deaths: genericStats
-    killDeathRatio: genericStats
-
-    bedsBroken: genericStats
-    bedsLost: genericStats
-    bedBreakLossRatio: genericStats
-  };
+  bedWars: BedWarsStats;
 }
 
-interface genericStats {
-  [key: string]: number | null | undefined;
+interface SocialMedia {
+  hypixel: string | null;
+  discord: string | null;
+  twitch: string | null;
+  instagram: string | null;
+  youtube: string | null;
+  twitter: string | null;
+}
 
+interface BedWarsStats {
+  experience: number;
+  gamesPlayed: GenericStats;
+  winStreak: GenericStats;
+  winRate: GenericStats;
+  finalKills: GenericStats;
+  finalDeaths: GenericStats;
+  finalKillDeathRatio: GenericStats;
+  wins: GenericStats;
+  losses: GenericStats;
+  winLossRatio: GenericStats;
+  kills: GenericStats;
+  deaths: GenericStats;
+  killDeathRatio: GenericStats;
+  bedsBroken: GenericStats;
+  bedsLost: GenericStats;
+  bedBreakLossRatio: GenericStats;
+
+  [key: string]: GenericStats | number;
+}
+
+interface GenericStats {
   overAll: number | null;
   eight_one: number | null;
   eight_two: number | null;
   four_three: number | null;
   four_four: number | null;
   two_four: number | null;
+
+  [key: string]: number | null | undefined;
 }
