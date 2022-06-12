@@ -35,7 +35,6 @@ export default async function (message: Message, args: string[]) {
         break;
     }
   });
-  console.log(server.iconURL, 'h');
 
   let embed = new MessageEmbed()
     .setTitle(`Server info on \`${server.name}\``)
@@ -67,7 +66,7 @@ export default async function (message: Message, args: string[]) {
 
       ].join('\n'));
 
-  const iconUrl = server.iconURL({dynamic: true});
+  const iconUrl = server.iconURL({dynamic: true, size: 4096});
 
   if (iconUrl !== null && iconUrl !== undefined)
     embed = embed
