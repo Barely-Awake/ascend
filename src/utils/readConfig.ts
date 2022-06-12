@@ -3,6 +3,8 @@ import 'dotenv/config';
 export function readConfig(): Config {
   return <Config>{
     token: process.env['TOKEN'],
+    betaToken: process.env['BETA_TOKEN'],
+    betaMode: process.env['BETA_MODE'] === 'true',
     prefix: process.env['PREFIX'],
     botName: process.env['BOT_NAME'],
     hypixelApiKey: process.env['HYPIXEL_API_KEY'],
@@ -12,6 +14,8 @@ export function readConfig(): Config {
 
 interface Config {
   token: string;
+  betaToken: string;
+  betaMode: boolean;
   prefix: string;
   botName: string;
   hypixelApiKey: string;

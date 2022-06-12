@@ -48,4 +48,4 @@ export const mongo = connect(config.mongoUrl);
 commandAdder(clientCollections.commands);
 eventHandler(client);
 
-client.login(config.token);
+client.login(config.betaMode ? config.betaToken : config.token);
