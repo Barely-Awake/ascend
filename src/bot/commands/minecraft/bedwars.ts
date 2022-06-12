@@ -198,7 +198,7 @@ function drawSecondCanvas(playerStats: playerStatsTypes) {
 }
 
 const statsText =
-  `Winstreak: §#F8A619§l$winStreak
+  `Winstreak: §$winStreakColor§l$winStreak
 Win Rate: §#F8A619§l$winRate%
 
 Wins: §#41B07C§l$wins
@@ -256,10 +256,8 @@ function fillModeStats(
   initialYPos: number,
 ) {
   const textToFill = statsText
-    .replace('$winStreak',
-      !winStreakApiOn ?
-        (playerStats.bedWars.winStreak[mode] || 0).toLocaleString() + '?' :
-        (playerStats.bedWars.winStreak[mode] || 0).toLocaleString())
+    .replace('$winStreakColor', winStreakApiOn ? '#F8A619' : '#EA4645')
+    .replace('$winStreak', (playerStats.bedWars.winStreak[mode] || 0).toLocaleString())
     .replace('$winRate',
       ((playerStats.bedWars.winRate[mode] || 0) * 100)
         .toLocaleString('en-US', {maximumFractionDigits: 2}))
