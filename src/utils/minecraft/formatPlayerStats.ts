@@ -7,6 +7,7 @@ export default function (playerStats: Player): playerStatsTypes {
 
   return <playerStatsTypes>{
     displayName: playerStats.displayname,
+    uuid: playerStats.uuid,
     rank: (tagCalc.getString(tagCalc.calcTag(playerStats)) === '&7' ?
       tagCalc.getString(tagCalc.calcTag(playerStats)) :
       tagCalc.getString(tagCalc.calcTag(playerStats)) + ' ').replace(/&/g, '§'),

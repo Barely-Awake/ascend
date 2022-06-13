@@ -1,5 +1,6 @@
 export default interface playerStatsTypes {
   displayName: string;
+  uuid: string;
   rank: string;
 
   lastLogIn: number | null;
