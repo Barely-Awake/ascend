@@ -5,7 +5,7 @@ import error from '../../responses/error.js';
 import config from '../../../utils/readConfig.js';
 
 export default async function (message: Message, args: string[]) {
-  let user = await getTargetUser(message, args[0]);
+  const user = await getTargetUser(message, args[0]);
 
   if (typeof user === 'boolean')
     return error('Unknown User', description.name, message);

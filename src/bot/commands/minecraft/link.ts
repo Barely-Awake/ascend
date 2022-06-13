@@ -31,7 +31,7 @@ export default async function (message: Message, args: string[]) {
     playerUuid = mojangData.id;
   } else {
     playerUuid = args[0];
-    let nameHistory = await getPlayerNames(playerUuid);
+    const nameHistory = await getPlayerNames(playerUuid);
 
     if (typeof nameHistory === 'boolean')
       return error('Couldn\'t fetch that players name', description.name, message);
