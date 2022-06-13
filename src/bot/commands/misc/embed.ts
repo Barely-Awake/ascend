@@ -22,7 +22,7 @@ export default function (message: Message, args: string[]) {
   else if (providedEmbedColor.length < 6)
     providedEmbedColor = providedEmbedColor + '0'.repeat(6 - providedEmbedColor.length);
 
-  let embedColor = parseInt(providedEmbedColor, 16);
+  const embedColor = parseInt(providedEmbedColor, 16);
 
   // Removes the color argument from the array
   args = args.splice(1);

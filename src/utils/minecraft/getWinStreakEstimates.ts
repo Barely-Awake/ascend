@@ -4,7 +4,7 @@ import keathizApiResponse from '../../types/keathizResponseTypes.js';
 
 export default async function (playerUuid: string) {
   try {
-    let response = await fetch(
+    const response = await fetch(
       `https://api.antisniper.net/winstreak?key=${config.keathizApiKey}&uuid=${playerUuid}`,
     );
 
@@ -16,7 +16,7 @@ export default async function (playerUuid: string) {
     if (!data.success || data.player === undefined || data.player === null)
       return false;
 
-    let winStreakData = data.player.data;
+    const winStreakData = data.player.data;
 
     return {
         overAll: winStreakData.overall_winstreak || 0,

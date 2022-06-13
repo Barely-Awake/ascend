@@ -24,7 +24,7 @@ export default async function (message: Message, args: string[]) {
   if (!res.ok)
     return error('Couldn\'t fetch npm registry', description.name, message);
 
-  const body: any = await res.json();
+  const body = await res.json();
 
   if (body.time.unpublished !== undefined)
     return error(`The npm package \`${query}\` was unpublished`, description.name, message);
@@ -61,7 +61,7 @@ export default async function (message: Message, args: string[]) {
         `[Click!](${repositoryUrl})` :
         'Unknown',
       false)
-    .addField('Maintainers', body.maintainers?.map((user: any) => user.name).join(', ') || 'Unknown');
+    .addField('Maintainers', body.maintainers?.map((user: { name: string }) => user.name).join(', ') || 'Unknown');
 
   message.channel.send({embeds: [embed]});
 }

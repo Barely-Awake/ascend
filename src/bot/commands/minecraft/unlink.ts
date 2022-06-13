@@ -8,7 +8,7 @@ export default async function (message: Message, args: string[]) {
 
   if (linkedAccountData.length === 0)
     return error('You haven\'t linked an account yet!', description.name, message);
-  let names: string[] = [];
+  const names: string[] = [];
 
   linkedAccountData.forEach((v) => {
     if (v.playerName !== undefined)
