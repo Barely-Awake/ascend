@@ -49,7 +49,11 @@ export default async function (message: Message, args: string[]) {
       text: 'Made with love & discord.js',
     });
 
-  message.channel.send({embeds: [infoEmbed]});
+  message.channel.send({
+    content: `Join ${config.botName}'s support server for information on changes to the bot and beta access! ` +
+      `discord.gg/PpdbKXKgT3`,
+    embeds: [infoEmbed],
+  });
 }
 
 export const description: DescriptionTypes = {
