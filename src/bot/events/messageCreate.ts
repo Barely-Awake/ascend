@@ -26,7 +26,7 @@ function commandHandler(message: Message) {
     command(message, args);
   } catch (err) {
     error(
-      `An unknown error occurred with the command: \`${commandName}\`. Logs have been send to developers.`,
+      `An unknown error occurred with the command: \`${commandName}\`. Logs have been sent to the developers.`,
       commandName,
       message,
     );
