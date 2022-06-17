@@ -1,16 +1,16 @@
 import { colors } from '../minecraft/getFormattedLevel.js';
 
 export default function (text: string): string {
-  const levelArray = ('§r' + text).split(/§/g);
+  const textArray = ('§r' + text).split(/§/g);
   let cleanedText = '';
-  for (let i = 0; i < levelArray.length; i++) {
-    let currentColor = colors[levelArray[i].charAt(0).toLocaleLowerCase()];
-    levelArray[i] = levelArray[i].substring(1);
+  for (let i = 0; i < textArray.length; i++) {
+    let currentColor = colors[textArray[i].charAt(0).toLocaleLowerCase()];
+    textArray[i] = textArray[i].substring(1);
 
     if (currentColor === 'hex')
-      cleanedText += levelArray[i].slice(0, 6);
+      cleanedText += textArray[i].slice(6);
     else
-      cleanedText += levelArray[i].slice();
+      cleanedText += textArray[i].slice();
   }
 
   return cleanedText;
