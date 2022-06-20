@@ -1,4 +1,4 @@
-import * as Discord from 'discord.js';
+import { Message } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
 import getPlayerUuid from '../../../utils/minecraft/getPlayerUuid.js';
 import getPlayerStats from '../../../utils/minecraft/getPlayerStats.js';
@@ -12,12 +12,15 @@ import playerStatsTypes from '../../../types/playerStatsTypes.js';
 import error from '../../responses/error.js';
 import playerModel from '../../../mongo/player.js';
 import getWinStreakEstimates from '../../../utils/minecraft/getWinStreakEstimates.js';
+import convertMode from '../../../utils/canvas/convertMode.js';
 
-const {createCanvas} = pkg;
+const {createCanvas, loadImage} = pkg;
 
 let winStreakApiOn: boolean;
+const hypixelLobby = loadImage('assets/images/hypixel-lobby.png');
 
-export default async function (message: Discord.Message, args: string[]) {
+export default async function (message: Message, args: string[]) {
+  message.channel.sendTyping();
   let player = (args[0] || '').replace(/-/g, '');
 
   if (!args[0]) {
@@ -59,163 +62,101 @@ export default async function (message: Discord.Message, args: string[]) {
       playerStats.bedWars.winStreak = keathizWinStreakData;
   }
 
-  const firstFile = drawFirstCanvas(playerStats);
-  const secondFile = drawSecondCanvas(playerStats);
+  const canvas = await drawFirstCanvas(playerStats);
 
   message.channel.send({
     files: [
-      {attachment: firstFile, name: `${playerStats.displayName}-top.png`},
-      {attachment: secondFile, name: `${playerStats.displayName}-bottom.png`},
+      {attachment: canvas, name: `${playerStats.displayName}-top (i'm a top :weary:).png`},
     ],
   });
 }
 
-function drawFirstCanvas(playerStats: playerStatsTypes) {
-  const canvas = createCanvas(870, 680);
+async function drawFirstCanvas(playerStats: playerStatsTypes) {
+  const canvas = createCanvas(870, 675);
   const ctx = canvas.getContext('2d');
 
-  ctx.fillStyle = '#202225';
-
   // Draw the general background
-  drawRoundedRectangle(ctx, 0, 0, canvas.width, canvas.height, {tl: 40, tr: 40, br: 0, bl: 0}, true, false);
-
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '40px Minecraft';
-  ctx.textAlign = 'center';
-
-  // Draw the user's display name
-  const playerBedWarsLevel = getFormattedLevel(calculateBedWarsLevel(playerStats.bedWars.experience));
-  fillColoredText(`${playerBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`, ctx, canvas.width / 2, 60);
-
-  ctx.fillStyle = '#36393f';
-
-  // Draw the stats' background
-  drawRoundedRectangle(ctx,
-    20,
-    80,
-    canvas.width - 40,
-    canvas.height,
-    {tl: 40, tr: 40, br: 0, bl: 0},
-    true,
-    false,
-  );
-
-  const includedOrderedModes = ['Overall', 'Solo', 'Doubles'];
-
-  const textPositions = drawModes(
+  ctx.save();
+  drawRoundedRectangle(
     ctx,
-    canvas,
-    includedOrderedModes,
-    [100, canvas.height - 10],
-    125,
-  );
-
-  ctx.fillStyle = '#999999';
-  ctx.font = '26px Sonus';
-
-  includedOrderedModes.forEach((value, index) => {
-    let mode: string;
-    switch (value) {
-      case 'Overall':
-        mode = 'overAll';
-        break;
-      case 'Solo':
-        mode = 'eight_one';
-        break;
-      case 'Doubles':
-        mode = 'eight_two';
-        break;
-      default:
-        mode = 'overAll';
-    }
-    fillModeStats(mode, playerStats, Number(index), ctx, textPositions, 125);
-  });
-
-  return canvas.toBuffer();
-}
-
-function drawSecondCanvas(playerStats: playerStatsTypes) {
-  const canvas = createCanvas(870, 680);
-  const ctx = canvas.getContext('2d');
-
-  ctx.fillStyle = '#202225';
-
-  // Draw the general background
-  drawRoundedRectangle(ctx,
     0,
     0,
     canvas.width,
-    canvas.height - 40,
-    {tl: 0, tr: 0, br: 40, bl: 40},
+    canvas.height,
+    {tr: 40, tl: 40, br: 40, bl: 40},
     true,
-    false);
+    false,
+  );
+  ctx.clip();
+  ctx.drawImage((await hypixelLobby), 0, 0, (await hypixelLobby).width, (await hypixelLobby).height);
+  ctx.restore();
 
-  ctx.fillStyle = '#36393f';
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+
+  // Draw the players information
+  await drawPlayerProfile(ctx, canvas, playerStats);
+
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
 
   // Draw the stats' background
   drawRoundedRectangle(ctx,
     20,
-    0,
+    120,
     canvas.width - 40,
-    canvas.height - 60,
-    {tl: 0, tr: 0, br: 40, bl: 40},
+    canvas.height - 135,
+    40,
     true,
     false,
   );
 
-  const includedOrderedModes = ['Threes', 'Fours', '4v4'];
+  let firstIncludedOrderedModes: ['Overall', 'Solo', 'Doubles'] = ['Overall', 'Solo', 'Doubles'];
 
-  const textPositions = drawModes(
+  let firstTextPositions = drawModes(
     ctx,
     canvas,
-    includedOrderedModes,
-    [20, canvas.height - 85],
-    45,
+    firstIncludedOrderedModes,
+    [130, canvas.height - 25],
+    150,
   );
 
   ctx.fillStyle = '#999999';
-  ctx.font = '26px Sonus';
+  ctx.font = '30px Sonus';
 
-  includedOrderedModes.forEach((value, index) => {
-    let mode: string;
-    switch (value) {
-      case 'Threes':
-        mode = 'four_three';
-        break;
-      case 'Fours':
-        mode = 'four_four';
-        break;
-      case '4v4':
-        mode = 'two_four';
-        break;
-      default:
-        mode = 'four_three';
-    }
-    fillModeStats(mode, playerStats, Number(index), ctx, textPositions, 50);
+  firstIncludedOrderedModes.forEach((value, index) => {
+    let mode = convertMode(value);
+    fillModeStats(mode, playerStats, Number(index), ctx, firstTextPositions, 150);
+  });
+
+  let secondIncludedOrderedModes: ['Threes', 'Fours', '4v4'] = ['Threes', 'Fours', '4v4'];
+
+  let secondTextPositions = drawModes(
+    ctx,
+    canvas,
+    secondIncludedOrderedModes,
+    [130, canvas.height - 25],
+    410,
+  );
+
+  ctx.fillStyle = '#999999';
+  ctx.font = '30px Sonus';
+
+  secondIncludedOrderedModes.forEach((value, index) => {
+    let mode = convertMode(value);
+    fillModeStats(mode, playerStats, Number(index), ctx, secondTextPositions, 410);
   });
 
   return canvas.toBuffer();
 }
 
-const statsText =
-  `Winstreak: §$winStreakColor§l$winStreak
-Win Rate: §#F8A619§l$winRate%
+const statsText = `Winstreak: §$winStreakColor§l$winStreakLabel$winStreak
 
+WLR: §#F8A619§l$wlr
 Wins: §#41B07C§l$wins
 Losses: §#EA4645§l$losses
-WLR: §#F8A619§l$wlr
 
-Final Kills: §#41B07C§l$finalKills
-Final Deaths: §#EA4645§l$finalDeaths
 FKDR: §#F8A619§l$fkdr
-
-Kills: §#41B07C§l$kills
-Deaths: §#EA4645§l$deaths
-KDR: §#F8A619§l$kdr
-
-Beds Broken: §#41B07C§l$bedsBroken
-Beds Lost: §#EA4645§l$bedsLost
-BBLR: §#F8A619§l$bblr§r`;
+FKs: §#41B07C§l$finalKills
+FDs: §#EA4645§l$finalDeaths§r`;
 
 function drawModes(ctx: CanvasRenderingContext2D, canvas: Canvas, modes: string[], lineInfo: number[], textYPos: number) {
   ctx.strokeStyle = '#40444b';
@@ -257,38 +198,66 @@ function fillModeStats(
 ) {
   const textToFill = statsText
     .replace('$winStreakColor', winStreakApiOn ? '#F8A619' : '#EA4645')
+    .replace('$winStreakLabel', winStreakApiOn ? '' : '~')
     .replace('$winStreak', (playerStats.bedWars.winStreak[mode] || 0).toLocaleString())
-    .replace('$winRate',
-      ((playerStats.bedWars.winRate[mode] || 0) * 100)
-        .toLocaleString('en-US', {maximumFractionDigits: 2}))
 
-    .replace('$wins', (playerStats.bedWars.wins[mode] || 0).toLocaleString())
-    .replace('$losses', (playerStats.bedWars.losses[mode] || 0).toLocaleString())
     .replace('$wlr', (playerStats.bedWars.winLossRatio[mode] || 0)
       .toLocaleString('en-US', {maximumFractionDigits: 2}))
+    .replace('$wins', (playerStats.bedWars.wins[mode] || 0).toLocaleString())
+    .replace('$losses', (playerStats.bedWars.losses[mode] || 0).toLocaleString())
 
-    .replace('$finalKills', (playerStats.bedWars.finalKills[mode] || 0).toLocaleString())
-    .replace('$finalDeaths', (playerStats.bedWars.finalDeaths[mode] || 0).toLocaleString())
     .replace('$fkdr', (playerStats.bedWars.finalKillDeathRatio[mode] || 0)
       .toLocaleString('en-US', {maximumFractionDigits: 2}))
-
-    .replace('$kills', (playerStats.bedWars.kills[mode] || 0).toLocaleString())
-    .replace('$deaths', (playerStats.bedWars.deaths[mode] || 0).toLocaleString())
-    .replace('$kdr', (playerStats.bedWars.killDeathRatio[mode] || 0)
-      .toLocaleString('en-US', {maximumFractionDigits: 2}))
-
-    .replace('$bedsBroken', (playerStats.bedWars.bedsBroken[mode] || 0).toLocaleString())
-    .replace('$bedsLost', (playerStats.bedWars.bedsLost[mode] || 0).toLocaleString())
-    .replace('$bblr', (playerStats.bedWars.bedBreakLossRatio[mode] || 0)
-      .toLocaleString('en-US', {maximumFractionDigits: 2}));
+    .replace('$finalKills', (playerStats.bedWars.finalKills[mode] || 0).toLocaleString())
+    .replace('$finalDeaths', (playerStats.bedWars.finalDeaths[mode] || 0).toLocaleString());
 
   textToFill.split('\n').forEach((line, index) => {
-    fillColoredText(line, ctx, textPositions[i], initialYPos + (index + 1) * 30, 'left');
+    fillColoredText(
+      line,
+      ctx,
+      textPositions[i],
+      initialYPos + (index + 1) * 30 - (index > 1 ? 20 : 0) - (index > 5 ? 20 : 0),
+      'left',
+    );
   });
 }
 
+async function drawPlayerProfile(ctx: CanvasRenderingContext2D, canvas: Canvas, playerStats: playerStatsTypes) {
+  // Draw the player's background
+  drawRoundedRectangle(ctx,
+    20,
+    15,
+    canvas.width - 40,
+    90,
+    30,
+    true,
+    false,
+  );
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '40px Minecraft';
+  ctx.textAlign = 'center';
+
+  // Draw the user's display name
+  const bedWarsLevel = calculateBedWarsLevel(playerStats.bedWars.experience);
+  const displayBedWarsLevel = getFormattedLevel(bedWarsLevel);
+  let displayName = `${displayBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`;
+  fillColoredText(displayName, ctx, 480, 75);
+
+  const playerHead = await loadImage(`https://crafatar.com/avatars/${playerStats.uuid}?overlay&size=80`);
+
+  ctx.save();
+  // Setting opacity to 0 so no outer edges of base rectangle are visible
+  ctx.fillStyle = 'rgba(0,0,0,0)';
+  drawRoundedRectangle(ctx, 25, 20, 80, 80, 30, true, false);
+  // Fits the player head that is about to be drawn to the previously drawn rectangle
+  ctx.clip();
+  ctx.drawImage(playerHead, 25, 20, 80, 80);
+  ctx.restore();
+}
+
 export const description: DescriptionTypes = {
-  name: 'bedwars',
+  name: 'newbedwars',
   aliases: ['bw'],
   description: 'Shows a player\'s bedwars stats',
   usage: '[player]',
