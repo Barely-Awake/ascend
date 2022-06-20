@@ -54,9 +54,12 @@ export default function (text: string, ctx: CanvasRenderingContext2D, textPosX: 
         break;
     }
 
-    ctx.fillText(levelArray[i],
-      textPosX + ctx.measureText(textCompleted).width - (boldCompensate ?
-        textCompleted.length : 0), textPosY);
+    ctx.fillText(
+      levelArray[i],
+      textPosX + ctx.measureText(textCompleted).width -
+      (boldCompensate && !startingFont.toLocaleLowerCase().includes('bold') ? textCompleted.length : 0),
+      textPosY,
+    );
 
     textCompleted += levelArray[i];
   }
