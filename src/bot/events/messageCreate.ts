@@ -24,6 +24,7 @@ function commandHandler(message: Message) {
 
   try {
     command(message, args);
+    console.log(`${message.author.tag} ran command '${commandName}' in ${message.guild?.name || 'dms'}`);
   } catch (err) {
     error(
       `An unknown error occurred with the command: \`${commandName}\`. Logs have been sent to the developers.`,
