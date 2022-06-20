@@ -17,7 +17,7 @@ export default function (text: string, ctx: CanvasRenderingContext2D, textPosX: 
 
   let textCompleted = ''; // The text that has been filled so far
   for (let i = 0; i < levelArray.length; i++) {
-    let currentColor = levelArray[i].charAt(0).toLocaleLowerCase();
+    const currentColor = levelArray[i].charAt(0).toLocaleLowerCase();
     levelArray[i] = levelArray[i].substring(1);
 
     const fillStyle = colors[currentColor];

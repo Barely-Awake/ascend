@@ -1,8 +1,8 @@
 export default function (bedWarsLevel: number) {
   bedWarsLevel = Number(bedWarsLevel.toFixed(2));
 
-  let split = (bedWarsLevel / 100).toString().split('.');
-  let remainder = Number(split[split.length - 1]);
+  const split = (bedWarsLevel / 100).toString().split('.');
+  const remainder = Number(split[split.length - 1]);
 
   let neededXp = 5000;
 
@@ -19,8 +19,8 @@ export default function (bedWarsLevel: number) {
     case 3:
       neededXp = 3500;
   }
-  let secondSplit = bedWarsLevel.toString().split('.');
-  let progressPercentage = Number(secondSplit[secondSplit.length - 1]);
+  const secondSplit = bedWarsLevel.toString().split('.');
+  const progressPercentage = Number(secondSplit[secondSplit.length - 1]);
   return [getPercentage(neededXp, progressPercentage), neededXp];
 }
 

@@ -4,7 +4,7 @@ export default function (text: string): string {
   const textArray = ('§r' + text).split(/§/g);
   let cleanedText = '';
   for (let i = 0; i < textArray.length; i++) {
-    let currentColor = colors[textArray[i].charAt(0).toLocaleLowerCase()];
+    const currentColor = colors[textArray[i].charAt(0).toLocaleLowerCase()];
     textArray[i] = textArray[i].substring(1);
 
     if (currentColor === 'hex')

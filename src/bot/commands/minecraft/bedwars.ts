@@ -109,9 +109,9 @@ async function drawFirstCanvas(playerStats: playerStatsTypes) {
     false,
   );
 
-  let firstIncludedOrderedModes: ['Overall', 'Solo', 'Doubles'] = ['Overall', 'Solo', 'Doubles'];
+  const firstIncludedOrderedModes: ['Overall', 'Solo', 'Doubles'] = ['Overall', 'Solo', 'Doubles'];
 
-  let firstTextPositions = drawModes(
+  const firstTextPositions = drawModes(
     ctx,
     canvas,
     firstIncludedOrderedModes,
@@ -123,13 +123,13 @@ async function drawFirstCanvas(playerStats: playerStatsTypes) {
   ctx.font = '30px Sonus';
 
   firstIncludedOrderedModes.forEach((value, index) => {
-    let mode = convertMode(value);
+    const mode = convertMode(value);
     fillModeStats(mode, playerStats, Number(index), ctx, firstTextPositions, 150);
   });
 
-  let secondIncludedOrderedModes: ['Threes', 'Fours', '4v4'] = ['Threes', 'Fours', '4v4'];
+  const secondIncludedOrderedModes: ['Threes', 'Fours', '4v4'] = ['Threes', 'Fours', '4v4'];
 
-  let secondTextPositions = drawModes(
+  const secondTextPositions = drawModes(
     ctx,
     canvas,
     secondIncludedOrderedModes,
@@ -141,7 +141,7 @@ async function drawFirstCanvas(playerStats: playerStatsTypes) {
   ctx.font = '30px Sonus';
 
   secondIncludedOrderedModes.forEach((value, index) => {
-    let mode = convertMode(value);
+    const mode = convertMode(value);
     fillModeStats(mode, playerStats, Number(index), ctx, secondTextPositions, 410);
   });
 
@@ -241,7 +241,7 @@ async function drawPlayerProfile(ctx: CanvasRenderingContext2D, canvas: Canvas, 
   // Draw the user's display name
   const bedWarsLevel = calculateBedWarsLevel(playerStats.bedWars.experience);
   const displayBedWarsLevel = getFormattedLevel(bedWarsLevel);
-  let displayName = `${displayBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`;
+  const displayName = `${displayBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`;
   fillColoredText(displayName, ctx, 480, 75);
 
   const playerHead = await loadImage(`https://crafatar.com/avatars/${playerStats.uuid}?overlay&size=80`);
