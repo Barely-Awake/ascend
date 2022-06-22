@@ -77,6 +77,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'serverinfo',
+  category: 'misc',
   aliases: ['server'],
   description: 'Provides information on the given server',
   usage: '[server]',

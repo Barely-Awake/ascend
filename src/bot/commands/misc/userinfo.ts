@@ -33,6 +33,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'userinfo',
+  category: 'misc',
   description: 'Provides information on the given user.',
   usage: '[user]',
 };
