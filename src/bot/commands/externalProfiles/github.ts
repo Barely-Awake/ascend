@@ -76,6 +76,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'github',
+  category: 'externalProfiles',
   description: 'Provides information on a GitHub user.',
   usage: '<user>',
 };

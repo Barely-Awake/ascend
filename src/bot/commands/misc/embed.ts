@@ -43,6 +43,7 @@ export default function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'embed',
+  category: 'misc',
   description: 'Sends a simple embed to the current channel. \`text\` should be formatted with | separating the ' +
     'title and description. For example: \`this is a title | this is a description\` (Manage Server permission needed)',
   usage: '<color> <text>',

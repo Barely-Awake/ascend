@@ -5,7 +5,7 @@ import botColors from '../../../utils/discord/botColors.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 
-export default async function (message: Message, args: string[]) {
+export default async function (message: Message, _: string[]) {
   const perfMsg = await message.channel.send('Checking Client Performance...');
 
   let clientUptime;
@@ -24,11 +24,12 @@ export default async function (message: Message, args: string[]) {
       'Unknown')
     .addField('Memory Usage', `\`${Math.floor(process.memoryUsage().heapUsed / 1024 / 1024)}\` MB`);
 
-  perfMsg.edit({content: 'Client Performance', embeds: [embed]})
+  perfMsg.edit({content: 'Client Performance', embeds: [embed]});
 }
 
 export const description: DescriptionTypes = {
   name: 'performance',
+  category: 'info',
   description: 'Sends stats about the bot\'s performance',
   usage: '',
 };

@@ -7,7 +7,7 @@ import botColors from '../../../utils/discord/botColors.js';
 export default async function (message: Message, args: string[]) {
 
   if (!message.guild)
-    return error('Please use this command in a guild', description.name, message)
+    return error('Please use this command in a guild', description.name, message);
 
   const user = await getTargetUser(message, args[0]);
 
@@ -36,11 +36,12 @@ export default async function (message: Message, args: string[]) {
       iconURL: message.guild.iconURL() || undefined,
     });
 
-  message.channel.send({embeds: [embed]})
+  message.channel.send({embeds: [embed]});
 }
 
 export const description: DescriptionTypes = {
   name: 'invites',
+  category: 'server',
   description: 'Checks the invite information of a user',
   usage: '<user>',
 };

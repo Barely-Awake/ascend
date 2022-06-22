@@ -3,7 +3,7 @@ import { DescriptionTypes } from '../_example.js';
 import Player from '../../../mongo/player.js';
 import error from '../../responses/error.js';
 
-export default async function (message: Message, args: string[]) {
+export default async function (message: Message, _: string[]) {
   const linkedAccountData = await Player.find({discordId: message.author.id});
 
   if (linkedAccountData.length === 0)
@@ -21,6 +21,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'unlink',
+  category: 'minecraft',
   description: 'Unlinks your discord account from your minecraft account',
   usage: '',
 };

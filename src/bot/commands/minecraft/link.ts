@@ -74,6 +74,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'link',
+  category: 'minecraft',
   description: 'Links your discord account to your minecraft account. Allows you to use stat checking commands ' +
     'without inputting your username',
   usage: '<player>',
