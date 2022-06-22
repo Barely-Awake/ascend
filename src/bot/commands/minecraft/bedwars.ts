@@ -258,6 +258,7 @@ async function drawPlayerProfile(ctx: CanvasRenderingContext2D, canvas: Canvas, 
 
 export const description: DescriptionTypes = {
   name: 'bedwars',
+  category: 'minecraft',
   aliases: ['bw'],
   description: 'Shows a player\'s bedwars stats',
   usage: '[player]',

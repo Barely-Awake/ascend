@@ -5,7 +5,7 @@ import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import botColors from '../../../utils/discord/botColors.js';
 
-export default async function (message: Message, args: string[]) {
+export default async function (message: Message, _: string[]) {
   const clientApplication = await message.client.application?.fetch();
   let applicationOwner;
 
@@ -58,6 +58,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'info',
+  category: 'info',
   description: `Displays information about \`${config.botName}\``,
   usage: '',
 };

@@ -43,13 +43,14 @@ export default async function (message: Message, args: string[]) {
   });
 
   return message.channel.send(
-    `Successfully banned ${target.toString()} (\`${target.user.tag}\`) for ${reason || 'None'}`
+    `Successfully banned ${target.toString()} (\`${target.user.tag}\`) for ${reason || 'None'}`,
   );
 
 }
 
 export const description: DescriptionTypes = {
   name: 'ban',
+  category: 'moderation',
   description: 'Bans the target user',
   usage: '<user> [reason]',
 };

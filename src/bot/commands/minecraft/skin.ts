@@ -40,6 +40,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'skin',
+  category: 'minecraft',
   description: 'Shows a player\'s minecraft skin.',
   usage: '<player>',
 };

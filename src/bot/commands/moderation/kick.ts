@@ -48,6 +48,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'kick',
+  category: 'moderation',
   description: 'Kick the target user',
   usage: '<user> [reason]',
 };

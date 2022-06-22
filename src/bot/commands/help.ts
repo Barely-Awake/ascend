@@ -3,14 +3,14 @@ import { readdirSync } from 'fs';
 import { DescriptionTypes } from './_example.js';
 import config from '../../utils/readConfig.js';
 
-export default async function (message: Message, args: string[]) {
+export default async function (message: Message, _: string[]) {
   const helpEmbed = new MessageEmbed;
   helpEmbed
     .setTitle(`${config.botName || message?.client?.user?.username || 'Bot'} Help`)
     .setDescription(`<> = Required Argument\n[] = Optional Argument\n${config.prefix} = Prefix`)
     .setColor('#9b027f');
 
-  const commandFields: { [index: string]: {name: string, value: string, inline: boolean}[] } = {
+  const commandFields: { [index: string]: { name: string, value: string, inline: boolean }[] } = {
     0: [],
   };
   let totalCommands = 0;
@@ -78,8 +78,9 @@ export default async function (message: Message, args: string[]) {
   });
 }
 
-export const description = {
+export const description: DescriptionTypes = {
   name: 'help',
+  category: 'general',
   description: 'Shows help message.',
   usage: '',
 };
