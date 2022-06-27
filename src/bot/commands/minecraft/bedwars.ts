@@ -17,7 +17,6 @@ import convertMode from '../../../utils/canvas/convertMode.js';
 const {createCanvas, loadImage} = pkg;
 
 let winStreakApiOn: boolean;
-const hypixelLobby = loadImage('assets/images/hypixel-lobby.png');
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
@@ -75,8 +74,8 @@ async function drawFirstCanvas(playerStats: playerStatsTypes) {
   const canvas = createCanvas(870, 675);
   const ctx = canvas.getContext('2d');
 
+  ctx.fillStyle = '#363636';
   // Draw the general background
-  ctx.save();
   drawRoundedRectangle(
     ctx,
     0,
@@ -87,9 +86,6 @@ async function drawFirstCanvas(playerStats: playerStatsTypes) {
     true,
     false,
   );
-  ctx.clip();
-  ctx.drawImage((await hypixelLobby), 0, 0, (await hypixelLobby).width, (await hypixelLobby).height);
-  ctx.restore();
 
   ctx.fillStyle = 'rgba(0,0,0,0.4)';
 
