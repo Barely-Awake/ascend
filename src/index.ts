@@ -34,7 +34,7 @@ const client = new Client({
     status: 'idle',
     activities: [
       {
-        name: `${config.prefix}help | Happy pride month!`,
+        name: `${config.prefix}help`,
         type: 'WATCHING',
       },
     ],
