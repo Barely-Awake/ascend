@@ -1,7 +1,10 @@
-import { Collection } from 'discord.js';
+import { Collection, Message } from 'discord.js';
 import { readdir } from 'fs/promises';
 
-export default async function commandAdder(commandCollection: Collection<any, any>, pathAdditions = '') {
+export default async function commandAdder(
+  commandCollection: Collection<string, (message: Message, args: string[]) => void | Promise<void>>,
+  pathAdditions = '',
+) {
   const commandFiles = await readdir('./dist/bot/commands' + pathAdditions);
 
   for (const file of commandFiles) {
