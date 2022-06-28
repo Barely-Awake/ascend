@@ -1,4 +1,3 @@
-import clientCollections from '../../index.js';
 import { Message } from 'discord.js';
 import config from '../../utils/misc/readConfig.js';
 import error from '../responses/error.js';
@@ -17,7 +16,7 @@ function commandHandler(message: Message) {
   commandName = commandName.slice(config.prefix.length);
   const args = messageArray.slice(1);
 
-  const command = clientCollections.commands.get(commandName);
+  const command = message.client.commands.get(commandName);
 
   if (!command || typeof command !== 'function')
     return;

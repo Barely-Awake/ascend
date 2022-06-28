@@ -40,14 +40,11 @@ const client = new Client({
     ],
   },
 });
-const clientCollections = {
-  commands: new Collection(),
-};
+client.commands = new Collection();
 
-export { clientCollections as default };
 export const mongo = connect(config.mongoUrl);
 
-commandAdder(clientCollections.commands);
+commandAdder(client.commands);
 eventHandler(client);
 
 client.login(config.betaMode ? config.betaToken : config.token);
