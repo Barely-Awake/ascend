@@ -31,7 +31,7 @@ export default async function (message: Message, _: string[]) {
       iconURL: 'https://avatars.githubusercontent.com/u/80858965?v=4',
     })
     .setDescription(`${config.botName} is an open source bot made by Barely Awake. ` +
-      `The source code can be found at https://github.com/Barely-Awake/raging-bisexual. ` +
+      `The source code can be found at https://github.com/Barely-Awake/ascend. ` +
       `${config.botName} features a lot of random commands. Currently there isn't a real direction besides just ` +
       `being a useful bot.`,
     )
