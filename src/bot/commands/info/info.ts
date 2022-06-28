@@ -1,6 +1,6 @@
 import { Message, MessageEmbed, Team, User, version } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import config from '../../../utils/readConfig.js';
+import config from '../../../utils/misc/readConfig.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import botColors from '../../../utils/discord/botColors.js';

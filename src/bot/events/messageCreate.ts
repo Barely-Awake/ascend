@@ -1,6 +1,6 @@
 import clientCollections from '../../index.js';
 import { Message } from 'discord.js';
-import config from '../../utils/readConfig.js';
+import config from '../../utils/misc/readConfig.js';
 import error from '../responses/error.js';
 
 export default function (message: Message): void {

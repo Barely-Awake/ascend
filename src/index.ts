@@ -1,7 +1,7 @@
 import { Client, Collection, Intents } from 'discord.js';
 import commandAdder from './bot/commandAdder.js';
 import eventHandler from './bot/eventHandler.js';
-import config from './utils/readConfig.js';
+import config from './utils/misc/readConfig.js';
 import pkg from 'canvas';
 import mPkg from 'mongoose';
 
