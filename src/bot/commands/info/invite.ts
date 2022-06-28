@@ -1,6 +1,6 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import config from '../../../utils/readConfig.js';
+import config from '../../../utils/misc/readConfig.js';
 
 export default function (message: Message, _: string[]) {
   const embed = new MessageEmbed()

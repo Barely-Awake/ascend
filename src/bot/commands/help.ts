@@ -1,7 +1,7 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { readdirSync } from 'fs';
 import { DescriptionTypes } from './_example.js';
-import config from '../../utils/readConfig.js';
+import config from '../../utils/misc/readConfig.js';
 
 export default async function (message: Message, _: string[]) {
   const helpEmbed = new MessageEmbed;

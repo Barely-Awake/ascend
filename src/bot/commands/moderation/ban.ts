@@ -2,7 +2,7 @@ import { GuildMember, Message } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
 import getTargetUser from '../../../utils/discord/getTargetUser.js';
 import error from '../../responses/error.js';
-import config from '../../../utils/readConfig.js';
+import config from '../../../utils/misc/readConfig.js';
 
 export default async function (message: Message, args: string[]) {
   const user = await getTargetUser(message, args[0]);

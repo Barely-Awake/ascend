@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import hypixelResponseTypes from '../../types/hypixelResponseTypes.js';
-import config from '../readConfig.js';
+import config from '../misc/readConfig.js';
 
 export default async function (playerUuid: string) {
   let data: hypixelResponseTypes;

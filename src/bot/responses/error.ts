@@ -1,5 +1,5 @@
 import { Message, MessageEmbed } from 'discord.js';
-import config from '../../utils/readConfig.js';
+import config from '../../utils/misc/readConfig.js';
 
 export default function error(error: string, commandName: string, message: Message) {
   const embed = new MessageEmbed()
