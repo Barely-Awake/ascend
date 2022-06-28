@@ -41,11 +41,11 @@ interface BedWarsStats {
   bedsLost: GenericStats;
   bedBreakLossRatio: GenericStats;
 
-  [key: string]: GenericStats | number | Function;
+  [key: string]: GenericStats | number | (() => boolean);
 }
 
 interface WinStreakApiOn {
-  (): boolean
+  (): boolean;
 }
 
 interface GenericStats {
