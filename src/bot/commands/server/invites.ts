@@ -18,18 +18,18 @@ export default async function (message: Message, args: string[]) {
 
   const userInvites = allInvites?.filter((value: Invite) => value.inviter?.id === message.author.id);
 
-  const userInvitesCount = 0;
+  let userInvitesCount = 0;
   let userInviteCodes;
 
   if (userInvites !== undefined) {
-    userInvites.forEach(invite => userInvitesCount + (invite.uses || 0));
+    userInvites.forEach(invite => userInvitesCount = userInvitesCount + (invite.uses || 0));
     userInviteCodes = userInvites?.map(i => i.code).join('\n');
   }
 
   const embed = new MessageEmbed()
     .setTitle(`${user.tag}'s invite count`)
     .setColor(botColors[1])
-    .addField('Invite Count', String(userInvitesCount))
+    .addField('Invite Count', userInvitesCount.toLocaleString())
     .addField('Invite Codes', userInviteCodes || 'None')
     .setFooter({
       text: message.guild.name,
