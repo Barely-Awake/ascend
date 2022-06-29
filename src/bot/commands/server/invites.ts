@@ -5,6 +5,7 @@ import error from '../../responses/error.js';
 import botColors from '../../../utils/discord/botColors.js';
 
 export default async function (message: Message, args: string[]) {
+  message.channel.sendTyping();
 
   if (!message.guild)
     return error('Please use this command in a guild', description.name, message);
@@ -14,6 +15,7 @@ export default async function (message: Message, args: string[]) {
   if (typeof user === 'boolean')
     return error('Couldn\'t fetch that user', description.name, message);
 
+  await message.guild.invites.fetch();
   const allInvites = message.guild.invites.cache;
 
   const userInvites = allInvites?.filter((value: Invite) => value.inviter?.id === message.author.id);
@@ -22,7 +24,9 @@ export default async function (message: Message, args: string[]) {
   let userInviteCodes;
 
   if (userInvites !== undefined) {
-    userInvites.forEach(invite => userInvitesCount = userInvitesCount + (invite.uses || 0));
+    userInvites.forEach(invite => {
+      userInvitesCount = userInvitesCount + (invite.uses || 0);
+    });
     userInviteCodes = userInvites?.map(i => i.code).join('\n');
   }
 
