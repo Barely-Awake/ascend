@@ -36,7 +36,8 @@ export default async function (message: Message, args: string[]) {
   if (!target.kickable)
     return error('I can\'t kick that user', description.name, message);
 
-  const reason = args.splice(0, 1).join(' ');
+  args.shift();
+  const reason = args.join(' ');
 
   await target.kick(reason || 'None');
 
