@@ -1,6 +1,6 @@
 import { Invite, Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import getTargetUser from '../../../utils/discord/getTargetUser.js';
+import resolveUser from '../../../utils/discord/resolveUser.js';
 import error from '../../responses/error.js';
 import botColors from '../../../utils/discord/botColors.js';
 
@@ -10,7 +10,7 @@ export default async function (message: Message, args: string[]) {
   if (!message.guild)
     return error('Please use this command in a guild', description.name, message);
 
-  const user = await getTargetUser(message, args[0]);
+  const user = await resolveUser(message, args[0]);
 
   if (typeof user === 'boolean')
     return error('Couldn\'t fetch that user', description.name, message);

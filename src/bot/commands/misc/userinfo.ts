@@ -1,13 +1,13 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import getTargetUser from '../../../utils/discord/getTargetUser.js';
+import resolveUser from '../../../utils/discord/resolveUser.js';
 import error from '../../responses/error.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import botColors from '../../../utils/discord/botColors.js';
 
 export default async function (message: Message, args: string[]) {
-  let user = await getTargetUser(message, args[0]);
+  let user = await resolveUser(message, args[0]);
 
   if (typeof user === 'boolean')
     return error('Error finding target user', description.name, message);

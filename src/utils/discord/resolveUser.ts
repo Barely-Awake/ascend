@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 
-export default async function getTargetUser(message: Message, argument: string) {
+export default async function resolveUser(message: Message, argument: string) {
   let user;
 
   try {

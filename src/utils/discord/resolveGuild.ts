@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 
-export default async function getTargetGuild(message: Message, argument: string) {
+export default async function resolveGuild(message: Message, argument: string) {
   let target;
 
   try {
