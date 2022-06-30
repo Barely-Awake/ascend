@@ -2,8 +2,8 @@ import { Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
 import error from '../../responses/error.js';
 
-export default function (message: Message, args: string[]) {
-  message.delete();
+export default async function (message: Message, args: string[]) {
+  await message.delete();
 
   if (message.member !== null && !message.member?.permissions.has('MANAGE_GUILD'))
     return error('You need to have the manage server permission to use this command', description.name, message);
@@ -38,7 +38,9 @@ export default function (message: Message, args: string[]) {
   if (embedArray[1] && embedArray[1] !== '' && embedArray[1] !== ' ')
     embed = embed.setDescription(embedArray[1]);
 
-  message.channel.send({embeds: [embed]});
+  const responseMessage = await message.channel.send({embeds: [embed]});
+  if (responseMessage.crosspostable)
+    responseMessage.crosspost();
 }
 
 export const description: DescriptionTypes = {
