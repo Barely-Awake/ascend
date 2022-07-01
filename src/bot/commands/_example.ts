@@ -6,14 +6,14 @@ export default function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: '_example',
-  category: 'general',
+  category: 'info',
   description: 'Example command',
   usage: '<Required Argument> [Optional Argument]',
 };
 
 export interface DescriptionTypes {
   name: string;
-  category: 'server' | 'moderation' | 'misc' | 'minecraft' | 'externalProfiles' | 'info' | 'general';
+  category: 'moderation' | 'misc' | 'minecraft' | 'externalProfiles' | 'info';
   aliases?: string[];
   description: string;
   usage: string;
