@@ -54,7 +54,10 @@ export default async function (message: Message, _: string[]) {
       return;
 
     if (interaction.user.id !== message.author.id)
-      return;
+      return interaction.reply({
+        content: 'You can\'t do that to this message!',
+        ephemeral: true,
+      });
 
     interaction.update({
       embeds: [categoryInfo[interaction.values[0]].embed],
