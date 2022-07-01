@@ -45,7 +45,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'invites',
-  category: 'server',
+  category: 'misc',
   description: 'Checks the invite information of a user',
   usage: '<user>',
 };
