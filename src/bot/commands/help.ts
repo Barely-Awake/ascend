@@ -9,16 +9,19 @@ import {
 import { DescriptionTypes } from './_example.js';
 import { readdir } from 'fs/promises';
 import config from '../../utils/misc/readConfig.js';
-import categoryInfo, { CategoryInfo } from '../../utils/discord/categoryInfo.js';
+import categoryInfo from '../../utils/discord/categoryInfo.js';
 
 const commandsCache: { [index: string]: DescriptionTypes } = {};
+
+cacheCommands();
+makeCategoryEmbeds();
 
 export default async function (message: Message, _: string[]) {
   message.channel.sendTyping();
 
   if (Object.keys(commandsCache).length === 0) {
     await cacheCommands();
-    await makeCategoryEmbeds(categoryInfo);
+    await makeCategoryEmbeds();
   }
 
   const baseEmbed = new MessageEmbed()
@@ -66,8 +69,8 @@ export default async function (message: Message, _: string[]) {
   });
 }
 
-function makeCategoryEmbeds(categories: { [index: string]: CategoryInfo }) {
-  for (let category in categories) {
+function makeCategoryEmbeds() {
+  for (let category in categoryInfo) {
     categoryInfo[category].embed = new MessageEmbed()
       .setTitle(`${config.botName} Help`)
       .setDescription(`<> - Required Argument\n[] - Option Argument\n${config.prefix} - Bot Prefix`);
