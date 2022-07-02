@@ -24,7 +24,7 @@ export default async function (message: Message, args: string[]) {
 
   const target = await message.guild?.members.resolve(user);
 
-  if (target == null) {
+  if (target === null || target === undefined) {
     await message.guild.members.kick(user, reason || 'None');
   } else {
 
