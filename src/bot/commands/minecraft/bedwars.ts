@@ -1,6 +1,5 @@
 import { Message } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import getPlayerUuid from '../../../utils/minecraft/getPlayerUuid.js';
 import getPlayerStats from '../../../utils/minecraft/getPlayerStats.js';
 import drawRoundedRectangle from '../../../utils/canvas/drawRoundedRectangle.js';
 import calculateBedWarsLevel from '../../../utils/minecraft/calculateBedWarsLevel.js';
@@ -10,9 +9,9 @@ import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import pkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
 import playerStatsTypes from '../../../types/playerStatsTypes.js';
 import error from '../../responses/error.js';
-import playerModel from '../../../mongo/player.js';
 import getWinStreakEstimates from '../../../utils/minecraft/getWinStreakEstimates.js';
 import convertMode from '../../../utils/canvas/convertMode.js';
+import resolvePlayer from '../../../utils/discord/resolvePlayer.js';
 
 const {createCanvas, loadImage} = pkg;
 
@@ -20,31 +19,12 @@ let winStreakApiOn: boolean;
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
-  let player = (args[0] || '').replace(/-/g, '');
+  const mojangData = await resolvePlayer(args[0], message);
 
-  if (!args[0]) {
-    let dataBaseInfo;
-    try {
-      dataBaseInfo = await playerModel.findOne({discordId: message.author.id});
-    } catch {
-      dataBaseInfo = null;
-    }
+  if (typeof mojangData === 'boolean')
+    return;
 
-    if (dataBaseInfo === null)
-      return error('You must be linked to not have to provide a player name. ' +
-        'To see how to do that please view this image (https://catboymaid.club/Z96boeByYUZd) ', description.name, message);
-
-    player = dataBaseInfo.playerUuid;
-  }
-
-  if (player.length !== 32) {
-    const mojangData = await getPlayerUuid(player);
-
-    if (typeof mojangData === 'boolean')
-      return error('Couldn\'t retrieve player uuid', description.name, message);
-
-    player = mojangData.id;
-  }
+  const player = mojangData.uuid;
 
   const hypixelApiResponse = await getPlayerStats(player);
 
