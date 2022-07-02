@@ -1,0 +1,31 @@
+name: CI/CD
+
+on:
+  workflow_dispatch:
+    branches:
+      - master
+  push:
+    paths-ignore:
+      - 'yarn.lock'
+      - 'package.json'
+    branches:
+      - master
+
+
+
+jobs:
+
+  buildAndDeployment:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Build test
+        run: npm run build
+      - name: Siginal for deploy
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: ${{ secrets.API_ENDPOINT }}
+          method: 'POST'
+          customHeaders: '{"Content-Type": "application/json", "Authorization": "Bearer ${{ secrets.API_KEY }}"}'
+          data: '{"signal":"restart"}'   
