@@ -17,8 +17,6 @@ jobs:
     environment: production
 
     steps:
-      - name: Build test
-        run: npm run build
       - name: Signal for deploy
         uses: fjogeleit/http-request-action@v1
         with:
