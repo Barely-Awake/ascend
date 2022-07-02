@@ -1,39 +1,33 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import getPlayerUuid from '../../../utils/minecraft/getPlayerUuid.js';
 import error from '../../responses/error.js';
 import getPlayerNames from '../../../utils/minecraft/getPlayerNames.js';
+import resolvePlayer from '../../../utils/discord/resolvePlayer.js';
 
 export default async function (message: Message, args: string[]) {
-  const player = args[0].replace(/-/g, '');
+  message.channel.sendTyping();
 
-  let mojangData;
-  if (player.length !== 32) {
-    const data = await getPlayerUuid(player);
+  const mojangData = await resolvePlayer(args[0], message);
+  if (typeof mojangData === 'boolean')
+    return;
 
-    if (typeof data === 'boolean')
-      return error(`Couldn't fetch player's uuid`, description.name, message);
-
-    mojangData = {
-      uuid: data.id,
-      name: data.name,
-    };
-  } else {
-    const data = await getPlayerNames(player);
+  if (mojangData.name === null) {
+    const data = await getPlayerNames(mojangData.uuid);
 
     if (typeof data === 'boolean')
       return error(`Couldn't fetch player's names`, description.name, message);
 
-    mojangData = {
-      uuid: args[0],
-      name: data[data.length - 1].name,
-    };
+    mojangData.name = data[data.length - 1].name;
   }
+
+  const visageUrl = `https://visage.surgeplay.com/full/4096/${mojangData.uuid}?tilt=0`;
 
   const embed = new MessageEmbed()
     .setTitle(`${mojangData.name}'s skin`)
+    .setDescription(`[Use this skin](https://www.minecraft.net/en-us/profile/skin/remote?url=${visageUrl})\n` +
+      `[Player's NameMC](https://namemc.com/profile/${mojangData.name})`)
     .setThumbnail(`https://crafatar.com/avatars/${mojangData.uuid}?overlay`)
-    .setImage(`https://visage.surgeplay.com/full/4096/${mojangData.uuid}?tilt=0`);
+    .setImage(visageUrl);
 
   message.channel.send({embeds: [embed]});
 }
@@ -42,5 +36,5 @@ export const description: DescriptionTypes = {
   name: 'skin',
   category: 'minecraft',
   description: 'Shows a player\'s minecraft skin.',
-  usage: '<player>',
+  usage: '[player]',
 };
