@@ -6,7 +6,7 @@ on:
       - master
   push:
     paths-ignore:
-      - 'yarn.lock'
+      - 'package-lock.json'
       - 'package.json'
     branches:
       - master
@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Build test
         run: npm run build
-      - name: Siginal for deploy
+      - name: Signal for deploy
         uses: fjogeleit/http-request-action@v1
         with:
           url: ${{ secrets.API_ENDPOINT }}
