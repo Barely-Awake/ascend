@@ -19,11 +19,6 @@ makeCategoryEmbeds();
 export default async function (message: Message, _: string[]) {
   message.channel.sendTyping();
 
-  if (Object.keys(commandsCache).length === 0) {
-    await cacheCommands();
-    await makeCategoryEmbeds();
-  }
-
   const baseEmbed = new MessageEmbed()
     .setTitle(`${config.botName} Help`)
     .setDescription(`<> - Required Argument\n[] - Option Argument\n${config.prefix} - Bot Prefix`);
