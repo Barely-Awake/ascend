@@ -13,8 +13,8 @@ import categoryInfo from '../../utils/discord/categoryInfo.js';
 
 const commandsCache: { [index: string]: DescriptionTypes } = {};
 
-cacheCommands();
-makeCategoryEmbeds();
+cacheCommands()
+  .then(makeCategoryEmbeds);
 
 export default async function (message: Message, _: string[]) {
   message.channel.sendTyping();
