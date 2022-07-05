@@ -13,7 +13,7 @@ export const description: DescriptionTypes = {
 
 export interface DescriptionTypes {
   name: string;
-  category: 'moderation' | 'misc' | 'minecraft' | 'externalProfiles' | 'info';
+  category: 'config' | 'info' | 'moderation' | 'minecraft' | 'externalProfiles' | 'misc';
   aliases?: string[];
   description: string;
   usage: string;

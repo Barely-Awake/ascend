@@ -1,6 +1,12 @@
 import { MessageEmbed, MessageSelectOptionData } from 'discord.js';
 
 export default <{ [index: string]: CategoryInfo }>{
+  config: {
+    description: 'Allows you to configure elements of the bot like the prefix in the current guild',
+    label: 'Config',
+    value: 'config',
+    embed: new MessageEmbed(),
+  },
   info: {
     description: 'Contain information about the bot, like performance, invite, etc...',
     label: 'Info',
