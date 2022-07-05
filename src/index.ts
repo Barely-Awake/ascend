@@ -34,7 +34,7 @@ const client = new Client({
     status: 'idle',
     activities: [
       {
-        name: `${config.prefix}help`,
+        name: `@${config.botName} help`,
         type: 'WATCHING',
       },
     ],
