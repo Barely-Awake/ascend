@@ -5,7 +5,7 @@ import { Message } from 'discord.js';
 import getPlayerUuid from '../minecraft/getPlayerUuid.js';
 
 export default async function resolvePlayer(argument: string, message: Message) {
-  let player = (argument || '').replace(/-/g, '');
+  const player = (argument || '').replace(/-/g, '');
   let mojangData: MojangData;
 
   if (!argument) {
