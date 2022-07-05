@@ -1,6 +1,6 @@
 {
   "name": "ascend",
-  "version": "1.0.0-dev",
+  "version": "0.0.1-dev",
   "description": "A gay, semi-decent, open source discord bot!",
   "main": "dist/index.js",
   "type": "module",
