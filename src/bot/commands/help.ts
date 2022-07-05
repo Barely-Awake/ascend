@@ -68,7 +68,7 @@ function makeCategoryEmbeds() {
   for (const category in categoryInfo) {
     categoryInfo[category].embed = new MessageEmbed()
       .setTitle(`${config.botName} Help`)
-      .setDescription(`<> - Required Argument\n[] - Option Argument\n${config.prefix} - Bot Prefix`);
+      .setDescription(`<> - Required Argument\n[] - Option Argument`);
 
     for (const command in commandsCache) {
       if (categoryInfo[category].value !== commandsCache[command].category)
