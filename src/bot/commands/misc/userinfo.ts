@@ -12,6 +12,8 @@ export default async function (message: Message, args: string[]) {
   if (typeof user === 'boolean')
     return error('Error finding target user', description.name, message);
 
+  await user.fetch();
+
   if (!user.hexAccentColor)
     user = await user.fetch(true);
 
