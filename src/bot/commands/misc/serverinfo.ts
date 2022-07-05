@@ -13,6 +13,14 @@ export default async function (message: Message, args: string[]) {
   if (typeof server === 'boolean')
     return error('Couldn\'t find a valid server', description.name, message);
 
+  await Promise.all([
+    server.fetch(),
+    server.members.fetch({withPresences: true}),
+    server.channels.fetch(),
+    server.roles.fetch(),
+    server.emojis.fetch(),
+  ]);
+
   const guildRoles = server.roles.cache.sort((a, b) => b.position - a.position).map(role => role.toString()),
     guildMembers = server.members.cache,
     guildPresences = server.presences.cache,
