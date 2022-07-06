@@ -6,6 +6,10 @@ import resolveRole from '../../../utils/discord/resolveRole.js';
 import GuildData from '../../../mongo/guildData.js';
 
 export default async function (message: Message, args: string[]) {
+
+  if (!message.member?.permissions.has('MANAGE_GUILD'))
+    return error('You must have permission to manage the server to do that', description.name, message);
+
   let muteRole: Role;
   if (args[0] === 'make') {
     const role = await createMuteRole(message);
@@ -34,7 +38,7 @@ export default async function (message: Message, args: string[]) {
   guild.muteRole = muteRole.id;
   guild.save();
 
-  return message.channel.send('Mute role successfully set!')
+  return message.channel.send('Mute role successfully set!');
 }
 
 async function createMuteRole(message: Message) {
