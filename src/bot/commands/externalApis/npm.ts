@@ -68,7 +68,7 @@ export default async function (message: Message, args: string[]) {
 
 export const description: DescriptionTypes = {
   name: 'npm',
-  category: 'externalProfiles',
+  category: 'externalApis',
   description: 'Fetches information about an npm package',
   usage: '<package>',
 };
