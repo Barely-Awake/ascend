@@ -25,10 +25,10 @@ export default <{ [index: string]: CategoryInfo }>{
     value: 'minecraft',
     embed: new MessageEmbed(),
   },
-  externalProfiles: {
-    description: 'Allows you to request info about other profiles, for example a GitHub account',
-    label: 'Profiles',
-    value: 'externalProfiles',
+  externalApis: {
+    description: 'Commands that use services from External APIs',
+    label: 'External APIs',
+    value: 'externalApis',
     embed: new MessageEmbed(),
   },
   misc: {
