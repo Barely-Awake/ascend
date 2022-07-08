@@ -1,4 +1,4 @@
-// Colors and getFormattedLevel were stolen from Statsify Overlay (Though they've been modified)
+// Colors and getFormattedLevel were taken from Statsify Overlay (Though they've been modified)
 
 export const colors: { [index: string]: string } = {
   '0': '#000000',

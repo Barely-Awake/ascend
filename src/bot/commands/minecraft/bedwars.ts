@@ -11,7 +11,7 @@ import playerStatsTypes from '../../../types/playerStatsTypes.js';
 import error from '../../responses/error.js';
 import getWinStreakEstimates from '../../../utils/minecraft/getWinStreakEstimates.js';
 import convertMode from '../../../utils/canvas/convertMode.js';
-import resolvePlayer from '../../../utils/discord/resolvePlayer.js';
+import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 
 const {createCanvas, loadImage} = pkg;
 

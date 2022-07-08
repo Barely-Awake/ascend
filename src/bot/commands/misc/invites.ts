@@ -1,6 +1,6 @@
 import { Invite, Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import resolveUser from '../../../utils/discord/resolveUser.js';
+import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import error from '../../responses/error.js';
 import botColors from '../../../utils/discord/botColors.js';
 

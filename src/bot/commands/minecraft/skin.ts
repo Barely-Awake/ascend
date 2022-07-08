@@ -2,7 +2,7 @@ import { Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
 import error from '../../responses/error.js';
 import getPlayerNames from '../../../utils/minecraft/getPlayerNames.js';
-import resolvePlayer from '../../../utils/discord/resolvePlayer.js';
+import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
