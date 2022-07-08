@@ -1,17 +1,19 @@
-import { Message } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import getPlayerStats from '../../../utils/minecraft/getPlayerStats.js';
-import drawRoundedRectangle from '../../../utils/canvas/drawRoundedRectangle.js';
-import calculateBedWarsLevel from '../../../utils/minecraft/calculateBedWarsLevel.js';
-import { getFormattedLevel } from '../../../utils/minecraft/getFormattedLevel.js';
-import formatPlayerStats from '../../../utils/minecraft/formatPlayerStats.js';
-import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import pkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
+import { Message } from 'discord.js';
 import playerStatsTypes from '../../../types/playerStatsTypes.js';
-import error from '../../responses/error.js';
-import getWinStreakEstimates from '../../../utils/minecraft/getWinStreakEstimates.js';
 import convertMode from '../../../utils/canvas/convertMode.js';
+import drawRoundedRectangle from '../../../utils/canvas/drawRoundedRectangle.js';
+import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
+import {
+  calculateBedWarsLevel,
+  formatPlayerStats,
+  getFormattedLevel,
+  getPlayerStats,
+  getWinStreakEstimates,
+} from '../../../utils/minecraft/hypixelApi.js';
+import error from '../../responses/error.js';
+import { DescriptionTypes } from '../_example.js';
 
 const {createCanvas, loadImage} = pkg;
 

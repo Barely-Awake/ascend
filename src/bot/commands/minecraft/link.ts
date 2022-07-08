@@ -3,8 +3,7 @@ import { DescriptionTypes } from '../_example.js';
 import { getPlayerNames, getPlayerUuid } from '../../../utils/minecraft/mojangApi.js';
 import error from '../../responses/error.js';
 import Player from '../../../mongo/player.js';
-import getPlayerStats from '../../../utils/minecraft/getPlayerStats.js';
-import formatPlayerStats from '../../../utils/minecraft/formatPlayerStats.js';
+import { formatPlayerStats, getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 
 export default async function (message: Message, args: string[]) {
   const existingDiscordData = await Player.find({discordId: message.author.id});
