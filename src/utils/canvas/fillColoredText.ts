@@ -1,5 +1,5 @@
 import { CanvasRenderingContext2D } from 'canvas';
-import { colors } from '../minecraft/getFormattedLevel.js';
+import { colors } from '../minecraft/hypixelApi.js';
 import removeColorCodes from './removeColorCodes.js';
 
 export default function (text: string, ctx: CanvasRenderingContext2D, textPosX: number, textPosY: number, textAlign = 'center'): void {

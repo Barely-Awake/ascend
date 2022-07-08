@@ -1,4 +1,4 @@
-import { colors } from '../minecraft/getFormattedLevel.js';
+import { colors } from '../minecraft/hypixelApi.js';
 
 export default function (text: string): string {
   const textArray = ('§r' + text).split(/§/g);

@@ -1,9 +1,9 @@
 import { Message, Role } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import error from '../../responses/error.js';
-import config from '../../../utils/misc/readConfig.js';
-import resolveRole from '../../../utils/discord/resolveRole.js';
 import GuildData from '../../../mongo/guildData.js';
+import { resolveRole } from '../../../utils/discord/resolveTarget.js';
+import config from '../../../utils/misc/readConfig.js';
+import error from '../../responses/error.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
 
