@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
 import error from '../../responses/error.js';
 import config from '../../../utils/misc/readConfig.js';
-import resolveUser from '../../../utils/discord/resolveUser.js';
+import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 
 export default async function (message: Message, args: string[]) {
   if (!message?.member?.permissions.has('KICK_MEMBERS'))

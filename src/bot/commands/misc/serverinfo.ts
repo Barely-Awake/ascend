@@ -1,6 +1,6 @@
 import { Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import resolveGuild from '../../../utils/discord/resolveGuild.js';
+import { resolveGuild } from '../../../utils/discord/resolveTarget.js';
 import error from '../../responses/error.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
