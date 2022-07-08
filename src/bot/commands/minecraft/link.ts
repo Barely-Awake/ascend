@@ -1,11 +1,10 @@
 import { Message } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
-import getPlayerUuid from '../../../utils/minecraft/getPlayerUuid.js';
+import { getPlayerNames, getPlayerUuid } from '../../../utils/minecraft/mojangApi.js';
 import error from '../../responses/error.js';
 import Player from '../../../mongo/player.js';
 import getPlayerStats from '../../../utils/minecraft/getPlayerStats.js';
 import formatPlayerStats from '../../../utils/minecraft/formatPlayerStats.js';
-import getPlayerNames from '../../../utils/minecraft/getPlayerNames.js';
 
 export default async function (message: Message, args: string[]) {
   const existingDiscordData = await Player.find({discordId: message.author.id});

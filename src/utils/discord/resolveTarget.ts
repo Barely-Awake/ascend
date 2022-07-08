@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import playerModel from '../../mongo/player.js';
 import error from '../../bot/responses/error.js';
 import { description } from '../../bot/commands/minecraft/skin.js';
-import getPlayerUuid from '../minecraft/getPlayerUuid.js';
+import { getPlayerUuid } from '../minecraft/mojangApi.js';
 
 export async function resolveUser(message: Message, argument: string) {
   let user;
