@@ -26,7 +26,7 @@ export default async function (message: Message, args: string[]) {
 
   guildInfo.prefix = prefix;
   guildInfo.save();
-
+  prefixCashe.set(message.guild.id, prefix);
   message.channel.send(`Successfully set prefix to ${prefix}`);
 }
 
