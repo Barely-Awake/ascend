@@ -1,14 +1,39 @@
-import { Message } from 'discord.js';
+import { Message, Collection } from 'discord.js';
 import config from '../../utils/misc/readConfig.js';
 import error from '../responses/error.js';
 import GuildData from '../../mongo/guildData.js';
-
+import { client } from "../../index.js";
 export default function (message: Message): void {
   commandHandler(message);
 }
+let prefixCashe = new Collection<string, string>();
+export {prefixCashe}
+const botMention = (client.user || '').toString();
 
 async function commandHandler(message: Message) {
-  const guildPrefix = await fetchGuildPrefix(message);
+
+  let guildPrefix = config.prefix;
+  if (message.guild){
+  
+  if (prefixCashe.has(message.guild.id)) {
+
+    let casheCheck = prefixCashe.get(message.guild.id);
+
+    if (casheCheck) guildPrefix = casheCheck;
+  }
+
+ 
+  else {
+
+    guildPrefix = await fetchGuildPrefix(message);
+
+    prefixCashe.set(message?.guild?.id, guildPrefix);
+  }
+}
+  if (message.content.startsWith(`${botMention} `)) {
+    guildPrefix = botMention
+
+  }
 
   if (!message.content.startsWith(guildPrefix))
     return;
@@ -39,16 +64,7 @@ async function commandHandler(message: Message) {
 
 async function fetchGuildPrefix(message: Message) {
   const botMention = (message.client.user || '').toString();
-
-  if (message.content.startsWith(`${botMention} `))
-    return `${botMention} `;
-
-  if (message.content.startsWith(botMention))
-    return botMention;
-
-  if (!message.guild)
-    return config.prefix;
-
+  if (!message.guild) return config.prefix;
   const fetchedData = await GuildData.find({serverId: message.guild.id});
 
   if (fetchedData.length === 0)
