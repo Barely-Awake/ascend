@@ -3,7 +3,7 @@ import { DescriptionTypes } from '../_example.js';
 import error from '../../responses/error.js';
 import GuildData from '../../../mongo/guildData.js';
 import config from '../../../utils/misc/readConfig.js';
-
+import { prefixCashe } from '../../events/messageCreate.js';
 export default async function (message: Message, args: string[]) {
   if (!message.guild || !message.member)
     return error('This command has to be run in a guild', description.name, message);
@@ -20,7 +20,7 @@ export default async function (message: Message, args: string[]) {
 
   let guildInfo;
   if (fetchedData.length === 0)
-    guildInfo = new GuildData({serverId: message.guild.id, prefix: config.prefix});
+    guildInfo = new GuildData({serverId: message.guild.id, prefix: prefix});
   else
     guildInfo = fetchedData[0];
 
