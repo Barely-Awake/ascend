@@ -1,38 +1,30 @@
-import { Message, Collection } from 'discord.js';
+import { Message } from 'discord.js';
+import GuildData from '../../mongo/guildData.js';
 import config from '../../utils/misc/readConfig.js';
 import error from '../responses/error.js';
-import GuildData from '../../mongo/guildData.js';
-import { client } from "../../index.js";
+
 export default function (message: Message): void {
   commandHandler(message);
 }
-let prefixCashe = new Collection<string, string>();
-export {prefixCashe}
-const botMention = (client.user || '').toString();
+
+const prefixCache: { [index: string]: string } = {};
 
 async function commandHandler(message: Message) {
+  const botMention = (message.client.user || '').toString();
 
   let guildPrefix = config.prefix;
-  if (message.guild){
-  
-  if (prefixCashe.has(message.guild.id)) {
+  if (message.guild) {
+    if (prefixCache[message.guild.id] !== undefined) {
+      guildPrefix = prefixCache[message.guild.id];
+    } else {
+      guildPrefix = await fetchGuildPrefix(message);
 
-    let casheCheck = prefixCashe.get(message.guild.id);
-
-    if (casheCheck) guildPrefix = casheCheck;
-  }
-
- 
-  else {
-
-    guildPrefix = await fetchGuildPrefix(message);
-
-    prefixCashe.set(message?.guild?.id, guildPrefix);
-  }
-}
-  if (message.content.startsWith(`${botMention} `)) {
-    guildPrefix = botMention
-
+      prefixCache[message.guild.id] = guildPrefix;
+    }
+  } else if (message.content.startsWith(`${botMention} `)) {
+    guildPrefix = `${botMention} `;
+  } else if (message.content.startsWith(botMention)) {
+    guildPrefix = botMention;
   }
 
   if (!message.content.startsWith(guildPrefix))
@@ -54,7 +46,8 @@ async function commandHandler(message: Message) {
     console.log(`${message.author.tag} ran command '${commandName}' in ${message.guild?.name || 'dms'}`);
   } catch (err) {
     error(
-      `An unknown error occurred with the command: \`${commandName}\`. Logs have been sent to the developers.`,
+      `An unknown error occurred with the command: \`${commandName}\`. Logs have been sent to the developers.` +
+      `If this error continues, please join the support discord and let us know in #support.`,
       commandName,
       message,
     );
@@ -63,8 +56,9 @@ async function commandHandler(message: Message) {
 }
 
 async function fetchGuildPrefix(message: Message) {
-  const botMention = (message.client.user || '').toString();
-  if (!message.guild) return config.prefix;
+  if (!message.guild)
+    return config.prefix;
+
   const fetchedData = await GuildData.find({serverId: message.guild.id});
 
   if (fetchedData.length === 0)
@@ -76,3 +70,4 @@ async function fetchGuildPrefix(message: Message) {
 export const settings = {
   once: false,
 };
+export { prefixCache };
