@@ -429,9 +429,9 @@ const ranks: { [index: string]: any } = {
 };
 
 function getPlayerRank(playerStats: Player) {
-  return getString(calcTag(playerStats)) === '&7' ?
+  return (getString(calcTag(playerStats)) === '&7' ?
     getString(calcTag(playerStats)) :
-    (getString(calcTag(playerStats)) + ' ').replace(/&/g, '§');
+    (getString(calcTag(playerStats)) + ' ')).replace(/&/g, '§');
 }
 
 const nameBasedColors: { [index: string]: string | undefined } = { // Convert name-based colors to number-based
