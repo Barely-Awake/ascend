@@ -4,7 +4,7 @@ import error from '../../responses/error.js';
 import fetch from 'node-fetch';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
-import botColors from '../../../utils/discord/botColors.js';
+import { botColors } from '../../../utils/discord/botData.js';
 
 export default async function (message: Message, args: string[]) {
   const query = args.join(' ');

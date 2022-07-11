@@ -5,7 +5,7 @@ import error from '../../responses/error.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import premiumTiers from '../../../utils/discord/premiumTiers.js';
-import botEmojis from '../../../utils/discord/botEmojis.js';
+import { botEmojis } from '../../../utils/discord/botData.js';
 
 export default async function (message: Message, args: string[]) {
   const server = await resolveGuild(message, args[0]);
