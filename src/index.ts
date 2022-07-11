@@ -1,9 +1,9 @@
+import pkg from 'canvas';
 import { Client, Collection, Intents } from 'discord.js';
+import mPkg from 'mongoose';
 import commandAdder from './bot/commandAdder.js';
 import eventHandler from './bot/eventHandler.js';
 import config from './utils/misc/readConfig.js';
-import pkg from 'canvas';
-import mPkg from 'mongoose';
 
 const {connect} = mPkg;
 const {registerFont} = pkg;

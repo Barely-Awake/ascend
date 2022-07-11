@@ -21,7 +21,7 @@ let winStreakApiOn: boolean;
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
-  const mojangData = await resolvePlayer(args[0].toLowerCase(), message);
+  const mojangData = await resolvePlayer((args[0] || '').toLowerCase(), message);
 
   if (typeof mojangData === 'boolean')
     return;
@@ -43,7 +43,7 @@ export default async function (message: Message, args: string[]) {
       playerStats.bedWars.winStreak = keathizWinStreakData;
   }
 
-  const canvas = await drawFirstCanvas(playerStats);
+  const canvas = await drawCanvas(playerStats);
 
   message.channel.send({
     files: [
@@ -52,7 +52,7 @@ export default async function (message: Message, args: string[]) {
   });
 }
 
-async function drawFirstCanvas(playerStats: playerStatsTypes) {
+async function drawCanvas(playerStats: playerStatsTypes) {
   const canvas = createCanvas(870, 675);
   const ctx = canvas.getContext('2d');
 
@@ -219,7 +219,7 @@ async function drawPlayerProfile(ctx: CanvasRenderingContext2D, canvas: Canvas, 
   // Draw the user's display name
   const bedWarsLevel = calculateBedWarsLevel(playerStats.bedWars.experience);
   const displayBedWarsLevel = getFormattedLevel(bedWarsLevel);
-  const displayName = `${displayBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`;
+  const displayName = `${displayBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`.replace(/&/g, '§');
   fillColoredText(displayName, ctx, 480, 75);
 
   const playerHead = await loadImage(`https://crafatar.com/avatars/${playerStats.uuid}?overlay&size=80`);
