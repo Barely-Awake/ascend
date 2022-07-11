@@ -10,27 +10,12 @@ export default function (message: Message): void {
 const prefixCache: { [index: string]: string } = {};
 
 async function commandHandler(message: Message) {
-  const botMention = (message.client.user || '').toString();
+  const prefixUsed = await fetchPrefix(message);
 
-  let guildPrefix = config.prefix;
-  if (message.guild) {
-    if (prefixCache[message.guild.id] !== undefined) {
-      guildPrefix = prefixCache[message.guild.id];
-    } else {
-      guildPrefix = await fetchGuildPrefix(message);
-
-      prefixCache[message.guild.id] = guildPrefix;
-    }
-  } else if (message.content.startsWith(`${botMention} `)) {
-    guildPrefix = `${botMention} `;
-  } else if (message.content.startsWith(botMention)) {
-    guildPrefix = botMention;
-  }
-
-  if (!message.content.startsWith(guildPrefix))
+  if (!message.content.startsWith(prefixUsed))
     return;
 
-  const messageContent = message.content.slice(guildPrefix.length);
+  const messageContent = message.content.slice(prefixUsed.length);
   const messageArray = messageContent.split(' ');
 
   const commandName = messageArray[0].toLowerCase();
@@ -55,7 +40,27 @@ async function commandHandler(message: Message) {
   }
 }
 
-async function fetchGuildPrefix(message: Message) {
+async function fetchPrefix(message: Message) {
+  const botMention = (message.client.user || '').toString();
+  let prefixUsed: string = config.prefix;
+
+  if (message.guild) {
+    if (prefixCache[message.guild.id] !== undefined) {
+      prefixUsed = prefixCache[message.guild.id];
+    } else {
+      prefixUsed = await fetchMongoData(message);
+
+      prefixCache[message.guild.id] = prefixUsed;
+    }
+  } else if (message.content.startsWith(`${botMention} `)) {
+    prefixUsed = `${botMention} `;
+  } else if (message.content.startsWith(botMention)) {
+    prefixUsed = botMention;
+  }
+  return prefixUsed;
+}
+
+async function fetchMongoData(message: Message) {
   if (!message.guild)
     return config.prefix;
 
