@@ -43,7 +43,7 @@ export default async function (message: Message, args: string[]) {
       playerStats.bedWars.winStreak = keathizWinStreakData;
   }
 
-  const canvas = await drawFirstCanvas(playerStats);
+  const canvas = await drawCanvas(playerStats);
 
   message.channel.send({
     files: [
@@ -52,7 +52,7 @@ export default async function (message: Message, args: string[]) {
   });
 }
 
-async function drawFirstCanvas(playerStats: playerStatsTypes) {
+async function drawCanvas(playerStats: playerStatsTypes) {
   const canvas = createCanvas(870, 675);
   const ctx = canvas.getContext('2d');
 
