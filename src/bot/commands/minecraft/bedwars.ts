@@ -21,7 +21,7 @@ let winStreakApiOn: boolean;
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
-  const mojangData = await resolvePlayer(args[0].toLowerCase(), message);
+  const mojangData = await resolvePlayer((args[0] || '').toLowerCase(), message);
 
   if (typeof mojangData === 'boolean')
     return;
