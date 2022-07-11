@@ -9,7 +9,7 @@ import {
 import { DescriptionTypes } from './_example.js';
 import { readdir } from 'fs/promises';
 import config from '../../utils/misc/readConfig.js';
-import categoryInfo from '../../utils/discord/categoryInfo.js';
+import { categoryInfo } from '../../utils/discord/botData.js';
 
 const commandsCache: { [index: string]: DescriptionTypes } = {};
 

@@ -5,7 +5,7 @@ import fetch from 'node-fetch';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import * as GitHubTypes from '@saber2pr/types-github-api';
-import botColors from '../../../utils/discord/botColors.js';
+import { botColors } from '../../../utils/discord/botData.js';
 import sharp from 'sharp';
 
 export default async function (message: Message, args: string[]) {

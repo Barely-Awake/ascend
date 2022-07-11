@@ -3,7 +3,7 @@ import { DescriptionTypes } from '../_example.js';
 import config from '../../../utils/misc/readConfig.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
-import botColors from '../../../utils/discord/botColors.js';
+import { botColors } from '../../../utils/discord/botData.js';
 
 export default async function (message: Message, _: string[]) {
   const clientApplication = await message.client.application?.fetch();

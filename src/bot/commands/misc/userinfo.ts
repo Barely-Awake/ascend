@@ -4,7 +4,7 @@ import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import error from '../../responses/error.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
-import botColors from '../../../utils/discord/botColors.js';
+import { botColors } from '../../../utils/discord/botData.js';
 
 export default async function (message: Message, args: string[]) {
   let user = await resolveUser(message, args[0]);

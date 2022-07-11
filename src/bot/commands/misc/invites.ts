@@ -2,7 +2,7 @@ import { Invite, Message, MessageEmbed } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import error from '../../responses/error.js';
-import botColors from '../../../utils/discord/botColors.js';
+import { botColors } from '../../../utils/discord/botData.js';
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();

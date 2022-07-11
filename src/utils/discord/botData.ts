@@ -1,6 +1,19 @@
-import { MessageEmbed, MessageSelectOptionData } from 'discord.js';
+import { ColorResolvable, MessageEmbed, MessageSelectOptionData } from 'discord.js';
 
-export default <{ [index: string]: CategoryInfo }>{
+export const botColors: ColorResolvable[] = [
+  '#e0006f',
+  '#a14b94',
+  '#002da4',
+];
+
+export const botEmojis = {
+  online: '<:online:979932796162293822>',
+  idle: '<:idle:979932819730083850>',
+  dnd: '<:dnd:979932833629995038>',
+  offline: '<:offline:979932845210468362>',
+};
+
+export const categoryInfo: { [index: string]: CategoryInfo } = {
   config: {
     description: 'Allows you to configure elements of the bot like the prefix in the current guild',
     label: 'Config',
