@@ -1,9 +1,10 @@
 import { Message } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import error from '../../responses/error.js';
 import GuildData from '../../../mongo/guildData.js';
 import config from '../../../utils/misc/readConfig.js';
-import { prefixCashe } from '../../events/messageCreate.js';
+import { prefixCache } from '../../events/messageCreate.js';
+import error from '../../responses/error.js';
+import { DescriptionTypes } from '../_example.js';
+
 export default async function (message: Message, args: string[]) {
   if (!message.guild || !message.member)
     return error('This command has to be run in a guild', description.name, message);
@@ -26,7 +27,7 @@ export default async function (message: Message, args: string[]) {
 
   guildInfo.prefix = prefix;
   guildInfo.save();
-  prefixCashe.set(message.guild.id, prefix);
+  prefixCache[message.guild.id] = prefix;
   message.channel.send(`Successfully set prefix to ${prefix}`);
 }
 
