@@ -1,14 +1,31 @@
 import { Message } from 'discord.js';
+import GuildData from '../../mongo/guildData.js';
 import config from '../../utils/misc/readConfig.js';
 import error from '../responses/error.js';
-import GuildData from '../../mongo/guildData.js';
 
 export default function (message: Message): void {
   commandHandler(message);
 }
 
+const prefixCache: { [index: string]: string } = {};
+
 async function commandHandler(message: Message) {
-  const guildPrefix = await fetchGuildPrefix(message);
+  const botMention = (message.client.user || '').toString();
+
+  let guildPrefix = config.prefix;
+  if (message.guild) {
+    if (prefixCache[message.guild.id] !== undefined) {
+      guildPrefix = prefixCache[message.guild.id];
+    } else {
+      guildPrefix = await fetchGuildPrefix(message);
+
+      prefixCache[message.guild.id] = guildPrefix;
+    }
+  } else if (message.content.startsWith(`${botMention} `)) {
+    guildPrefix = `${botMention} `;
+  } else if (message.content.startsWith(botMention)) {
+    guildPrefix = botMention;
+  }
 
   if (!message.content.startsWith(guildPrefix))
     return;
@@ -29,7 +46,8 @@ async function commandHandler(message: Message) {
     console.log(`${message.author.tag} ran command '${commandName}' in ${message.guild?.name || 'dms'}`);
   } catch (err) {
     error(
-      `An unknown error occurred with the command: \`${commandName}\`. Logs have been sent to the developers.`,
+      `An unknown error occurred with the command: \`${commandName}\`. Logs have been sent to the developers.` +
+      `If this error continues, please join the support discord and let us know in #support.`,
       commandName,
       message,
     );
@@ -38,14 +56,6 @@ async function commandHandler(message: Message) {
 }
 
 async function fetchGuildPrefix(message: Message) {
-  const botMention = (message.client.user || '').toString();
-
-  if (message.content.startsWith(`${botMention} `))
-    return `${botMention} `;
-
-  if (message.content.startsWith(botMention))
-    return botMention;
-
   if (!message.guild)
     return config.prefix;
 
@@ -60,3 +70,4 @@ async function fetchGuildPrefix(message: Message) {
 export const settings = {
   once: false,
 };
+export { prefixCache };
