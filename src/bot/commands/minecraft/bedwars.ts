@@ -219,7 +219,7 @@ async function drawPlayerProfile(ctx: CanvasRenderingContext2D, canvas: Canvas, 
   // Draw the user's display name
   const bedWarsLevel = calculateBedWarsLevel(playerStats.bedWars.experience);
   const displayBedWarsLevel = getFormattedLevel(bedWarsLevel);
-  const displayName = `${displayBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`;
+  const displayName = `${displayBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`.replace(/&/g, '§');
   fillColoredText(displayName, ctx, 480, 75);
 
   const playerHead = await loadImage(`https://crafatar.com/avatars/${playerStats.uuid}?overlay&size=80`);
