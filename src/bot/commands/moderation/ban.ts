@@ -33,7 +33,7 @@ export default async function (message: Message, args: string[]) {
       return error('You can\'t ban that user', description.name, message);
 
     if (!target.bannable)
-      return error('I can\'t ban that user', description.name, message);
+      return error('I can\'t ban that user, make sure my role is higher than theirs', description.name, message);
 
     await target.ban({reason: reason || 'None'});
   }

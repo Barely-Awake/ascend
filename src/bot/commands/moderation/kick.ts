@@ -33,7 +33,9 @@ export default async function (message: Message, args: string[]) {
       return error('You can\'t kick that user', description.name, message);
 
     if (!target.kickable)
-      return error('I can\'t kick that user', description.name, message);
+      return error(
+        'I can\'t kick that user, make sure my role is higher than theirs', description.name, message,
+      );
 
     await target.kick(reason || 'None');
   }
