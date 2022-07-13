@@ -45,7 +45,7 @@ export async function resolveGuild(message: Message, argument: string) {
   return target;
 }
 
-export async function resolveRole(message: Message, argument: string) {
+export function resolveRole(message: Message, argument: string) {
   const firstRoleMention = message.mentions.roles.first();
   if (firstRoleMention !== undefined)
     return firstRoleMention;

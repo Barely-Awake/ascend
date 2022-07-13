@@ -17,7 +17,7 @@ export default async function (message: Message, args: string[]) {
 
   const prefix = args.join(' ');
 
-  let fetchedData = await GuildData.find({serverId: message.guild.id});
+  const fetchedData = await GuildData.find({serverId: message.guild.id});
 
   let guildInfo;
   if (fetchedData.length === 0)
