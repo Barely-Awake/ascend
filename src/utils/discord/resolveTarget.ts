@@ -16,7 +16,7 @@ export async function resolveUser(message: Message, argument: string) {
       // If there is no mentions then fetches user from id
       user = await message.client.users.fetch(argument);
   } catch {
-    return false;
+    return null;
   }
 
   if (user === undefined)
@@ -34,14 +34,13 @@ export async function resolveGuild(message: Message, argument: string) {
     else if (argument)
       target = await message.client.guilds.fetch({guild: argument, withCounts: true});
     else
-      // If there is no mentions and the message isn't in a guild return
-      return false;
+      return null;
   } catch {
-    return false;
+    return null;
   }
 
   if (target === undefined)
-    return false;
+    return null;
 
   return target;
 }
@@ -50,8 +49,7 @@ export async function resolveRole(message: Message, argument: string) {
   const firstRoleMention = message.mentions.roles.first();
   if (firstRoleMention !== undefined)
     return firstRoleMention;
-
-  if (argument)
+  else if (argument)
     return message.guild?.roles.fetch(argument);
 
   return null;
@@ -82,7 +80,7 @@ export async function resolvePlayer(argument: string, message: Message) {
   } else if (argument.length !== 32) {
     const data = await getPlayerUuid(player);
 
-    if (typeof data === 'boolean') {
+    if (data === null) {
       error(`Couldn't fetch player's uuid`, description.name, message);
       return false;
     }

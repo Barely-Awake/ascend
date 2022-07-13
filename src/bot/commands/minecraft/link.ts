@@ -23,7 +23,7 @@ export default async function (message: Message, args: string[]) {
   if (args[0].length !== 32) {
     mojangData = await getPlayerUuid(args[0]);
 
-    if (typeof mojangData === 'boolean')
+    if (mojangData === null)
       return error('Couldn\'t fetch that uuid', description.name, message);
 
     playerUuid = mojangData.id;
@@ -31,7 +31,7 @@ export default async function (message: Message, args: string[]) {
     playerUuid = args[0];
     const nameHistory = await getPlayerNames(playerUuid);
 
-    if (typeof nameHistory === 'boolean')
+    if (nameHistory === null)
       return error('Couldn\'t fetch that players name', description.name, message);
 
     mojangData = {
@@ -47,7 +47,7 @@ export default async function (message: Message, args: string[]) {
 
   const hypixelData = await getPlayerStats(playerUuid);
 
-  if (typeof hypixelData === 'boolean')
+  if (hypixelData === null)
     return error('Couldn\'t fetch that player\'s Hypixel stats', description.name, message);
 
   const hypixelStats = formatPlayerStats(hypixelData);

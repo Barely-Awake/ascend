@@ -30,7 +30,7 @@ export default async function (message: Message, args: string[]) {
 
   const hypixelApiResponse = await getPlayerStats(player);
 
-  if (hypixelApiResponse === false || hypixelApiResponse === undefined)
+  if (hypixelApiResponse === null)
     return error('Couldn\'t retrieve player\'s Hypixel stats', description.name, message);
 
   const playerStats = formatPlayerStats(hypixelApiResponse);
@@ -39,7 +39,7 @@ export default async function (message: Message, args: string[]) {
   if (!winStreakApiOn) {
     const keathizWinStreakData = await getWinStreakEstimates(player);
 
-    if (typeof keathizWinStreakData !== 'boolean')
+    if (keathizWinStreakData !== null)
       playerStats.bedWars.winStreak = keathizWinStreakData;
   }
 
