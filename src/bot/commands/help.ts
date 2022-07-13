@@ -24,7 +24,7 @@ export default async function (message: Message, _: string[]) {
     .setDescription(`<> - Required Argument\n[] - Option Argument\n${config.prefix} - Bot Prefix`);
 
   const selectMenuOptions: MessageSelectOptionData[] = [];
-  for (const category in categoryInfo) {
+  for (const category of Object.keys(categoryInfo)) {
     baseEmbed.addField(categoryInfo[category].label, categoryInfo[category].description || '');
     const categoryDeepCopy = JSON.parse(JSON.stringify(categoryInfo[category]));
     delete categoryDeepCopy.embed;
@@ -65,7 +65,7 @@ export default async function (message: Message, _: string[]) {
 }
 
 function makeCategoryEmbeds() {
-  for (const category in categoryInfo) {
+  for (const category of Object.keys(categoryInfo)) {
     categoryInfo[category].embed = new MessageEmbed()
       .setTitle(`${config.botName} Help`)
       .setDescription(`<> - Required Argument\n[] - Option Argument`);

@@ -513,13 +513,13 @@ function parseMinecraftTag(tag: string) {
 
     for (let i = 0; i < splitTag.length; i++) {
       const j = Math.floor(i / 2); // First index
-      const k = i % 2; // Second index
+      const n = i % 2; // Second index
 
       if (!newRank[j])
         newRank[j] = [];
-      if (!newRank[j][k])
-        newRank[j][k] = [];
-      newRank[j][k] = splitTag[i];
+      if (!newRank[j][n])
+        newRank[j][n] = [];
+      newRank[j][n] = splitTag[i];
     }
 
     return newRank;

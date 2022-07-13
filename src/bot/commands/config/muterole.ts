@@ -61,7 +61,7 @@ async function createMuteRole(message: Message) {
   const channelCache = message.guild?.channels.cache;
   if (!channelCache)
     return muteRole;
-  for (let channelKey of channelCache) {
+  for (const channelKey of channelCache) {
     const channel = channelKey[1];
     if (channel.isThread())
       continue;
