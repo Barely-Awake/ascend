@@ -12,11 +12,11 @@ export async function getPlayerStats(playerUuid: string) {
     data = await response.json();
 
     if (!data.success)
-      return false;
+      return null;
 
-    return data.player || false;
+    return data.player || null;
   } catch (error) {
-    return false;
+    return null;
   }
 }
 
@@ -27,12 +27,12 @@ export async function getWinStreakEstimates(playerUuid: string) {
     );
 
     if (!response.ok)
-      return false;
+      return null;
 
     const data: keathizApiResponse = await response.json();
 
     if (!data.success || data.player === undefined || data.player === null)
-      return false;
+      return null;
 
     const winStreakData = data.player.data;
 
@@ -45,7 +45,7 @@ export async function getWinStreakEstimates(playerUuid: string) {
       two_four: winStreakData.two_four_winstreak || 0,
     };
   } catch {
-    return false;
+    return null;
   }
 }
 
@@ -428,6 +428,7 @@ const ranks: { [index: string]: any } = {
   ],
 };
 
+// Code up to line 570 is stolen from unborn-hypixel npm package
 function getPlayerRank(playerStats: Player) {
   return (getString(calcTag(playerStats)) === '&7' ?
     getString(calcTag(playerStats)) :

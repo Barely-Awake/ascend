@@ -14,7 +14,7 @@ export default async function (message: Message, args: string[]) {
   if (mojangData.name === null) {
     const data = await getPlayerNames(mojangData.uuid);
 
-    if (typeof data === 'boolean')
+    if (data === null)
       return error(`Couldn't fetch player's names`, description.name, message);
 
     mojangData.name = data[data.length - 1].name;

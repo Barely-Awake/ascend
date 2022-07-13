@@ -16,7 +16,7 @@ export default async function (message: Message, args: string[]) {
   args.shift();
   const reason = args.join(' ');
 
-  if (typeof user === 'boolean')
+  if (user === null)
     return error('Couldn\'t find that user', description.name, message);
 
   if (user.id === message.author.id)

@@ -12,7 +12,7 @@ export default async function (message: Message, args: string[]) {
 
   const user = await resolveUser(message, args[0]);
 
-  if (typeof user === 'boolean')
+  if (user === null)
     return error('Couldn\'t fetch that user', description.name, message);
 
   await message.guild.invites.fetch();

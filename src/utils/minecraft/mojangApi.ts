@@ -8,7 +8,7 @@ export async function getPlayerUuid(playerName: string) {
 
     return data;
   } catch (error) {
-    return false;
+    return null;
   }
 }
 
@@ -19,6 +19,6 @@ export async function getPlayerNames(playerUuid: string) {
 
     return data;
   } catch {
-    return false;
+    return null;
   }
 }

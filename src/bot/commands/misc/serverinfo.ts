@@ -10,7 +10,7 @@ import { botEmojis } from '../../../utils/discord/botData.js';
 export default async function (message: Message, args: string[]) {
   const server = await resolveGuild(message, args[0]);
 
-  if (typeof server === 'boolean')
+  if (server === null)
     return error('Couldn\'t find a valid server', description.name, message);
 
   await Promise.all([

@@ -9,7 +9,7 @@ import { botColors } from '../../../utils/discord/botData.js';
 export default async function (message: Message, args: string[]) {
   let user = await resolveUser(message, args[0]);
 
-  if (typeof user === 'boolean')
+  if (user === null)
     return error('Error finding target user', description.name, message);
 
   await user.fetch();
