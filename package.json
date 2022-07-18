@@ -17,7 +17,7 @@
   "dependencies": {
     "@saber2pr/types-github-api": "^0.0.7",
     "canvas": "^2.9.3",
-    "discord.js": "^13.8.1",
+    "discord.js": "^14.0.2",
     "dotenv": "^16.0.1",
     "mongoose": "^6.4.4",
     "sharp": "^0.30.7",
