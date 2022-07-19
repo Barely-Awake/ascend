@@ -23,8 +23,8 @@ export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
   const mojangData = await resolvePlayer((args[0] || '').toLowerCase(), message);
 
-  if (typeof mojangData === 'boolean')
-    return;
+  if (typeof mojangData === 'string')
+    return error(mojangData, description.name, message);
 
   const player = mojangData.uuid;
 

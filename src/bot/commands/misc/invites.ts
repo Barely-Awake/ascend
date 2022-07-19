@@ -1,8 +1,8 @@
-import { Invite, Message, MessageEmbed } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
+import { EmbedBuilder, Invite, Message } from 'discord.js';
+import { botColors } from '../../../utils/discord/botData.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import error from '../../responses/error.js';
-import { botColors } from '../../../utils/discord/botData.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
@@ -30,15 +30,23 @@ export default async function (message: Message, args: string[]) {
     userInviteCodes = userInvites?.map(i => i.code).join('\n');
   }
 
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
     .setTitle(`${user.tag}'s invite count`)
     .setColor(botColors[1])
-    .addField('Invite Count', userInvitesCount.toLocaleString())
-    .addField('Invite Codes', userInviteCodes || 'None')
     .setFooter({
       text: message.guild.name,
       iconURL: message.guild.iconURL() || undefined,
-    });
+    })
+    .addFields([
+      {
+        name: 'Invite Count',
+        value: userInvitesCount.toLocaleString(),
+      },
+      {
+        name: 'Invite Codes',
+        value: userInviteCodes || 'None',
+      },
+    ]);
 
   message.channel.send({embeds: [embed]});
 }

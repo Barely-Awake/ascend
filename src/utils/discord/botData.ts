@@ -1,4 +1,4 @@
-import { ColorResolvable, MessageEmbed, MessageSelectOptionData } from 'discord.js';
+import { ColorResolvable, EmbedBuilder, SelectMenuComponentOptionData } from 'discord.js';
 
 export const botColors: ColorResolvable[] = [
   '#e0006f',
@@ -18,40 +18,40 @@ export const categoryInfo: { [index: string]: CategoryInfo } = {
     description: 'Allows you to configure elements of the bot like the prefix in the current guild',
     label: 'Config',
     value: 'config',
-    embed: new MessageEmbed(),
+    embed: new EmbedBuilder(),
   },
   info: {
     description: 'Contain information about the bot, like performance, invite, etc...',
     label: 'Info',
     value: 'info',
-    embed: new MessageEmbed(),
+    embed: new EmbedBuilder(),
   },
   moderation: {
     description: 'Useful for server moderation, allows you to ban, kick, set up auto mod (soon), etc...',
     label: 'Moderation',
     value: 'moderation',
-    embed: new MessageEmbed(),
+    embed: new EmbedBuilder(),
   },
   minecraft: {
     description: 'Allows you to check information on players like their skin, stats, etc...',
     label: 'Minecraft',
     value: 'minecraft',
-    embed: new MessageEmbed(),
+    embed: new EmbedBuilder(),
   },
   externalApis: {
     description: 'Commands that use services from External APIs',
     label: 'External APIs',
     value: 'externalApis',
-    embed: new MessageEmbed(),
+    embed: new EmbedBuilder(),
   },
   misc: {
     description: 'Random useful commands that didn\'t fit well in any other category',
     label: 'Misc',
     value: 'misc',
-    embed: new MessageEmbed(),
+    embed: new EmbedBuilder(),
   },
 };
 
-export interface CategoryInfo extends MessageSelectOptionData {
-  embed: MessageEmbed;
+export interface CategoryInfo extends SelectMenuComponentOptionData {
+  embed: EmbedBuilder;
 }

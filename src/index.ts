@@ -1,5 +1,5 @@
 import pkg from 'canvas';
-import { Client, Collection, Intents } from 'discord.js';
+import { ActivityType, Client, Collection, GatewayIntentBits, IntentsBitField } from 'discord.js';
 import mPkg from 'mongoose';
 import commandAdder from './bot/commandAdder.js';
 import eventHandler from './bot/eventHandler.js';
@@ -16,17 +16,19 @@ registerFont('assets/fonts/minecraft-bold.otf', {family: 'Minecraft Bold'});
 registerFont('assets/fonts/minecraft-italic.otf', {family: 'Minecraft Italic'});
 registerFont('assets/fonts/minecraft-bold-italic.otf', {family: 'Minecraft Bold Italic'});
 
-const intents = new Intents();
-intents.add(
-  Intents.FLAGS.GUILDS,
-  Intents.FLAGS.GUILD_MESSAGES,
-  Intents.FLAGS.GUILD_PRESENCES,
-  Intents.FLAGS.GUILD_MEMBERS,
-  Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
-  Intents.FLAGS.DIRECT_MESSAGES,
-  Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
-  Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-);
+const intents = new IntentsBitField().add([
+  GatewayIntentBits.Guilds,
+  GatewayIntentBits.GuildMessages,
+  GatewayIntentBits.GuildPresences,
+  GatewayIntentBits.GuildMembers,
+  GatewayIntentBits.GuildMembers,
+  GatewayIntentBits.GuildEmojisAndStickers,
+  GatewayIntentBits.GuildEmojisAndStickers,
+  GatewayIntentBits.DirectMessages,
+  GatewayIntentBits.DirectMessageReactions,
+  GatewayIntentBits.GuildMessageReactions,
+  GatewayIntentBits.MessageContent,
+]);
 
 const client = new Client({
   intents: intents,
@@ -35,7 +37,7 @@ const client = new Client({
     activities: [
       {
         name: `@${config.botName} help`,
-        type: 'WATCHING',
+        type: ActivityType.Watching,
       },
     ],
   },

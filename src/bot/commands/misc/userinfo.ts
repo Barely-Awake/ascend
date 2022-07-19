@@ -1,10 +1,10 @@
-import { Message, MessageEmbed } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import { resolveUser } from '../../../utils/discord/resolveTarget.js';
-import error from '../../responses/error.js';
-import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
-import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
+import { EmbedBuilder, Message } from 'discord.js';
 import { botColors } from '../../../utils/discord/botData.js';
+import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
+import { resolveUser } from '../../../utils/discord/resolveTarget.js';
+import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
+import error from '../../responses/error.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
   let user = await resolveUser(message, args[0]);
@@ -19,16 +19,30 @@ export default async function (message: Message, args: string[]) {
 
   const creationDate = unixToSeconds(user.createdTimestamp);
 
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
     .setTitle(`Information on \`${user.username}\``)
-    .setThumbnail(user.displayAvatarURL({format: 'png', dynamic: true, size: 4096}))
+    .setThumbnail(user.displayAvatarURL({size: 4096}))
     .setColor(user.hexAccentColor || botColors[1])
-    .addField('Tag', user.tag)
-    .addField('ID', user.id)
-    .addField('Created', `${messageTimeStamp(creationDate)} (${messageTimeStamp(creationDate, 'R')})`);
+    .addFields([
+      {
+        name: 'Tag',
+        value: user.tag,
+      },
+      {
+        name: 'ID',
+        value: user.id,
+      },
+      {
+        name: 'Created',
+        value: `${messageTimeStamp(creationDate, 'R')} (${messageTimeStamp(creationDate)})`,
+      },
+    ]);
 
   if (user.bot)
-    embed.addField('Bot', 'true');
+    embed.addFields([{
+      name: 'Bot',
+      value: 'true',
+    }]);
 
   message.channel.send({embeds: [embed]});
 }
