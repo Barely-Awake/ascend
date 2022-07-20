@@ -1,6 +1,6 @@
-import { Message, MessageEmbed, Team, User, version } from 'discord.js';
+import { EmbedBuilder, Message, Team, User, version } from 'discord.js';
 import { botColors } from '../../../utils/discord/botData.js';
-import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
+import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import config from '../../../utils/misc/readConfig.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
 import { DescriptionTypes } from '../_example.js';
@@ -22,7 +22,7 @@ export default async function (message: Message, _: string[]) {
   else
     clientUptime = 'Unknown';
 
-  const infoEmbed = new MessageEmbed()
+  const infoEmbed = new EmbedBuilder()
     .setTitle(`Information on ${config.botName}`)
     .setColor(botColors[1])
     .setAuthor({
@@ -37,25 +37,53 @@ export default async function (message: Message, _: string[]) {
       `going to be that yet, but the dev team (jk, it's only 1 person) is working hard to reach that goal as soon as ` +
       `possible.`,
     )
-    .addField(`${config.botName} Version`, `\`${process.env.npm_package_version || 'Unknown'}\``)
-    .addField('Ping', `\`${message.client.ws.ping}\` ms`)
-    .addField('Up Since', typeof clientUptime !== 'string' ?
-      messageTimeStamp(clientUptime, 'R') :
-      'Unknown',
-    )
-    .addField('Instance Host', applicationOwner)
-    .addField('Server Count', String(message.client.guilds.cache.size))
-    .addField('User Count', String(message.client.users.cache.size))
-    .addField('Discord.js Version', version)
+    .addFields([
+      {
+        name: `${config.botName} Version`,
+        value: `\`${process.env.npm_package_version || 'Unknown'}\``,
+      },
+      {
+        name: 'Ping',
+        value: `\`${message.client.ws.ping}\` ms`,
+      },
+      {
+        name: 'Up Since',
+        value: typeof clientUptime !== 'string' ?
+          messageTimeStamp(clientUptime, 'R') :
+          'Unknown',
+      },
+      {
+        name: 'Instance Host',
+        value: applicationOwner,
+      },
+      {
+        name: 'Server Count',
+        value: String(message.client.guilds.cache.size),
+      },
+      {
+        name: 'User Count',
+        value: String(message.client.users.cache.size),
+      },
+      {
+        name: 'Discord.js Version',
+        value: version,
+      },
+    ])
     .setFooter({
       text: 'Made with love & discord.js',
+      iconURL: '',
     });
 
-  message.channel.send({
-    content: `Join ${config.botName}'s support server for information on changes to the bot and beta access! ` +
-      `discord.gg/PpdbKXKgT3`,
-    embeds: [infoEmbed],
-  });
+  if ((message.guild || {}).id !== config.supportServerId)
+    message.channel.send({
+      content: `Join ${config.botName}'s support server for information on changes to the bot and beta access! ` +
+        `https://discord.gg/PpdbKXKgT3`,
+      embeds: [infoEmbed],
+    });
+  else
+    message.channel.send({
+      embeds: [infoEmbed],
+    });
 }
 
 export const description: DescriptionTypes = {

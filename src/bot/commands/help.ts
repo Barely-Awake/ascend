@@ -1,15 +1,15 @@
 import {
+  ActionRowBuilder,
+  EmbedBuilder,
   InteractionCollector,
   Message,
-  MessageActionRow,
-  MessageEmbed,
-  MessageSelectMenu,
-  MessageSelectOptionData,
+  SelectMenuBuilder,
+  SelectMenuComponentOptionData,
 } from 'discord.js';
-import { DescriptionTypes } from './_example.js';
 import { readdir } from 'fs/promises';
-import config from '../../utils/misc/readConfig.js';
 import { categoryInfo } from '../../utils/discord/botData.js';
+import config from '../../utils/misc/readConfig.js';
+import { DescriptionTypes } from './_example.js';
 
 const commandsCache: { [index: string]: DescriptionTypes } = {};
 
@@ -19,20 +19,23 @@ cacheCommands()
 export default async function (message: Message, _: string[]) {
   message.channel.sendTyping();
 
-  const baseEmbed = new MessageEmbed()
+  const baseEmbed = new EmbedBuilder()
     .setTitle(`${config.botName} Help`)
     .setDescription(`<> - Required Argument\n[] - Option Argument\n${config.prefix} - Bot Prefix`);
 
-  const selectMenuOptions: MessageSelectOptionData[] = [];
+  const selectMenuOptions: SelectMenuComponentOptionData[] = [];
   for (const category of Object.keys(categoryInfo)) {
-    baseEmbed.addField(categoryInfo[category].label, categoryInfo[category].description || '');
+    baseEmbed.addFields([{
+      name: categoryInfo[category].label,
+      value: categoryInfo[category].description || '',
+    }]);
     const categoryDeepCopy = JSON.parse(JSON.stringify(categoryInfo[category]));
     delete categoryDeepCopy.embed;
     selectMenuOptions.push(categoryDeepCopy);
   }
 
-  const actionRow = new MessageActionRow()
-    .addComponents(new MessageSelectMenu()
+  const actionRow = new ActionRowBuilder<SelectMenuBuilder>()
+    .addComponents(new SelectMenuBuilder()
       .setCustomId('categorySelector')
       .setPlaceholder('Categories')
       .addOptions(selectMenuOptions));
@@ -51,12 +54,12 @@ export default async function (message: Message, _: string[]) {
     if (!interaction.isSelectMenu())
       return;
 
-    if (interaction.user.id !== message.author.id)
-      return interaction.reply({
+    if (interaction.user.id !== message.author.id) {
+      interaction.reply({
         content: 'You can\'t do that to this message!',
-        ephemeral: true,
       });
-
+      return;
+    }
     interaction.update({
       embeds: [categoryInfo[interaction.values[0]].embed],
       components: [actionRow],
@@ -66,7 +69,7 @@ export default async function (message: Message, _: string[]) {
 
 function makeCategoryEmbeds() {
   for (const category of Object.keys(categoryInfo)) {
-    categoryInfo[category].embed = new MessageEmbed()
+    categoryInfo[category].embed = new EmbedBuilder()
       .setTitle(`${config.botName} Help`)
       .setDescription(`<> - Required Argument\n[] - Option Argument`);
 
@@ -74,10 +77,10 @@ function makeCategoryEmbeds() {
       if (categoryInfo[category].value !== commandsCache[command].category)
         continue;
 
-      categoryInfo[category].embed.addField(
-        `${commandsCache[command].name} ${commandsCache[command].usage}`,
-        commandsCache[command].description,
-      );
+      categoryInfo[category].embed.addFields([{
+        name: `${commandsCache[command].name} ${commandsCache[command].usage}`,
+        value: commandsCache[command].description,
+      }]);
     }
   }
 }
