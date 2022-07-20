@@ -1,17 +1,16 @@
-import { Message, MessageEmbed } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import { resolveGuild } from '../../../utils/discord/resolveTarget.js';
-import error from '../../responses/error.js';
-import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
-import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
-import premiumTiers from '../../../utils/discord/premiumTiers.js';
+import { EmbedBuilder, Message } from 'discord.js';
 import { botEmojis } from '../../../utils/discord/botData.js';
+import { messageTimeStamp } from '../../../utils/discord/misc.js';
+import { resolveGuild } from '../../../utils/discord/resolveTarget.js';
+import { error } from '../../../utils/discord/responses.js';
+import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
   const server = await resolveGuild(message, args[0]);
 
   if (server === null)
-    return error('Couldn\'t find a valid server', description.name, message);
+    return error('Couldn\'t find a valid server', message);
 
   await Promise.all([
     server.fetch(),
@@ -44,37 +43,42 @@ export default async function (message: Message, args: string[]) {
     }
   });
 
-  let embed = new MessageEmbed()
+  let embed = new EmbedBuilder()
     .setTitle(`Server info on \`${server.name}\``)
     .setDescription(server.description ? server.description : '')
-    .addField('General',
-      [
-        `Owner: <@${server.ownerId}>`,
-        `ID: ${server.id}`,
-        `Level: ${premiumTiers[server.premiumTier]}`,
-        `Created: ${messageTimeStamp(guildCreationDate)} (${messageTimeStamp(guildCreationDate, 'R')})`,
-      ].join('\n'),
-    )
-    .addField('Counts',
-      [
-        `Users: ${guildMembers.filter(member => !member.user.bot).size}`,
-        `Bots: ${guildMembers.filter(member => member.user.bot).size}`,
-        `Boosts: ${server.premiumSubscriptionCount || 0}`,
-        `Channels: ${guildChannels.size}`,
-        `Roles: ${guildRoles.length}`,
-        `Emojis: ${guildEmojis.size}`,
-      ].join('\n'),
-    )
-    .addField('Activity',
-      [
-        `Online ${botEmojis.online}: ${statusCounts[0]}`,
-        `Idle ${botEmojis.idle}: ${statusCounts[1]}`,
-        `Do Not Disturb ${botEmojis.dnd}: ${statusCounts[2]}`,
-        `Offline ${botEmojis.offline}: ${server.memberCount - (statusCounts[0] + statusCounts[1] + statusCounts[2])}`,
+    .addFields([
+      {
+        name: 'General',
+        value: [
+          `Owner: <@${server.ownerId}>`,
+          `ID: ${server.id}`,
+          `Level: ${server.premiumTier.toLocaleString() || 'Unknown'}`,
+          `Created: ${messageTimeStamp(guildCreationDate)} (${messageTimeStamp(guildCreationDate, 'R')})`,
+        ].join('\n'),
+      },
+      {
+        name: 'Counts',
+        value: [
+          `Users: ${guildMembers.filter(member => !member.user.bot).size}`,
+          `Bots: ${guildMembers.filter(member => member.user.bot).size}`,
+          `Boosts: ${server.premiumSubscriptionCount || 0}`,
+          `Channels: ${(guildChannels.size).toLocaleString()}`,
+          `Roles: ${(guildRoles.length).toLocaleString()}`,
+          `Emojis: ${guildEmojis.size}`,
+        ].join('\n'),
+      },
+      {
+        name: 'Activity',
+        value: [
+          `Online ${botEmojis.online}: ${statusCounts[0]}`,
+          `Idle ${botEmojis.idle}: ${statusCounts[1]}`,
+          `Do Not Disturb ${botEmojis.dnd}: ${statusCounts[2]}`,
+          `Offline ${botEmojis.offline}: ${server.memberCount - (statusCounts[0] + statusCounts[1] + statusCounts[2])}`,
+        ].join('\n'),
+      },
+    ]);
 
-      ].join('\n'));
-
-  const iconUrl = server.iconURL({dynamic: true, size: 4096});
+  const iconUrl = server.iconURL({size: 4096});
 
   if (iconUrl !== null && iconUrl !== undefined)
     embed = embed
