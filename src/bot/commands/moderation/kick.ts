@@ -1,26 +1,30 @@
 import { Message } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import error from '../../responses/error.js';
-import config from '../../../utils/misc/readConfig.js';
+import { canModerateUser, checkPermissions } from '../../../utils/discord/misc.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
+import { error } from '../../../utils/discord/responses.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
-  if (!message?.member?.permissions.has('KICK_MEMBERS'))
-    return error('You can\'t kick users', description.name, message);
+  if (!message.guild || !message.member)
+    return error('This command must be run in a guild', message);
 
-  if (!message.guild?.me?.permissions.has('KICK_MEMBERS'))
-    return error(`${config.botName} doesn't have permission to kick members ` +
-      `(*It's recommended to give ${config.botName} admin permissions*)`, description.name, message);
+  if (!checkPermissions(message.member, 'KickMembers'))
+    return error('You can\'t kick users', message);
+
+  if (!checkPermissions(await message.guild.members.fetchMe(), 'KickMembers'))
+    return error(`I don't have permission to kick members ` +
+      `(*I'm a moderation bot, it's recommended to give me admin*)`, message);
 
   const user = await resolveUser(message, args[0]);
   args.shift();
   const reason = args.join(' ');
 
   if (user === null)
-    return error('Couldn\'t find that user', description.name, message);
+    return error('I couldn\'t find that user, make sure you\'re providing a mention or id', message);
 
   if (user.id === message.author.id)
-    return error('I\'m going to assume you don\'t want to kick yourself', description.name, message);
+    return error('I\'m going to assume you don\'t want to kick yourself ' +
+      '(If you did want that, there\'s a leave server button instead)', message);
 
   const target = await message.guild?.members.resolve(user);
 
@@ -28,13 +32,12 @@ export default async function (message: Message, args: string[]) {
     await message.guild.members.kick(user, reason || 'None');
   } else {
 
-    if (target.roles.highest.position >= message.member?.roles.highest.position &&
-      message.author.id !== message.guild.ownerId)
-      return error('You can\'t kick that user', description.name, message);
+    if (!canModerateUser(message.member, target, message.guild.ownerId))
+      return error('You can\'t kick that user, is your role higher than theirs?', message);
 
     if (!target.kickable)
       return error(
-        'I can\'t kick that user, make sure my role is higher than theirs', description.name, message,
+        'I can\'t kick that user, make sure my role is higher than theirs', message,
       );
 
     await target.kick(reason || 'None');
