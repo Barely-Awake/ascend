@@ -1,7 +1,5 @@
 import { Message } from 'discord.js';
 import playerModel from '../../mongo/player.js';
-import error from '../../bot/responses/error.js';
-import { description } from '../../bot/commands/minecraft/skin.js';
 import { getPlayerUuid } from '../minecraft/mojangApi.js';
 
 export async function resolveUser(message: Message, argument: string) {
@@ -67,11 +65,9 @@ export async function resolvePlayer(argument: string, message: Message) {
       dataBaseInfo = null;
     }
 
-    if (dataBaseInfo === null) {
-      error('You must be linked to not have to provide a player name. ' +
-        'To see how to do that please view this image (https://catboymaid.club/Z96boeByYUZd) ', description.name, message);
-      return false;
-    }
+    if (dataBaseInfo === null)
+      return 'You must be linked to not have to provide a player name. ' +
+        'To see how to do that please view this image (https://catboymaid.club/Z96boeByYUZd) ';
 
     mojangData = {
       uuid: dataBaseInfo.playerUuid,
@@ -80,10 +76,8 @@ export async function resolvePlayer(argument: string, message: Message) {
   } else if (argument.length !== 32) {
     const data = await getPlayerUuid(player);
 
-    if (data === null) {
-      error(`Couldn't fetch player's uuid`, description.name, message);
-      return false;
-    }
+    if (data === null)
+      return `Couldn't fetch player's uuid`;
 
     mojangData = {
       uuid: data.id,

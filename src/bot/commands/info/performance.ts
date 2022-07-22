@@ -1,9 +1,9 @@
-import { Message, MessageEmbed } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import config from '../../../utils/misc/readConfig.js';
+import { EmbedBuilder, Message } from 'discord.js';
 import { botColors } from '../../../utils/discord/botData.js';
-import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
+import { messageTimeStamp } from '../../../utils/discord/misc.js';
+import config from '../../../utils/misc/readConfig.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, _: string[]) {
   const perfMsg = await message.channel.send('Checking Client Performance...');
@@ -14,17 +14,31 @@ export default async function (message: Message, _: string[]) {
   else
     clientUptime = 'Unknown';
 
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
     .setTitle(`Performance information on \`${config.botName}\``)
     .setColor(botColors[1])
-    .addField('API Ping', `\`${Math.trunc(perfMsg.createdTimestamp - message.createdTimestamp)}\` ms`)
-    .addField('Websocket Ping', `\`${message.client.ws.ping}\` ms`)
-    .addField('Uptime', typeof clientUptime !== 'string' ?
-      messageTimeStamp(clientUptime, 'R') :
-      'Unknown')
-    .addField('Memory Usage', `\`${Math.floor(process.memoryUsage().heapUsed / 1024 / 1024)}\` MB`);
+    .addFields([
+      {
+        name: 'API Ping',
+        value: `\`${Math.trunc(perfMsg.createdTimestamp - message.createdTimestamp)}\` ms`,
+      },
+      {
+        name: 'Websocket Ping',
+        value: `\`${message.client.ws.ping}\` ms`,
+      },
+      {
+        name: 'Uptime',
+        value: typeof clientUptime !== 'string' ?
+          messageTimeStamp(clientUptime, 'R') :
+          'Unknown',
+      },
+      {
+        name: 'Memory Usage',
+        value: `\`${Math.floor(process.memoryUsage().heapUsed / 1024 / 1024)}\` MB`,
+      },
+    ]);
 
-  perfMsg.edit({content: 'Client Performance', embeds: [embed]});
+  perfMsg.edit({embeds: [embed]});
 }
 
 export const description: DescriptionTypes = {

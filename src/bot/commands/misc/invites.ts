@@ -1,19 +1,19 @@
-import { Invite, Message, MessageEmbed } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import { resolveUser } from '../../../utils/discord/resolveTarget.js';
-import error from '../../responses/error.js';
+import { EmbedBuilder, Invite, Message } from 'discord.js';
 import { botColors } from '../../../utils/discord/botData.js';
+import { resolveUser } from '../../../utils/discord/resolveTarget.js';
+import { error } from '../../../utils/discord/responses.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
 
   if (!message.guild)
-    return error('Please use this command in a guild', description.name, message);
+    return error('Please use this command in a guild', message);
 
   const user = await resolveUser(message, args[0]);
 
   if (user === null)
-    return error('Couldn\'t fetch that user', description.name, message);
+    return error('Couldn\'t fetch that user', message);
 
   await message.guild.invites.fetch();
   const allInvites = message.guild.invites.cache;
@@ -30,15 +30,23 @@ export default async function (message: Message, args: string[]) {
     userInviteCodes = userInvites?.map(i => i.code).join('\n');
   }
 
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
     .setTitle(`${user.tag}'s invite count`)
     .setColor(botColors[1])
-    .addField('Invite Count', userInvitesCount.toLocaleString())
-    .addField('Invite Codes', userInviteCodes || 'None')
     .setFooter({
       text: message.guild.name,
       iconURL: message.guild.iconURL() || undefined,
-    });
+    })
+    .addFields([
+      {
+        name: 'Invite Count',
+        value: userInvitesCount.toLocaleString(),
+      },
+      {
+        name: 'Invite Codes',
+        value: userInviteCodes || 'None',
+      },
+    ]);
 
   message.channel.send({embeds: [embed]});
 }

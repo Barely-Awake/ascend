@@ -1,19 +1,19 @@
 import { Message } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import { getPlayerNames, getPlayerUuid } from '../../../utils/minecraft/mojangApi.js';
-import error from '../../responses/error.js';
 import Player from '../../../mongo/player.js';
+import { error } from '../../../utils/discord/responses.js';
 import { formatPlayerStats, getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
+import { getPlayerNames, getPlayerUuid } from '../../../utils/minecraft/mojangApi.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
   const existingDiscordData = await Player.find({discordId: message.author.id});
 
   if (existingDiscordData.length !== 0)
     return error('You have already linked on this discord account. Please use the unlink command and then try ' +
-      'linking again.', description.name, message);
+      'linking again.', message);
 
   if (!args[0])
-    return error('Please provide the account you want to link with', description.name, message);
+    return error('Please provide the account you want to link with', message);
 
   args[0] = (args[0] || '').replace(/-/g, '');
 
@@ -24,7 +24,7 @@ export default async function (message: Message, args: string[]) {
     mojangData = await getPlayerUuid(args[0]);
 
     if (mojangData === null)
-      return error('Couldn\'t fetch that uuid', description.name, message);
+      return error('Couldn\'t fetch that uuid', message);
 
     playerUuid = mojangData.id;
   } else {
@@ -32,7 +32,7 @@ export default async function (message: Message, args: string[]) {
     const nameHistory = await getPlayerNames(playerUuid);
 
     if (nameHistory === null)
-      return error('Couldn\'t fetch that players name', description.name, message);
+      return error('Couldn\'t fetch that players name', message);
 
     mojangData = {
       id: playerUuid,
@@ -43,22 +43,22 @@ export default async function (message: Message, args: string[]) {
 
   if (existingMinecraftData.length !== 0)
     return error(`That minecraft account has already been linked with another discord account. ` +
-      `Please use the unlink command on that account and then try linking again.`, description.name, message);
+      `Please use the unlink command on that account and then try linking again.`, message);
 
   const hypixelData = await getPlayerStats(playerUuid);
 
   if (hypixelData === null)
-    return error('Couldn\'t fetch that player\'s Hypixel stats', description.name, message);
+    return error('Couldn\'t fetch that player\'s Hypixel stats', message);
 
   const hypixelStats = formatPlayerStats(hypixelData);
 
   if (hypixelStats.socialMedia.discord === null)
     return error('That account doesn\'t have a discord linked to it. If that is your account, you can click ' +
-      'the link below to see how to do that.\nhttps://catboymaid.club/Z96boeByYUZd', description.name, message);
+      'the link below to see how to do that.\nhttps://catboymaid.club/Z96boeByYUZd', message);
 
   if (hypixelStats.socialMedia.discord !== message.author.tag)
     return error(`Your discord (\`${message.author.tag}\`)doesn't match with the linked discord on that ` +
-      `account (\`${hypixelStats.socialMedia.discord}\`)`, description.name, message);
+      `account (\`${hypixelStats.socialMedia.discord}\`)`, message);
 
   const playerData = new Player({
     playerUuid: playerUuid,

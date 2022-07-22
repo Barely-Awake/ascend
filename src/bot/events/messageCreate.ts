@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import GuildData from '../../mongo/guildData.js';
+import { error } from '../../utils/discord/responses.js';
 import config from '../../utils/misc/readConfig.js';
-import error from '../responses/error.js';
 
 export default function (message: Message): void {
   commandHandler(message);
@@ -30,10 +30,9 @@ async function commandHandler(message: Message) {
     command(message, args);
     console.log(`${message.author.tag} ran command '${commandName}' in ${message.guild?.name || 'dms'}`);
   } catch (err) {
-    error(
+    await error(
       `An unknown error occurred with the command: \`${commandName}\`. Logs have been sent to the developers.` +
       `If this error continues, please join the support discord and let us know in #support.`,
-      commandName,
       message,
     );
     console.error(`An unknown error occurred with the command: ${commandName}. Error:\n`, err);

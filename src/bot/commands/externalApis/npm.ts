@@ -1,10 +1,10 @@
-import { Message, MessageEmbed } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import error from '../../responses/error.js';
+import { EmbedBuilder, Message } from 'discord.js';
 import fetch from 'node-fetch';
-import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
-import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import { botColors } from '../../../utils/discord/botData.js';
+import { messageTimeStamp } from '../../../utils/discord/misc.js';
+import { error } from '../../../utils/discord/responses.js';
+import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
   const query = args.join(' ');
@@ -15,19 +15,19 @@ export default async function (message: Message, args: string[]) {
   try {
     res = await fetch(`https://registry.npmjs.com/${encodeURIComponent(query)}`);
   } catch (err) {
-    return error('Couldn\'t fetch npm registry', description.name, message);
+    return error('Couldn\'t fetch npm registry', message);
   }
 
   if (res.status === 404)
-    return error(`Couldn't find the npm package \`${query}\``, description.name, message);
+    return error(`Couldn't find the npm package \`${query}\``, message);
 
   if (!res.ok)
-    return error('Couldn\'t fetch npm registry', description.name, message);
+    return error('Couldn\'t fetch npm registry', message);
 
   const body = await res.json();
 
   if (body.time.unpublished !== undefined)
-    return error(`The npm package \`${query}\` was unpublished`, description.name, message);
+    return error(`The npm package \`${query}\` was unpublished`, message);
 
   const timeCreated = unixToSeconds(Date.parse(body.time.created));
   const timeModified = unixToSeconds(Date.parse(body.time.modified));
@@ -42,26 +42,45 @@ export default async function (message: Message, args: string[]) {
 
   repositoryUrl = repositoryUrl.replace('.git', '');
 
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
     .setColor(botColors[1])
     .setTitle(`Information on \`${body.name}\``)
     .setURL(`https://www.npmjs.com/package/${body.name}`)
     .setDescription(body.description !== undefined ? String(body.description) : '')
-    .addField('Version', body['dist-tags']?.latest || 'Unknown', false)
-    .addField('License', body.license || 'Unknown', false)
-    .addField('Author', body.author ? body.author.name : 'Unknown', false)
-    .addField('Created',
-      `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`
-      , false)
-    .addField('Last Modified', body.time.modified ?
-        `${messageTimeStamp(timeModified)} (${messageTimeStamp(timeModified, 'R')})` :
-        `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`
-      , false)
-    .addField('Repository', repositoryUrl !== 'Unknown' ?
-        `[Click!](${repositoryUrl})` :
-        'Unknown',
-      false)
-    .addField('Maintainers', body.maintainers?.map((user: { name: string }) => user.name).join(', ') || 'Unknown');
+    .addFields([
+      {
+        name: 'Version',
+        value: body['dist-tags']?.latest || 'Unknown',
+      },
+      {
+        name: 'License',
+        value: body.license || 'Unknown',
+      },
+      {
+        name: 'Author',
+        value: body.author ? body.author.name : 'Unknown',
+      },
+      {
+        name: 'Created',
+        value: `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`,
+      },
+      {
+        name: 'Last Modified',
+        value: body.time.modified ?
+          `${messageTimeStamp(timeModified)} (${messageTimeStamp(timeModified, 'R')})` :
+          `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`,
+      },
+      {
+        name: 'Repository',
+        value: repositoryUrl !== 'Unknown' ?
+          `[Click!](${repositoryUrl})` :
+          'Unknown',
+      },
+      {
+        name: 'Maintainers',
+        value: body.maintainers?.map((user: { name: string }) => user.name).join(', ') || 'Unknown',
+      },
+    ]);
 
   message.channel.send({embeds: [embed]});
 }

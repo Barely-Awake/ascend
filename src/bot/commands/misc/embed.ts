@@ -1,15 +1,15 @@
-import { Message, MessageEmbed } from 'discord.js';
+import { EmbedBuilder, Message } from 'discord.js';
+import { error } from '../../../utils/discord/responses.js';
 import { DescriptionTypes } from '../_example.js';
-import error from '../../responses/error.js';
 
 export default async function (message: Message, args: string[]) {
   await message.delete();
 
-  if (message.member !== null && !message.member?.permissions.has('MANAGE_GUILD'))
-    return error('You need to have the manage server permission to use this command', description.name, message);
+  if (message.member !== null && !message.member?.permissions.has('ManageGuild'))
+    return error('You need to have the manage server permission to use this command', message);
 
   if (!args[0] || !args[1])
-    return error('Please provided the needed arguments', description.name, message);
+    return error('Please provided the needed arguments', message);
 
   if (args[0].startsWith('#'))
     args[0] = args[0].slice();
@@ -30,7 +30,7 @@ export default async function (message: Message, args: string[]) {
   const text = args.join(' ');
   const embedArray = text.includes('|') ? text.split('|') : [text];
 
-  let embed = new MessageEmbed()
+  let embed = new EmbedBuilder()
     .setColor(embedColor);
   if (embedArray[0] !== '' && embedArray[0] !== ' ')
     embed = embed.setTitle(embedArray[0]);
