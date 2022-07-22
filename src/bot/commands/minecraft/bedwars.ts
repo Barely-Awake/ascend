@@ -5,6 +5,7 @@ import convertMode from '../../../utils/canvas/convertMode.js';
 import drawRoundedRectangle from '../../../utils/canvas/drawRoundedRectangle.js';
 import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
+import { error } from '../../../utils/discord/responses.js';
 import {
   calculateBedWarsLevel,
   formatPlayerStats,
@@ -12,7 +13,6 @@ import {
   getPlayerStats,
   getWinStreakEstimates,
 } from '../../../utils/minecraft/hypixelApi.js';
-import error from '../../responses/error.js';
 import { DescriptionTypes } from '../_example.js';
 
 const {createCanvas, loadImage} = pkg;
@@ -23,15 +23,15 @@ export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
   const mojangData = await resolvePlayer((args[0] || '').toLowerCase(), message);
 
-  if (typeof mojangData === 'boolean')
-    return;
+  if (typeof mojangData === 'string')
+    return error(mojangData, message);
 
   const player = mojangData.uuid;
 
   const hypixelApiResponse = await getPlayerStats(player);
 
   if (hypixelApiResponse === null)
-    return error('Couldn\'t retrieve player\'s Hypixel stats', description.name, message);
+    return error('Couldn\'t retrieve player\'s Hypixel stats', message);
 
   const playerStats = formatPlayerStats(hypixelApiResponse);
 

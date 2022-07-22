@@ -1,14 +1,13 @@
 import { Message, Role } from 'discord.js';
 import GuildData from '../../../mongo/guildData.js';
 import { resolveRole } from '../../../utils/discord/resolveTarget.js';
+import { error } from '../../../utils/discord/responses.js';
 import config from '../../../utils/misc/readConfig.js';
-import error from '../../responses/error.js';
 import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
-
-  if (!message.member?.permissions.has('MANAGE_GUILD'))
-    return error('You must have permission to manage the server to do that', description.name, message);
+  if (!message.member?.permissions.has('ManageGuild'))
+    return error('You must have permission to manage the server to do that', message);
 
   let muteRole: Role;
   if (args[0] === 'make') {
@@ -20,11 +19,11 @@ export default async function (message: Message, args: string[]) {
     const role = await resolveRole(message, args[1]);
 
     if (!role)
-      return error('Please provide a role', description.name, message);
+      return error('Please provide a role', message);
 
     muteRole = role;
   } else {
-    return error('Please provide valid arguments', description.name, message);
+    return error('Please provide valid arguments', message);
   }
 
   let guild = (await GuildData.find({serverId: message.guild?.id}))[0];
@@ -38,7 +37,7 @@ export default async function (message: Message, args: string[]) {
   guild.muteRole = muteRole.id;
   guild.save();
 
-  return message.channel.send('Mute role successfully set!');
+  return message.reply('Mute role successfully set!');
 }
 
 async function createMuteRole(message: Message) {
@@ -49,12 +48,11 @@ async function createMuteRole(message: Message) {
   });
 
   if (muteRole === undefined) {
-    error(
-      `Couldn't create a mute role. Check to see if ${config.botName} has the create role permission`,
-      description.name,
+    await error(
+      `I couldn't create a mute role, do I have the correct permissions?`,
       message,
     );
-    return;
+    return null;
   }
 
   await message.guild?.channels.fetch();
@@ -66,24 +64,24 @@ async function createMuteRole(message: Message) {
     if (channel.isThread())
       continue;
 
-    if (channel.isText()) {
-      channel.permissionOverwrites.create(
-        muteRole,
-        {
-          SEND_MESSAGES: false,
-          SEND_MESSAGES_IN_THREADS: false,
-          CREATE_PUBLIC_THREADS: false,
-          CREATE_PRIVATE_THREADS: false,
-          ADD_REACTIONS: false,
-        });
-    } else if (channel.isVoice()) {
+    if (channel.isTextBased()) {
       await channel.permissionOverwrites.create(
         muteRole,
         {
-          CONNECT: false,
-          SPEAK: false,
-          STREAM: false,
-          START_EMBEDDED_ACTIVITIES: false,
+          SendMessages: false,
+          SendMessagesInThreads: false,
+          CreatePublicThreads: false,
+          CreatePrivateThreads: false,
+          AddReactions: false,
+        });
+    } else if (channel.isVoiceBased()) {
+      await channel.permissionOverwrites.create(
+        muteRole,
+        {
+          Connect: false,
+          Speak: false,
+          Stream: false,
+          UseEmbeddedActivities: false,
         },
       );
     }

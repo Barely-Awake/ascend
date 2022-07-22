@@ -1,19 +1,19 @@
 import { Message } from 'discord.js';
 import GuildData from '../../../mongo/guildData.js';
+import { error } from '../../../utils/discord/responses.js';
 import config from '../../../utils/misc/readConfig.js';
 import { prefixCache } from '../../events/messageCreate.js';
-import error from '../../responses/error.js';
 import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
   if (!message.guild || !message.member)
-    return error('This command has to be run in a guild', description.name, message);
+    return error('This command has to be run in a guild', message);
 
   if (!args || args[0] === undefined)
-    return error('You have to provide a prefix', description.name, message);
+    return error('You have to provide a prefix', message);
 
-  if (!message.member.permissions.has('MANAGE_GUILD'))
-    return error('You must have permission to manage the server to do that', description.name, message);
+  if (!message.member.permissions.has('ManageGuild'))
+    return error('You must have permission to manage the server to do that', message);
 
   const prefix = args.join(' ');
 
