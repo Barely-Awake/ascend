@@ -46,10 +46,7 @@ export default async function (message: Message, _: string[]) {
     .addField('Instance Host', applicationOwner)
     .addField('Server Count', String(message.client.guilds.cache.size))
     .addField('User Count', String(message.client.users.cache.size))
-    .addField('Discord.js Version', version)
-    .setFooter({
-      text: 'Made with love & discord.js',
-    });
+    .addField('Discord.js Version', version);
 
   message.channel.send({
     content: `Join ${config.botName}'s support server for information on changes to the bot and beta access! ` +
