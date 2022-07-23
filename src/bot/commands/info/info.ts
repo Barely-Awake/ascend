@@ -33,7 +33,7 @@ export default async function (message: Message, _: string[]) {
     .setDescription(`${config.botName} is an open source bot made by Barely Awake. ` +
       `The source code can be found at https://github.com/Barely-Awake/ascend. ` +
       `${config.botName} features a lot of useful moderation commands. Currently the direction is being an open ` +
-      `source replacement for almost every bot in your server. Right now it's still in early development so it isn't` +
+      `source replacement for almost every bot in your server. Right now it's still in early development so it isn't ` +
       `going to be that yet, but the dev team (jk, it's only 1 person) is working hard to reach that goal as soon as ` +
       `possible.`,
     )
