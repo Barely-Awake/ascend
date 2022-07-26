@@ -22,3 +22,7 @@ export async function getPlayerNames(playerUuid: string) {
     return null;
   }
 }
+
+export function getPlayerSkin(playerUuid: string) {
+  return `https://visage.surgeplay.com/full/4096/${playerUuid}?tilt=0`;
+}
