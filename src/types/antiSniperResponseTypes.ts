@@ -1,3 +1,19 @@
+export interface FindNickEndPoint {
+  success: boolean;
+  player?: FindNickPlayer;
+  data?: null;
+  cause?: string;
+}
+
+interface FindNickPlayer {
+  uuid: string;
+  dashed_uuid: string;
+  nick_uuid: string;
+  dashed_nick_uuid: string;
+  date: number;
+  nick: string;
+}
+
 export interface DenickEndPoint {
   success: boolean;
   player?: DenickPlayer;
@@ -5,14 +21,8 @@ export interface DenickEndPoint {
   cause?: string;
 }
 
-interface DenickPlayer {
-  uuid: string;
-  dashed_uuid: string;
-  nick_uuid: string;
-  dashed_nick_uuid: string;
-  date: number;
+interface DenickPlayer extends FindNickPlayer {
   ign: string;
-  nick: string;
 }
 
 export interface WinStreakEndPoint {
