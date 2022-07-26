@@ -65,6 +65,13 @@ export default async function (message: Message, _: string[]) {
       components: [actionRow],
     });
   });
+
+  interactionCollector.on('end', () => {
+    sentMessage.edit({
+      embeds: sentMessage.embeds,
+      components: [],
+    });
+  });
 }
 
 function makeCategoryEmbeds() {
