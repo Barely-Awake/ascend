@@ -12,7 +12,7 @@ export function readConfig(): Config {
     supportServerId: process.env['SUPPORT_SERVER_ID'],
 
     hypixelApiKey: process.env['HYPIXEL_API_KEY'],
-    keathizApiKey: process.env['KEATHIZ_API_KEY'],
+    antiSniperApiKey: process.env['ANTI_SNIPER_API_KEY'],
 
     mongoUrl: process.env['MONGO_URL'],
   };
@@ -29,7 +29,7 @@ interface Config {
   supportServerId: string;
 
   hypixelApiKey: string;
-  keathizApiKey: string;
+  antiSniperApiKey: string;
 
   mongoUrl: string;
 }

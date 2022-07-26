@@ -37,10 +37,10 @@ export default async function (message: Message, args: string[]) {
 
   winStreakApiOn = playerStats.bedWars.winStreakApiOn();
   if (!winStreakApiOn) {
-    const keathizWinStreakData = await getWinStreakEstimates(player);
+    const antiSniperWinStreakData = await getWinStreakEstimates(player);
 
-    if (keathizWinStreakData !== null)
-      playerStats.bedWars.winStreak = keathizWinStreakData;
+    if (antiSniperWinStreakData !== null)
+      playerStats.bedWars.winStreak = antiSniperWinStreakData;
   }
 
   const canvas = await drawCanvas(playerStats);
