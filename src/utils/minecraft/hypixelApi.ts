@@ -1,10 +1,26 @@
 import fetch from 'node-fetch';
-import hypixelResponseTypes, { Player } from '../../types/hypixelResponseTypes.js';
 import { WinStreakEndPoint } from '../../types/antiSniperResponseTypes.js';
+import hypixelResponseTypes, { Player } from '../../types/hypixelResponseTypes.js';
 import playerStatsTypes from '../../types/playerStatsTypes.js';
 import config from '../misc/readConfig.js';
 
 export async function getPlayerStats(playerUuid: string) {
+  const hypixelData = await getHypixelData(playerUuid);
+  if (hypixelData === null)
+    return null;
+
+  const playerStats = formatPlayerStats(hypixelData);
+  if (!playerStats.bedWars.winStreakApiOn()) {
+    const antiSniperWinStreakData = await getWinStreakEstimates(playerUuid);
+
+    if (antiSniperWinStreakData !== null)
+      playerStats.bedWars.winStreak = antiSniperWinStreakData;
+  }
+
+  return playerStats;
+}
+
+export async function getHypixelData(playerUuid: string) {
   let data: hypixelResponseTypes;
   try {
     const response = await fetch(`https://api.hypixel.net/player?uuid=${playerUuid}&key=${config.hypixelApiKey}`);
