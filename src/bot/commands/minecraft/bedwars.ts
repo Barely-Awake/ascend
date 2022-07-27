@@ -6,13 +6,7 @@ import drawRoundedRectangle from '../../../utils/canvas/drawRoundedRectangle.js'
 import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
-import {
-  calculateBedWarsLevel,
-  formatPlayerStats,
-  getFormattedLevel,
-  getPlayerStats,
-  getWinStreakEstimates,
-} from '../../../utils/minecraft/hypixelApi.js';
+import { calculateBedWarsLevel, getFormattedLevel, getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import { DescriptionTypes } from '../_example.js';
 
 const {createCanvas, loadImage} = pkg;
@@ -28,31 +22,21 @@ export default async function (message: Message, args: string[]) {
 
   const player = mojangData.uuid;
 
-  const hypixelApiResponse = await getPlayerStats(player);
+  const playerStats = await getPlayerStats(player);
 
-  if (hypixelApiResponse === null)
-    return error('Couldn\'t retrieve player\'s Hypixel stats', message);
+  if (playerStats === null)
+    return message.reply('Couldn\'t get player stats from Hypixel\'s API');
 
-  const playerStats = formatPlayerStats(hypixelApiResponse);
+  const canvas = await drawBedWarsCanvas(playerStats);
 
-  winStreakApiOn = playerStats.bedWars.winStreakApiOn();
-  if (!winStreakApiOn) {
-    const antiSniperWinStreakData = await getWinStreakEstimates(player);
-
-    if (antiSniperWinStreakData !== null)
-      playerStats.bedWars.winStreak = antiSniperWinStreakData;
-  }
-
-  const canvas = await drawCanvas(playerStats);
-
-  message.channel.send({
+  await message.reply({
     files: [
       {attachment: canvas, name: `${playerStats.displayName}-top (i'm a top :weary:).png`},
     ],
   });
 }
 
-async function drawCanvas(playerStats: playerStatsTypes) {
+export async function drawBedWarsCanvas(playerStats: playerStatsTypes) {
   const canvas = createCanvas(870, 675);
   const ctx = canvas.getContext('2d');
 
@@ -213,14 +197,18 @@ async function drawPlayerProfile(ctx: CanvasRenderingContext2D, canvas: Canvas, 
   );
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '40px Minecraft';
+  ctx.font = `${playerStats.nick ? 30 : 40}px Minecraft`;
   ctx.textAlign = 'center';
 
   // Draw the user's display name
   const bedWarsLevel = calculateBedWarsLevel(playerStats.bedWars.experience);
   const displayBedWarsLevel = getFormattedLevel(bedWarsLevel);
   const displayName = `${displayBedWarsLevel} §r${playerStats.rank}${playerStats.displayName}`.replace(/&/g, '§');
-  fillColoredText(displayName, ctx, 480, 75);
+  fillColoredText(displayName, ctx, 480, playerStats.nick ? 55 : 75);
+
+  if (playerStats.nick) {
+    fillColoredText(`§#999999Nick - §#EA4645${playerStats.nick}`, ctx, 480, 85);
+  }
 
   const playerHead = await loadImage(`https://crafatar.com/avatars/${playerStats.uuid}?overlay&size=80`);
 
