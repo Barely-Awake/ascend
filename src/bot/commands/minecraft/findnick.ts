@@ -1,12 +1,14 @@
-import { EmbedBuilder, Message } from 'discord.js';
+import { Message } from 'discord.js';
 import { FindNickEndPoint } from '../../../types/antiSniperResponseTypes.js';
 import { error } from '../../../utils/discord/responses.js';
-import { getPlayerSkin } from '../../../utils/minecraft/mojangApi.js';
+import { getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import makeWebRequest from '../../../utils/misc/makeWebRequest.js';
 import config from '../../../utils/misc/readConfig.js';
 import { DescriptionTypes } from '../_example.js';
+import { drawBedWarsCanvas } from './bedwars.js';
 
 export default async function (message: Message, args: string[]) {
+  message.channel.sendTyping();
   if (!args[0])
     return error('You must provide a player!', message);
 
@@ -20,15 +22,17 @@ export default async function (message: Message, args: string[]) {
   if (!antiSniperData.player || antiSniperData.data === null)
     return error('I couldn\'t find that player\'s nick', message);
 
-  return message.reply({
-    embeds: [
-      new EmbedBuilder()
-        .setTitle(`Find Nick`)
-        .setDescription(
-          `Nick: ${antiSniperData.player.nick}\n` +
-          `IGN: ${args[0]}\n` +
-          '*Embed is temporary, will be replaced with image soon*')
-        .setImage(getPlayerSkin(antiSniperData.player.uuid)),
+  const playerStats = await getPlayerStats(antiSniperData.player.uuid);
+  if (playerStats === null)
+    return message.reply('Couldn\'t get player stats from Hypixel\'s API');
+
+  playerStats.nick = antiSniperData.player.nick;
+
+  const canvas = await drawBedWarsCanvas(playerStats);
+
+  await message.reply({
+    files: [
+      {attachment: canvas, name: `${playerStats.displayName}.png`},
     ],
   });
 }
