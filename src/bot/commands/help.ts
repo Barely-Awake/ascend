@@ -11,7 +11,7 @@ import { categoryInfo } from '../../utils/discord/botData.js';
 import config from '../../utils/misc/readConfig.js';
 import { CommandInfo } from './_command.js';
 
-const commandsCache: { [index: string]: CommandInfo } = {};
+const commandCache: { [index: string]: CommandInfo } = {};
 
 cacheCommands()
   .then(makeCategoryEmbeds);
@@ -24,12 +24,12 @@ export default async function (message: Message, _: string[]) {
     .setDescription(`<> - Required Argument\n[] - Option Argument\n${config.prefix} - Bot Prefix`);
 
   const selectMenuOptions: SelectMenuComponentOptionData[] = [];
-  for (const category of Object.keys(categoryInfo)) {
+  for (const key of Object.keys(categoryInfo)) {
     baseEmbed.addFields([{
-      name: categoryInfo[category].label,
-      value: categoryInfo[category].description || '',
+      name: categoryInfo[key].label,
+      value: categoryInfo[key].description || '',
     }]);
-    const categoryDeepCopy = JSON.parse(JSON.stringify(categoryInfo[category]));
+    const categoryDeepCopy = JSON.parse(JSON.stringify(categoryInfo[key]));
     delete categoryDeepCopy.embed;
     selectMenuOptions.push(categoryDeepCopy);
   }
@@ -75,25 +75,24 @@ export default async function (message: Message, _: string[]) {
 }
 
 function makeCategoryEmbeds() {
-  for (const category of Object.keys(categoryInfo)) {
-    categoryInfo[category].embed = new EmbedBuilder()
+  for (const key of Object.keys(categoryInfo)) {
+    categoryInfo[key].embed = new EmbedBuilder()
       .setTitle(`${config.botName} Help`)
       .setDescription(`<> - Required Argument\n[] - Option Argument`);
 
-    for (const command in commandsCache) {
-      if (categoryInfo[category].value !== commandsCache[command].category)
+    for (const key of Object.keys(commandCache)) {
+      if (categoryInfo[key].value !== commandCache[key].category)
         continue;
 
-      categoryInfo[category].embed.addFields([{
-        name: `${commandsCache[command].name} ${commandsCache[command].usage}`,
-        value: commandsCache[command].description,
+      categoryInfo[key].embed.addFields([{
+        name: `${commandCache[key].name} ${commandCache[key].usage}`,
+        value: commandCache[key].description,
       }]);
     }
   }
 }
 
 async function cacheCommands() {
-
   const folders = await readdir('./dist/bot/commands');
 
   for (const folder of folders) {
@@ -106,7 +105,7 @@ async function cacheCommands() {
       if (!file.endsWith('.js'))
         continue;
       const commandData: CommandData = await import(`./${folder}/${file}`);
-      commandsCache[commandData.description.name] = commandData.description;
+      commandCache[commandData.commandInfo.name] = commandData.commandInfo;
     }
   }
 }
@@ -115,7 +114,7 @@ type CommandFunction = (message: Message, args: string[]) => void | Promise<void
 
 interface CommandData {
   default: CommandFunction;
-  description: CommandInfo;
+  commandInfo: CommandInfo;
 }
 
 export const commandInfo: CommandInfo = {

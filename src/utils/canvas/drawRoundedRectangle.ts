@@ -27,13 +27,13 @@ export default function drawRoundedRectangle(
   radius: radiusParamTypes | number = 5,
   fill = false,
   stroke = true,
-): void  {
+) {
   if (typeof radius === 'number') {
     radius = {tl: radius, tr: radius, br: radius, bl: radius};
   } else {
     const defaultRadius: { [index: string]: number | undefined } = {tl: 0, tr: 0, br: 0, bl: 0};
 
-    for (const side in defaultRadius) {
+    for (const side of Object.keys(defaultRadius)) {
       radius[side] = radius[side] || defaultRadius[side];
     }
   }

@@ -22,11 +22,11 @@ export default async function commandAdder(
 
     commandCollection.set(commandName, command.default);
     console.log(`Loaded command: ${commandName}`);
-    if (command.description.aliases === undefined)
+    if (command.commandInfo.aliases === undefined)
       continue;
 
-    for (const i in command.description.aliases) {
-      commandCollection.set(command.description.aliases[i], command.default);
+    for (const key of Object.keys(command.commandInfo.aliases)) {
+      commandCollection.set(command.commandInfo.aliases[key], command.default);
     }
   }
 }
