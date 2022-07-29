@@ -1,10 +1,27 @@
-export default interface keathizApiResponse {
+export interface DenickEndPoint {
   success: boolean;
-  player?: Player | null;
+  player?: DenickPlayer;
+  data?: null;
   cause?: string;
 }
 
-export interface Player {
+interface DenickPlayer {
+  uuid: string;
+  dashed_uuid: string;
+  nick_uuid: string;
+  dashed_nick_uuid: string;
+  date: number;
+  ign: string;
+  nick: string;
+}
+
+export interface WinStreakEndPoint {
+  success: boolean;
+  player?: WinStreakEstimatePlayer;
+  cause?: string;
+}
+
+interface WinStreakEstimatePlayer {
   uuid: string;
   ign: string;
   ign_lower: string;
@@ -13,7 +30,7 @@ export interface Player {
   data: Data;
 }
 
-export interface Data {
+interface Data {
   overall_winstreak: number;
   eight_one_winstreak: number;
   eight_two_winstreak: number;
