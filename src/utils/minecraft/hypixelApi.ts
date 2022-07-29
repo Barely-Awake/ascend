@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import hypixelResponseTypes, { Player } from '../../types/hypixelResponseTypes.js';
-import keathizApiResponse from '../../types/keathizResponseTypes.js';
+import { WinStreakEndPoint } from '../../types/antiSniperResponseTypes.js';
 import playerStatsTypes from '../../types/playerStatsTypes.js';
 import config from '../misc/readConfig.js';
 
@@ -23,13 +23,13 @@ export async function getPlayerStats(playerUuid: string) {
 export async function getWinStreakEstimates(playerUuid: string) {
   try {
     const response = await fetch(
-      `https://api.antisniper.net/winstreak?key=${config.keathizApiKey}&uuid=${playerUuid}`,
+      `https://api.antisniper.net/winstreak?key=${config.antiSniperApiKey}&uuid=${playerUuid}`,
     );
 
     if (!response.ok)
       return null;
 
-    const data: keathizApiResponse = await response.json();
+    const data: WinStreakEndPoint = await response.json();
 
     if (!data.success || data.player === undefined || data.player === null)
       return null;
