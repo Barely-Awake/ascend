@@ -1,12 +1,12 @@
-import pkg from 'canvas';
+import canvasPkg from 'canvas';
 import { ActivityType, Client, Collection, GatewayIntentBits, IntentsBitField } from 'discord.js';
-import mPkg from 'mongoose';
+import mongoosePkg from 'mongoose';
 import commandAdder from './bot/commandAdder.js';
 import eventHandler from './bot/eventHandler.js';
 import config from './utils/misc/readConfig.js';
 
-const {connect} = mPkg;
-const {registerFont} = pkg;
+const {connect} = mongoosePkg;
+const {registerFont} = canvasPkg;
 
 registerFont('assets/fonts/sonus-light.ttf', {family: 'Sonus'});
 registerFont('assets/fonts/sonus-bold.ttf', {family: 'Sonus Bold'});
@@ -44,7 +44,7 @@ const client = new Client({
 });
 client.commands = new Collection();
 
-export const mongo = connect(config.mongoUrl);
+export const mongoClient = connect(config.mongoUrl);
 
 commandAdder(client.commands);
 eventHandler(client);

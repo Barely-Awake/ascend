@@ -1,6 +1,6 @@
-import pkg from 'mongoose';
+import mongoosePkg from 'mongoose';
 
-const {model, Schema} = pkg;
+const {model, Schema} = mongoosePkg;
 
 interface IGuild {
   serverId: string;
