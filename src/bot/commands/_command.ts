@@ -1,17 +1,18 @@
+// Template command
 import { Message } from 'discord.js';
 
 export default function (message: Message, args: string[]) {
   return;
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: '_example',
   category: 'info',
   description: 'Example command',
   usage: '<Required Argument> [Optional Argument]',
 };
 
-export interface DescriptionTypes {
+export interface CommandInfo {
   name: string;
   category: 'config' | 'info' | 'moderation' | 'minecraft' | 'externalApis' | 'misc';
   aliases?: string[];
