@@ -2,7 +2,7 @@ import { Message } from 'discord.js';
 import { canModerateUser, checkPermissions } from '../../../utils/discord/misc.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   if (!message.guild || !message.member)
@@ -48,7 +48,7 @@ export default async function (message: Message, args: string[]) {
   );
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'kick',
   category: 'moderation',
   description: 'Kick the target user',

@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   if (!message.guild)
@@ -28,7 +28,7 @@ export default async function (message: Message, args: string[]) {
   );
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'unban',
   category: 'moderation',
   description: 'Unbans the target user',

@@ -9,9 +9,9 @@ import {
 import { readdir } from 'fs/promises';
 import { categoryInfo } from '../../utils/discord/botData.js';
 import config from '../../utils/misc/readConfig.js';
-import { DescriptionTypes } from './_example.js';
+import { CommandInfo } from './_command.js';
 
-const commandsCache: { [index: string]: DescriptionTypes } = {};
+const commandsCache: { [index: string]: CommandInfo } = {};
 
 cacheCommands()
   .then(makeCategoryEmbeds);
@@ -115,10 +115,10 @@ type CommandFunction = (message: Message, args: string[]) => void | Promise<void
 
 interface CommandData {
   default: CommandFunction;
-  description: DescriptionTypes;
+  description: CommandInfo;
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'help',
   category: 'info',
   description: 'Shows help message.',

@@ -4,7 +4,7 @@ import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   let user = await resolveUser(message, args[0]);
@@ -47,7 +47,7 @@ export default async function (message: Message, args: string[]) {
   message.channel.send({embeds: [embed]});
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'userinfo',
   category: 'misc',
   description: 'Provides information on the given user.',

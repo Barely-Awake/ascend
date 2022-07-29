@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import Player from '../../../mongo/player.js';
 import { error } from '../../../utils/discord/responses.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, _: string[]) {
   const linkedAccountData = await Player.find({discordId: message.author.id});
@@ -19,7 +19,7 @@ export default async function (message: Message, _: string[]) {
   return message.channel.send(`Successfully unlinked your discord account from \`${names.join(' & ') || 'Unknown'}\``);
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'unlink',
   category: 'minecraft',
   description: 'Unlinks your discord account from your minecraft account',

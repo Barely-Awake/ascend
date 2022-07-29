@@ -3,7 +3,7 @@ import GuildData from '../../../mongo/guildData.js';
 import { error } from '../../../utils/discord/responses.js';
 import config from '../../../utils/misc/readConfig.js';
 import { prefixCache } from '../../events/messageCreate.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   if (!message.guild || !message.member)
@@ -31,7 +31,7 @@ export default async function (message: Message, args: string[]) {
   message.channel.send(`Successfully set prefix to ${prefix}`);
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'setprefix',
   category: 'config',
   description: 'Sets prefix in current guild',

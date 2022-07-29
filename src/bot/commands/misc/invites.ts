@@ -2,7 +2,7 @@ import { EmbedBuilder, Invite, Message } from 'discord.js';
 import { botColors } from '../../../utils/discord/botData.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
@@ -51,7 +51,7 @@ export default async function (message: Message, args: string[]) {
   message.channel.send({embeds: [embed]});
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'invites',
   category: 'misc',
   description: 'Checks the invite information of a user',

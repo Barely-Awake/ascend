@@ -4,7 +4,7 @@ import { error } from '../../../utils/discord/responses.js';
 import { getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import makeWebRequest from '../../../utils/misc/makeWebRequest.js';
 import config from '../../../utils/misc/readConfig.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 import { drawBedWarsCanvas } from './bedwars.js';
 
 export default async function (message: Message, args: string[]) {
@@ -37,7 +37,7 @@ export default async function (message: Message, args: string[]) {
   });
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'denick',
   category: 'minecraft',
   description: 'Uses antisniper API to denick a player',

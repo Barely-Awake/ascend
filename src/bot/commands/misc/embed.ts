@@ -1,6 +1,6 @@
 import { EmbedBuilder, Message } from 'discord.js';
 import { error } from '../../../utils/discord/responses.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   await message.delete();
@@ -43,7 +43,7 @@ export default async function (message: Message, args: string[]) {
     responseMessage.crosspost();
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'embed',
   category: 'misc',
   description: 'Sends a simple embed to the current channel. \`text\` should be formatted with | separating the ' +

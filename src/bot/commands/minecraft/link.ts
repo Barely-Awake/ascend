@@ -3,7 +3,7 @@ import Player from '../../../mongo/player.js';
 import { error } from '../../../utils/discord/responses.js';
 import { getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import { getPlayerNames, getPlayerUuid } from '../../../utils/minecraft/mojangApi.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   const existingDiscordData = await Player.find({discordId: message.author.id});
@@ -68,7 +68,7 @@ export default async function (message: Message, args: string[]) {
   return message.channel.send(`Successfully linked \`${message.author.tag}\` to \`${mojangData.name}\``);
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'link',
   category: 'minecraft',
   description: 'Links your discord account to your minecraft account. Allows you to use stat checking commands ' +

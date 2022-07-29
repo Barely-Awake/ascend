@@ -2,7 +2,7 @@
 
 import { EmbedBuilder, Message } from 'discord.js';
 import config from '../../../utils/misc/readConfig.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default function (message: Message, _: string[]) {
   const embed = new EmbedBuilder()
@@ -12,7 +12,7 @@ export default function (message: Message, _: string[]) {
   message.channel.send({embeds: [embed]});
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'invite',
   category: 'info',
   aliases: ['botinvite'],

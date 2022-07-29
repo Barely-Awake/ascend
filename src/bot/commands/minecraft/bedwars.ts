@@ -1,4 +1,4 @@
-import pkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
+import canvasPkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
 import { Message } from 'discord.js';
 import playerStatsTypes from '../../../types/playerStatsTypes.js';
 import convertMode from '../../../utils/canvas/convertMode.js';
@@ -7,9 +7,9 @@ import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import { calculateBedWarsLevel, getFormattedLevel, getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
-const {createCanvas, loadImage} = pkg;
+const {createCanvas, loadImage} = canvasPkg;
 
 let winStreakApiOn: boolean;
 
@@ -222,7 +222,7 @@ async function drawPlayerProfile(ctx: CanvasRenderingContext2D, canvas: Canvas, 
   ctx.restore();
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'bedwars',
   category: 'minecraft',
   aliases: ['bw'],

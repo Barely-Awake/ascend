@@ -3,7 +3,7 @@ import GuildData from '../../../mongo/guildData.js';
 import { resolveRole } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import config from '../../../utils/misc/readConfig.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   if (!message.member?.permissions.has('ManageGuild'))
@@ -90,7 +90,7 @@ async function createMuteRole(message: Message) {
   return muteRole;
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'muterole',
   category: 'config',
   description: 'Lets you set a custom mute role or makes one for you.',

@@ -4,7 +4,7 @@ import { botColors } from '../../../utils/discord/botData.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { error } from '../../../utils/discord/responses.js';
 import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   const query = args.join(' ');
@@ -85,7 +85,7 @@ export default async function (message: Message, args: string[]) {
   message.channel.send({embeds: [embed]});
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'npm',
   category: 'externalApis',
   description: 'Fetches information about an npm package',

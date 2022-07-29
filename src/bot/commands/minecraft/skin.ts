@@ -2,7 +2,7 @@ import { EmbedBuilder, Message } from 'discord.js';
 import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import { getPlayerNames, getPlayerSkin } from '../../../utils/minecraft/mojangApi.js';
-import { DescriptionTypes } from '../_example.js';
+import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
   message.channel.sendTyping();
@@ -32,7 +32,7 @@ export default async function (message: Message, args: string[]) {
   message.channel.send({embeds: [embed]});
 }
 
-export const description: DescriptionTypes = {
+export const commandInfo: CommandInfo = {
   name: 'skin',
   category: 'minecraft',
   description: 'Shows a player\'s minecraft skin.',
