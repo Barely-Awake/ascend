@@ -2,8 +2,9 @@ import { Message } from 'discord.js';
 import GuildData from '../../mongo/guildData.js';
 import { error } from '../../utils/discord/responses.js';
 import config from '../../utils/misc/readConfig.js';
+import { Settings } from './_event.js';
 
-export default function (message: Message): void {
+export default function (message: Message) {
   commandHandler(message);
 }
 
@@ -71,7 +72,8 @@ async function fetchMongoData(message: Message) {
   return fetchedData[0].prefix;
 }
 
-export const settings = {
+export { prefixCache };
+
+export const settings: Settings = {
   once: false,
 };
-export { prefixCache };
