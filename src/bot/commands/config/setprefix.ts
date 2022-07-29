@@ -12,7 +12,7 @@ export default async function (message: Message, args: string[]) {
   if (!args || args[0] === undefined)
     return error('You have to provide a prefix', description.name, message);
 
-  if (!message.member.permissions.has('MANAGE_GUILD'))
+  if (!message.member.permissions.has('ManageGuild'))
     return error('You must have permission to manage the server to do that', description.name, message);
 
   const prefix = args.join(' ');

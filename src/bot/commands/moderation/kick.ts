@@ -1,14 +1,17 @@
 import { Message } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import error from '../../responses/error.js';
-import config from '../../../utils/misc/readConfig.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
+import config from '../../../utils/misc/readConfig.js';
+import error from '../../responses/error.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
-  if (!message?.member?.permissions.has('KICK_MEMBERS'))
+  if (!message.guild)
+    return error('This command must be run in a guild', description.name, message);
+
+  if (!message?.member?.permissions.has('KickMembers'))
     return error('You can\'t kick users', description.name, message);
 
-  if (!message.guild?.me?.permissions.has('KICK_MEMBERS'))
+  if (!message.guild.members.me?.permissions.has('KickMembers'))
     return error(`${config.botName} doesn't have permission to kick members ` +
       `(*It's recommended to give ${config.botName} admin permissions*)`, description.name, message);
 

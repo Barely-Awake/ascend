@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 import { Message } from 'discord.js';
 import { DescriptionTypes } from '../_example.js';
 

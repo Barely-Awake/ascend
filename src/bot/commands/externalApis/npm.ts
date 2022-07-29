@@ -1,10 +1,10 @@
-import { Message, MessageEmbed } from 'discord.js';
-import { DescriptionTypes } from '../_example.js';
-import error from '../../responses/error.js';
+import { EmbedBuilder, Message } from 'discord.js';
 import fetch from 'node-fetch';
-import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
-import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
 import { botColors } from '../../../utils/discord/botData.js';
+import messageTimeStamp from '../../../utils/discord/messageTimeStamp.js';
+import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
+import error from '../../responses/error.js';
+import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
   const query = args.join(' ');
@@ -42,26 +42,45 @@ export default async function (message: Message, args: string[]) {
 
   repositoryUrl = repositoryUrl.replace('.git', '');
 
-  const embed = new MessageEmbed()
+  const embed = new EmbedBuilder()
     .setColor(botColors[1])
     .setTitle(`Information on \`${body.name}\``)
     .setURL(`https://www.npmjs.com/package/${body.name}`)
     .setDescription(body.description !== undefined ? String(body.description) : '')
-    .addField('Version', body['dist-tags']?.latest || 'Unknown', false)
-    .addField('License', body.license || 'Unknown', false)
-    .addField('Author', body.author ? body.author.name : 'Unknown', false)
-    .addField('Created',
-      `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`
-      , false)
-    .addField('Last Modified', body.time.modified ?
-        `${messageTimeStamp(timeModified)} (${messageTimeStamp(timeModified, 'R')})` :
-        `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`
-      , false)
-    .addField('Repository', repositoryUrl !== 'Unknown' ?
-        `[Click!](${repositoryUrl})` :
-        'Unknown',
-      false)
-    .addField('Maintainers', body.maintainers?.map((user: { name: string }) => user.name).join(', ') || 'Unknown');
+    .addFields([
+      {
+        name: 'Version',
+        value: body['dist-tags']?.latest || 'Unknown',
+      },
+      {
+        name: 'License',
+        value: body.license || 'Unknown',
+      },
+      {
+        name: 'Author',
+        value: body.author ? body.author.name : 'Unknown',
+      },
+      {
+        name: 'Created',
+        value: `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`,
+      },
+      {
+        name: 'Last Modified',
+        value: body.time.modified ?
+          `${messageTimeStamp(timeModified)} (${messageTimeStamp(timeModified, 'R')})` :
+          `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`,
+      },
+      {
+        name: 'Repository',
+        value: repositoryUrl !== 'Unknown' ?
+          `[Click!](${repositoryUrl})` :
+          'Unknown',
+      },
+      {
+        name: 'Maintainers',
+        value: body.maintainers?.map((user: { name: string }) => user.name).join(', ') || 'Unknown',
+      },
+    ]);
 
   message.channel.send({embeds: [embed]});
 }
