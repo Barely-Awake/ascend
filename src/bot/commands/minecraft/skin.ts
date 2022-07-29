@@ -1,7 +1,7 @@
 import { EmbedBuilder, Message } from 'discord.js';
 import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
-import { getPlayerNames } from '../../../utils/minecraft/mojangApi.js';
+import { getPlayerNames, getPlayerSkin } from '../../../utils/minecraft/mojangApi.js';
 import { DescriptionTypes } from '../_example.js';
 
 export default async function (message: Message, args: string[]) {
@@ -20,14 +20,14 @@ export default async function (message: Message, args: string[]) {
     mojangData.name = data[data.length - 1].name;
   }
 
-  const visageUrl = `https://visage.surgeplay.com/full/4096/${mojangData.uuid}?tilt=0`;
+  const skinUrl = getPlayerSkin(mojangData.uuid);
 
   const embed = new EmbedBuilder()
     .setTitle(`${mojangData.name}'s skin`)
-    .setDescription(`[Use this skin](https://www.minecraft.net/en-us/profile/skin/remote?url=${visageUrl})\n` +
+    .setDescription(`[Use this skin](https://www.minecraft.net/en-us/profile/skin/remote?url=${skinUrl})\n` +
       `[Player's NameMC](https://namemc.com/profile/${mojangData.name})`)
     .setThumbnail(`https://crafatar.com/avatars/${mojangData.uuid}?overlay`)
-    .setImage(visageUrl);
+    .setImage(skinUrl);
 
   message.channel.send({embeds: [embed]});
 }
