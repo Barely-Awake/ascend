@@ -2,7 +2,6 @@ import { Message } from 'discord.js';
 import GuildData from '../../../mongo/guildData.js';
 import { error } from '../../../utils/discord/responses.js';
 import config from '../../../utils/misc/readConfig.js';
-import { prefixCache } from '../../events/messageCreate.js';
 import { CommandInfo } from '../_command.js';
 
 export default async function (message: Message, args: string[]) {
@@ -27,7 +26,7 @@ export default async function (message: Message, args: string[]) {
 
   guildInfo.prefix = prefix;
   guildInfo.save();
-  prefixCache[message.guild.id] = prefix;
+  message.client.cache.prefixes[message.guild.id] = prefix;
   message.channel.send(`Successfully set prefix to ${prefix}`);
 }
 

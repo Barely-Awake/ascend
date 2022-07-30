@@ -7,11 +7,11 @@ import {
   SelectMenuComponentOptionData,
 } from 'discord.js';
 import { readdir } from 'fs/promises';
+import { client } from '../../index.js';
+import { CommandFunction } from '../../types/discord.js';
 import { categoryInfo } from '../../utils/discord/botData.js';
 import config from '../../utils/misc/readConfig.js';
 import { CommandInfo } from './_command.js';
-
-const commandCache: { [index: string]: CommandInfo } = {};
 
 cacheCommands()
   .then(makeCategoryEmbeds);
@@ -74,24 +74,6 @@ export default async function (message: Message, _: string[]) {
   });
 }
 
-function makeCategoryEmbeds() {
-  for (const key of Object.keys(categoryInfo)) {
-    categoryInfo[key].embed = new EmbedBuilder()
-      .setTitle(`${config.botName} Help`)
-      .setDescription(`<> - Required Argument\n[] - Option Argument`);
-
-    for (const command of Object.keys(commandCache)) {
-      if (categoryInfo[key].value !== commandCache[command].category)
-        continue;
-
-      categoryInfo[key].embed.addFields([{
-        name: `${commandCache[command].name} ${commandCache[command].usage}`,
-        value: commandCache[command].description,
-      }]);
-    }
-  }
-}
-
 async function cacheCommands() {
   const folders = await readdir('./dist/bot/commands');
 
@@ -105,12 +87,28 @@ async function cacheCommands() {
       if (!file.endsWith('.js'))
         continue;
       const commandData: CommandData = await import(`./${folder}/${file}`);
-      commandCache[commandData.commandInfo.name] = commandData.commandInfo;
+      client.cache.commandInfo[commandData.commandInfo.name] = commandData.commandInfo;
     }
   }
 }
 
-type CommandFunction = (message: Message, args: string[]) => void | Promise<void>
+function makeCategoryEmbeds() {
+  for (const key of Object.keys(categoryInfo)) {
+    categoryInfo[key].embed = new EmbedBuilder()
+      .setTitle(`${config.botName} Help`)
+      .setDescription(`<> - Required Argument\n[] - Option Argument`);
+
+    for (const command of Object.keys(client.cache.commandInfo)) {
+      if (categoryInfo[key].value !== client.cache.commandInfo[command].category)
+        continue;
+
+      categoryInfo[key].embed.addFields([{
+        name: `${client.cache.commandInfo[command].name} ${client.cache.commandInfo[command].usage}`,
+        value: client.cache.commandInfo[command].description,
+      }]);
+    }
+  }
+}
 
 interface CommandData {
   default: CommandFunction;

@@ -8,8 +8,6 @@ export default function (message: Message) {
   commandHandler(message);
 }
 
-const prefixCache: { [index: string]: string } = {};
-
 async function commandHandler(message: Message) {
   const prefixUsed = await fetchPrefix(message);
 
@@ -45,12 +43,12 @@ async function fetchPrefix(message: Message) {
   let prefixUsed: string = config.prefix;
 
   if (message.guild) {
-    if (prefixCache[message.guild.id] !== undefined) {
-      prefixUsed = prefixCache[message.guild.id];
+    if (message.client.cache.prefixes[message.guild.id] !== undefined) {
+      prefixUsed = message.client.cache.prefixes[message.guild.id];
     } else {
       prefixUsed = await fetchMongoData(message);
 
-      prefixCache[message.guild.id] = prefixUsed;
+      message.client.cache.prefixes[message.guild.id] = prefixUsed;
     }
   } else if (message.content.startsWith(`${botMention} `)) {
     prefixUsed = `${botMention} `;
@@ -71,8 +69,6 @@ async function fetchMongoData(message: Message) {
 
   return fetchedData[0].prefix;
 }
-
-export { prefixCache };
 
 export const settings: Settings = {
   once: false,
