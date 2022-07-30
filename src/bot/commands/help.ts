@@ -80,13 +80,13 @@ function makeCategoryEmbeds() {
       .setTitle(`${config.botName} Help`)
       .setDescription(`<> - Required Argument\n[] - Option Argument`);
 
-    for (const key of Object.keys(commandCache)) {
-      if (categoryInfo[key].value !== commandCache[key].category)
+    for (const command of Object.keys(commandCache)) {
+      if (categoryInfo[key].value !== commandCache[command].category)
         continue;
 
       categoryInfo[key].embed.addFields([{
-        name: `${commandCache[key].name} ${commandCache[key].usage}`,
-        value: commandCache[key].description,
+        name: `${commandCache[command].name} ${commandCache[command].usage}`,
+        value: commandCache[command].description,
       }]);
     }
   }
