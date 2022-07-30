@@ -30,7 +30,7 @@ const intents = new IntentsBitField().add([
   GatewayIntentBits.MessageContent,
 ]);
 
-const client = new Client({
+export const client = new Client({
   intents: intents,
   presence: {
     status: 'idle',
@@ -43,6 +43,10 @@ const client = new Client({
   },
 });
 client.commands = new Collection();
+client.cache = {
+  commandInfo: {},
+  prefixes: {},
+};
 
 export const mongoClient = connect(config.mongoUrl);
 
