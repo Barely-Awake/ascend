@@ -41,6 +41,10 @@ const client = new Client({
       },
     ],
   },
+  failIfNotExists: false,
+  allowedMentions: {
+    repliedUser: false,
+  },
 });
 client.commands = new Collection();
 client.cache = {
