@@ -24,6 +24,6 @@ export default class _Example implements CommandClass {
   }
 
   command(message: Message, args: string[]) {
-    return;
+    return [message, args];
   }
 }
