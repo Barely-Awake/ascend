@@ -6,8 +6,7 @@ import {
   SelectMenuBuilder,
   SelectMenuComponentOptionData,
 } from 'discord.js';
-import { client } from '../../index.js';
-import { CommandCategory } from '../../types/discord.js';
+import { CommandCategory, CommandCollection } from '../../types/discord.js';
 import { categoryInfo } from '../../utils/discord/botData.js';
 import config from '../../utils/misc/readConfig.js';
 
@@ -91,13 +90,13 @@ export default class Help {
   }
 }
 
-export function makeHelpEmbeds() {
+export function makeHelpEmbeds(commands: CommandCollection) {
   for (const key of Object.keys(categoryInfo)) {
     categoryInfo[key].embed = new EmbedBuilder()
       .setTitle(`${config.botName} Help`)
       .setDescription(`<> - Required Argument\n[] - Option Argument`);
 
-    client.commands.forEach((commandClass, commandName) => {
+    commands.forEach((commandClass, commandName) => {
       if (categoryInfo[key].value !== commandClass.category)
         return;
 

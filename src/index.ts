@@ -30,7 +30,7 @@ const intents = new IntentsBitField().add([
   GatewayIntentBits.MessageContent,
 ]);
 
-export const client = new Client({
+const client = new Client({
   intents: intents,
   presence: {
     status: 'idle',
@@ -50,7 +50,7 @@ client.cache = {
 export const mongoClient = connect(config.mongoUrl);
 
 commandAdder(client.commands)
-  .then(makeHelpEmbeds);
+  .then(() => makeHelpEmbeds(client.commands));
 eventHandler(client);
 
 client.login(config.betaMode ? config.betaToken : config.token);
