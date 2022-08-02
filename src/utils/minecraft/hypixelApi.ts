@@ -68,7 +68,7 @@ export async function getWinStreakEstimates(playerUuid: string) {
 export function calculateBedWarsLevel(experience: number): number {
   let level = Math.floor(experience / 487000) * 100;
 
-  experience = experience % 487000;
+  experience %= 487000;
 
   if (experience < 500)
     return level + experience / 500;

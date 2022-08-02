@@ -12,7 +12,7 @@ export default function (text: string, ctx: CanvasRenderingContext2D, textPosX: 
   ctx.textAlign = 'left';
   if (textAlign === 'center') {
     const textWidth = ctx.measureText(removeColorCodes(text)).width;
-    textPosX = textPosX - textWidth / 2;
+    textPosX -= textWidth / 2;
   }
 
   let textCompleted = ''; // The text that has been filled so far
