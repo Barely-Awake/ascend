@@ -2,6 +2,7 @@ import canvasPkg from 'canvas';
 import { ActivityType, Client, Collection, GatewayIntentBits, IntentsBitField } from 'discord.js';
 import mongoosePkg from 'mongoose';
 import commandAdder from './bot/commandAdder.js';
+import { makeHelpEmbeds } from './bot/commands/help.js';
 import eventHandler from './bot/eventHandler.js';
 import config from './utils/misc/readConfig.js';
 
@@ -44,13 +45,13 @@ export const client = new Client({
 });
 client.commands = new Collection();
 client.cache = {
-  commandInfo: {},
   prefixes: {},
 };
 
 export const mongoClient = connect(config.mongoUrl);
 
-commandAdder(client.commands);
+commandAdder(client.commands)
+  .then(makeHelpEmbeds);
 eventHandler(client);
 
 client.login(config.betaMode ? config.betaToken : config.token);
