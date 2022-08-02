@@ -1,9 +1,8 @@
 import canvasPkg from 'canvas';
 import { ActivityType, Client, Collection, GatewayIntentBits, IntentsBitField } from 'discord.js';
 import mongoosePkg from 'mongoose';
-import commandAdder from './bot/commandAdder.js';
 import { makeHelpEmbeds } from './bot/commands/help.js';
-import eventHandler from './bot/eventHandler.js';
+import { commandAdder, eventHandler } from './bot/startUp.js';
 import config from './utils/misc/readConfig.js';
 
 const {connect} = mongoosePkg;
