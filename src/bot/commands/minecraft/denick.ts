@@ -1,45 +1,60 @@
 import { Message } from 'discord.js';
 import { DenickEndPoint } from '../../../types/antiSniperResponseTypes.js';
+import { CommandCategory } from '../../../types/discord.js';
 import { error } from '../../../utils/discord/responses.js';
 import { getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import makeWebRequest from '../../../utils/misc/makeWebRequest.js';
 import config from '../../../utils/misc/readConfig.js';
-import { CommandInfo } from '../_command.js';
 import { drawBedWarsCanvas } from './bedwars.js';
 
-export default async function (message: Message, args: string[]) {
-  message.channel.sendTyping();
-  if (!args[0])
-    return error('You must provide a nick!', message);
+export default class Denick {
+  public name: string;
+  public category: CommandCategory;
+  public aliases: string[] | null;
+  public description: string;
+  public usage: string;
 
-  const antiSniperData: DenickEndPoint = await makeWebRequest(
-    `https://api.antisniper.net/denick?key=${config.antiSniperApiKey}&nick=${args[0]}`,
-  );
+  constructor(
+    name = 'denick',
+    category: CommandCategory = 'minecraft',
+    aliases: string[] | null = null,
+    description = 'Uses antisniper API to denick a player',
+    usage = '<nick>',
+  ) {
+    this.name = name;
+    this.category = category;
+    this.aliases = aliases;
+    this.description = description;
+    this.usage = usage;
+  }
 
-  if (antiSniperData === null || !antiSniperData.success)
-    return error('Failed to reach antisniper API.', message);
+  async command(message: Message, args: string[]) {
+    message.channel.sendTyping();
+    if (!args[0])
+      return error('You must provide a nick!', message);
 
-  if (!antiSniperData.player || antiSniperData.data === null)
-    return error('Player is not denickable, did you mean to use find nick?', message);
+    const antiSniperData: DenickEndPoint = await makeWebRequest(
+      `https://api.antisniper.net/denick?key=${config.antiSniperApiKey}&nick=${args[0]}`,
+    );
 
-  const playerStats = await getPlayerStats(antiSniperData.player.uuid);
-  if (playerStats === null)
-    return message.reply('Couldn\'t get player stats from Hypixel\'s API');
+    if (antiSniperData === null || !antiSniperData.success)
+      return error('Failed to reach antisniper API.', message);
 
-  playerStats.nick = antiSniperData.player.nick;
+    if (!antiSniperData.player || antiSniperData.data === null)
+      return error('Player is not denickable, did you mean to use find nick?', message);
 
-  const canvas = await drawBedWarsCanvas(playerStats);
+    const playerStats = await getPlayerStats(antiSniperData.player.uuid);
+    if (playerStats === null)
+      return message.reply('Couldn\'t get player stats from Hypixel\'s API');
 
-  await message.reply({
-    files: [
-      {attachment: canvas, name: `${playerStats.displayName}-top (i'm a top :weary:).png`},
-    ],
-  });
+    playerStats.nick = antiSniperData.player.nick;
+
+    const canvas = await drawBedWarsCanvas(playerStats);
+
+    await message.reply({
+      files: [
+        {attachment: canvas, name: `${playerStats.displayName}-top (i'm a top :weary:).png`},
+      ],
+    });
+  }
 }
-
-export const commandInfo: CommandInfo = {
-  name: 'denick',
-  category: 'minecraft',
-  description: 'Uses antisniper API to denick a player',
-  usage: '<nick>',
-};

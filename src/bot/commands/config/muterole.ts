@@ -1,43 +1,65 @@
 import { Message, Role } from 'discord.js';
 import GuildData from '../../../mongo/guildData.js';
+import { CommandCategory } from '../../../types/discord.js';
 import { resolveRole } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import config from '../../../utils/misc/readConfig.js';
-import { CommandInfo } from '../_command.js';
 
-export default async function (message: Message, args: string[]) {
-  if (!message.member?.permissions.has('ManageGuild'))
-    return error('You must have permission to manage the server to do that', message);
+export default class MuteRole {
+  public name: string;
+  public category: CommandCategory;
+  public aliases: string[] | null;
+  public description: string;
+  public usage: string;
 
-  let muteRole: Role;
-  if (args[0] === 'make') {
-    const role = await createMuteRole(message);
-    if (!role)
-      return;
-    muteRole = role;
-  } else if (args[0] === 'set') {
-    const role = await resolveRole(message, args[1]);
-
-    if (!role)
-      return error('Please provide a role', message);
-
-    muteRole = role;
-  } else {
-    return error('Please provide valid arguments', message);
+  constructor(
+    name = 'muterole',
+    category: CommandCategory = 'config',
+    aliases: string[] | null = null,
+    description = 'Lets you set a custom mute role or makes one for you.',
+    usage = '<set|make> [role]',
+  ) {
+    this.name = name;
+    this.category = category;
+    this.aliases = aliases;
+    this.description = description;
+    this.usage = usage;
   }
 
-  let guild = (await GuildData.find({serverId: message.guild?.id}))[0];
+  async command(message: Message, args: string[]) {
+    if (!message.member?.permissions.has('ManageGuild'))
+      return error('You must have permission to manage the server to do that', message);
 
-  if (guild === undefined)
-    guild = new GuildData({
-      serverId: message.guild?.id,
-      prefix: config.prefix,
-    });
+    let muteRole: Role;
+    if (args[0] === 'make') {
+      const role = await createMuteRole(message);
+      if (role == null)
+        return;
+      muteRole = role;
+    } else if (args[0] === 'set') {
+      const role = await resolveRole(message, args[1]);
 
-  guild.muteRole = muteRole.id;
-  guild.save();
+      if (!role)
+        return error('Please provide a role', message);
 
-  return message.reply('Mute role successfully set!');
+      muteRole = role;
+    } else {
+      return error('Please provide valid arguments', message);
+    }
+
+    let guild = (await GuildData.find({serverId: message.guild?.id}))[0];
+
+    if (guild === undefined)
+      guild = new GuildData({
+        serverId: message.guild?.id,
+        prefix: config.prefix,
+      });
+
+    guild.muteRole = muteRole.id;
+    guild.save();
+
+    return message.reply('Mute role successfully configured!');
+  }
 }
 
 async function createMuteRole(message: Message) {
@@ -56,16 +78,15 @@ async function createMuteRole(message: Message) {
   }
 
   await message.guild?.channels.fetch();
-  const channelCache = message.guild?.channels.cache;
-  if (!channelCache)
+  if (!message.guild?.channels.cache)
     return muteRole;
-  for (const channelKey of channelCache) {
-    const channel = channelKey[1];
+
+  message.guild?.channels.cache.forEach((channel) => {
     if (channel.isThread())
-      continue;
+      return;
 
     if (channel.isTextBased()) {
-      await channel.permissionOverwrites.create(
+      channel.permissionOverwrites.create(
         muteRole,
         {
           SendMessages: false,
@@ -75,7 +96,7 @@ async function createMuteRole(message: Message) {
           AddReactions: false,
         });
     } else if (channel.isVoiceBased()) {
-      await channel.permissionOverwrites.create(
+      channel.permissionOverwrites.create(
         muteRole,
         {
           Connect: false,
@@ -85,14 +106,7 @@ async function createMuteRole(message: Message) {
         },
       );
     }
-  }
+  });
 
   return muteRole;
 }
-
-export const commandInfo: CommandInfo = {
-  name: 'muterole',
-  category: 'config',
-  description: 'Lets you set a custom mute role or makes one for you.',
-  usage: '<set|make> [role]',
-};

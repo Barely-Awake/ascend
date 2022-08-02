@@ -1,21 +1,33 @@
-// noinspection SpellCheckingInspection
-
 import { EmbedBuilder, Message } from 'discord.js';
+import { CommandCategory } from '../../../types/discord.js';
 import config from '../../../utils/misc/readConfig.js';
-import { CommandInfo } from '../_command.js';
 
-export default function (message: Message, _: string[]) {
-  const embed = new EmbedBuilder()
-    .setTitle(`Invite for \`${config.botName}\``)
-    .setURL(`https://discord.com/api/oauth2/authorize?client_id=${message.client.user?.id}&permissions=8&scope=bot%20applications.commands`);
+export default class Invite {
+  public name: string;
+  public category: CommandCategory;
+  public aliases: string[] | null;
+  public description: string;
+  public usage: string;
 
-  message.channel.send({embeds: [embed]});
+  constructor(
+    name = 'invite',
+    category: CommandCategory = 'info',
+    aliases: string[] | null = ['botinvite'],
+    description = 'Provides an invite link for this bot',
+    usage = '',
+  ) {
+    this.name = name;
+    this.category = category;
+    this.aliases = aliases;
+    this.description = description;
+    this.usage = usage;
+  }
+
+  command(message: Message, _: string[]) {
+    const embed = new EmbedBuilder()
+      .setTitle(`Invite for \`${config.botName}\``)
+      .setURL(`https://discord.com/api/oauth2/authorize?client_id=${message.client.user?.id}&permissions=8&scope=bot%20applications.commands`);
+
+    message.channel.send({embeds: [embed]});
+  }
 }
-
-export const commandInfo: CommandInfo = {
-  name: 'invite',
-  category: 'info',
-  aliases: ['botinvite'],
-  description: 'Provides an invite link for the bot',
-  usage: '',
-};

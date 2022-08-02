@@ -1,13 +1,28 @@
 import { Message } from 'discord.js';
-import { CommandInfo } from '../_command.js';
+import { CommandCategory } from '../../../types/discord.js';
 
-export default function (message: Message, _: string[]) {
-  message.channel.send('For support please join discord.gg/PpdbKXKgT3');
+export default class Support {
+  public name: string;
+  public category: CommandCategory;
+  public aliases: string[] | null;
+  public description: string;
+  public usage: string;
+
+  constructor(
+    name = 'support',
+    category: CommandCategory = 'info',
+    aliases: string[] | null = ['example_'],
+    description = 'Provides the support discord invite link',
+    usage = '',
+  ) {
+    this.name = name;
+    this.category = category;
+    this.aliases = aliases;
+    this.description = description;
+    this.usage = usage;
+  }
+
+  command(message: Message, _: string[]) {
+    message.channel.send('For support please join discord.gg/PpdbKXKgT3');
+  }
 }
-
-export const commandInfo: CommandInfo = {
-  name: 'support',
-  category: 'info',
-  description: 'Provides the support discord invite link',
-  usage: '',
-};
