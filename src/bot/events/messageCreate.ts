@@ -20,13 +20,13 @@ async function commandHandler(message: Message) {
   const commandName = messageArray[0].toLowerCase();
   const args = messageArray.slice(1);
 
-  const command = message.client.commands.get(commandName);
+  const commandClass = message.client.commands.get(commandName);
 
-  if (typeof command !== 'function')
+  if (commandClass === undefined)
     return;
 
   try {
-    command(message, args);
+    commandClass.command(message, args);
     console.log(`${message.author.tag} ran command '${commandName}' in ${message.guild?.name || 'dms'}`);
   } catch (err) {
     await error(
