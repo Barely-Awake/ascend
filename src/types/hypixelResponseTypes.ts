@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 export default interface apiResponse {
   success: boolean;
   player?: Player;
