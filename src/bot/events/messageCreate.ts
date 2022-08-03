@@ -48,32 +48,32 @@ async function fetchPrefix(message: Message) {
   const botMention = (message.client.user || '').toString();
   let prefixUsed: string = config.prefix;
 
-  if (message.guild) {
-    if (message.client.cache.prefixes[message.guild.id] !== undefined) {
-      prefixUsed = message.client.cache.prefixes[message.guild.id];
-    } else {
-      prefixUsed = await fetchMongoData(message);
-
-      message.client.cache.prefixes[message.guild.id] = prefixUsed;
-    }
-  } else if (message.content.startsWith(`${botMention} `)) {
+  if (message.content.startsWith(`${botMention} `)) {
     prefixUsed = `${botMention} `;
   } else if (message.content.startsWith(botMention)) {
     prefixUsed = botMention;
+  } else if (message.guild) {
+    if (message.client.cache.prefixes[message.guild.id] !== undefined) {
+      prefixUsed = message.client.cache.prefixes[message.guild.id];
+    } else {
+      prefixUsed = await fetchMongoPrefix(message);
+
+      message.client.cache.prefixes[message.guild.id] = prefixUsed;
+    }
   }
   return prefixUsed;
 }
 
-async function fetchMongoData(message: Message) {
+async function fetchMongoPrefix(message: Message) {
   if (!message.guild)
     return config.prefix;
 
-  const fetchedData = await GuildData.find({serverId: message.guild.id});
+  const fetchedData = await GuildData.findOne({serverId: message.guild.id});
 
-  if (fetchedData.length === 0)
+  if (fetchedData === null)
     return config.prefix;
 
-  return fetchedData[0].prefix;
+  return fetchedData.prefix;
 }
 
 export const settings: Settings = {
