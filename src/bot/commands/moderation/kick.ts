@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import { CommandCategory } from '../../../types/discord.js';
-import { canModerateUser, checkPermissions } from '../../../utils/discord/misc.js';
+import { onlyInGuild, requireBotPermission, requirePermission } from '../../../utils/discord/commandDecorators.js';
+import { canModerateUser } from '../../../utils/discord/misc.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 
@@ -25,17 +26,10 @@ export default class Kick {
     this.usage = usage;
   }
 
+  @onlyInGuild()
+  @requirePermission('KickMembers')
+  @requireBotPermission('KickMembers')
   async command(message: Message, args: string[]) {
-    if (!message.guild || !message.member)
-      return error('This command must be run in a guild', message);
-
-    if (!checkPermissions(message.member, 'KickMembers'))
-      return error('You can\'t kick users', message);
-
-    if (!checkPermissions(await message.guild.members.fetchMe(), 'KickMembers'))
-      return error(`I don't have permission to kick members ` +
-        `(*I'm a moderation bot, it's recommended to give me admin*)`, message);
-
     const user = await resolveUser(message, args[0]);
     args.shift();
     const reason = args.join(' ');
@@ -47,13 +41,13 @@ export default class Kick {
       return error('I\'m going to assume you don\'t want to kick yourself ' +
         '(If you did want that, there\'s a leave server button instead)', message);
 
-    const target = await message.guild?.members.resolve(user);
+    const target = await message.guild!.members.resolve(user);
 
     if (target === null || target === undefined) {
-      await message.guild.members.kick(user, reason || 'None');
+      await message.guild!.members.kick(user, reason || 'None');
     } else {
 
-      if (!canModerateUser(message.member, target, message.guild.ownerId))
+      if (!canModerateUser(message.member!, target, message.guild!.ownerId))
         return error('You can\'t kick that user, is your role higher than theirs?', message);
 
       if (!target.kickable)

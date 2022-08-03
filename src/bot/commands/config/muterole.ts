@@ -1,6 +1,7 @@
 import { Message, Role } from 'discord.js';
 import GuildData from '../../../mongo/guildData.js';
 import { CommandCategory } from '../../../types/discord.js';
+import { onlyInGuild, requireBotPermission, requirePermission } from '../../../utils/discord/commandDecorators.js';
 import { resolveRole } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import config from '../../../utils/misc/readConfig.js';
@@ -26,10 +27,10 @@ export default class MuteRole {
     this.usage = usage;
   }
 
+  @onlyInGuild()
+  @requirePermission('ManageGuild')
+  @requireBotPermission('ManageRoles')
   async command(message: Message, args: string[]) {
-    if (!message.member?.permissions.has('ManageGuild'))
-      return error('You must have permission to manage the server to do that', message);
-
     let muteRole: Role;
     if (args[0] === 'make') {
       const role = await createMuteRole(message);
@@ -47,11 +48,11 @@ export default class MuteRole {
       return error('Please provide valid arguments', message);
     }
 
-    let guild = (await GuildData.find({serverId: message.guild?.id}))[0];
+    let guild = (await GuildData.find({serverId: message.guild!.id}))[0];
 
     if (guild === undefined)
       guild = new GuildData({
-        serverId: message.guild?.id,
+        serverId: message.guild!.id,
         prefix: config.prefix,
       });
 
@@ -63,7 +64,7 @@ export default class MuteRole {
 }
 
 async function createMuteRole(message: Message) {
-  const muteRole = await message.guild?.roles.create({
+  const muteRole = await message.guild!.roles.create({
     name: 'Muted',
     color: '#000000',
     reason: 'Setting up a mute role',
@@ -77,11 +78,11 @@ async function createMuteRole(message: Message) {
     return null;
   }
 
-  await message.guild?.channels.fetch();
-  if (!message.guild?.channels.cache)
+  await message.guild!.channels.fetch();
+  if (!message.guild!.channels.cache)
     return muteRole;
 
-  message.guild?.channels.cache.forEach((channel) => {
+  message.guild!.channels.cache.forEach((channel) => {
     if (channel.isThread())
       return;
 

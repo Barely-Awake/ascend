@@ -1,5 +1,6 @@
 import { Message } from 'discord.js';
 import { CommandCategory } from '../../../types/discord.js';
+import { onlyInGuild, requireBotPermission, requirePermission } from '../../../utils/discord/commandDecorators.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 
@@ -24,17 +25,10 @@ export default class Unban {
     this.usage = usage;
   }
 
+  @onlyInGuild()
+  @requirePermission('BanMembers')
+  @requireBotPermission('BanMembers')
   async command(message: Message, args: string[]) {
-    if (!message.guild)
-      return error('This command must be run in a guild', message);
-
-    if (!message.member?.permissions.has('BanMembers'))
-      return error('You can\'t unban users', message);
-
-    if (!message.guild.members.me?.permissions.has('BanMembers'))
-      return error('I don\'t have permission to ban members ' +
-        '(*I\'m a moderation bot, it\'s recommended to give me admin*)', message);
-
     const user = await resolveUser(message, args[0]);
     args.shift();
     const reason = args.join(' ');
@@ -42,7 +36,7 @@ export default class Unban {
     if (user === null)
       return error('I couldn\'t find that user, make sure you\'re providing a mention or id', message);
 
-    await message.guild.bans.remove(user, reason || 'None');
+    await message.guild!.bans.remove(user, reason || 'None');
 
     return message.channel.send(
       `Successfully unbanned ${user.toString()} (\`${user.tag}\`) for ${reason || 'None'}`,
