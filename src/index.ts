@@ -2,7 +2,7 @@ import canvasPkg from 'canvas';
 import { ActivityType, Client, Collection, GatewayIntentBits, IntentsBitField } from 'discord.js';
 import mongoosePkg from 'mongoose';
 import { makeHelpEmbeds } from './bot/commands/help.js';
-import { commandAdder, eventHandler } from './bot/startUp.js';
+import { commandAdder, eventHandler, taskAdder } from './bot/startUp.js';
 import config from './utils/misc/readConfig.js';
 
 const {connect} = mongoosePkg;
@@ -56,5 +56,6 @@ export const mongoClient = connect(config.mongoUrl);
 commandAdder(client.commands)
   .then(() => makeHelpEmbeds(client.commands));
 eventHandler(client);
+taskAdder(client, mongoClient);
 
 client.login(config.betaMode ? config.betaToken : config.token);
