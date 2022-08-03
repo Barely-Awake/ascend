@@ -18,15 +18,14 @@ export async function commandAdder(
     }
 
     const commandFile = await import(`./commands${pathAdditions}/${file}`);
-    const commandName = file.split('.')[0];
 
     const commandInstance = new commandFile.default();
 
-    commandCollection.set(commandName, commandInstance);
-    console.log(`Loaded command: ${commandName}`);
-    if (commandFile.default.aliases === undefined)
+    commandCollection.set(commandInstance.name, commandInstance);
+    console.log(`Loaded command: ${commandInstance.name}`);
+    if (commandInstance.aliases === null)
       continue;
-    commandFile.default.aliases.forEach((v: string) => {
+    commandInstance.aliases.forEach((v: string) => {
       commandCollection.set(v, commandInstance);
     });
   }
