@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import GuildData from '../../../mongo/guildData.js';
+import { GuildData } from '../../../mongo/guildData.js';
 import { CommandCategory } from '../../../types/discord.js';
 import { onlyInGuild, requirePermission } from '../../../utils/discord/commandDecorators.js';
 import { error } from '../../../utils/discord/responses.js';

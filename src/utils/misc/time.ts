@@ -1,4 +1,8 @@
-export default function parseDuration(duration: string) {
+export function unixToSeconds(ms: number) {
+  return Math.trunc(ms / 1000);
+}
+
+export function parseDuration(duration: string) {
   if (Number.isNaN(duration.slice(0, -1)) && Number.isNaN(duration.slice(0, -2)))
     return null;
 

@@ -4,7 +4,7 @@ import { botColors } from '../../../utils/discord/botData.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
-import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
+import { unixToSeconds } from '../../../utils/misc/time.js';
 
 export default class UserInfo {
   public name: string;

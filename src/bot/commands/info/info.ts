@@ -3,7 +3,7 @@ import { CommandCategory } from '../../../types/discord.js';
 import { botColors } from '../../../utils/discord/botData.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import config from '../../../utils/misc/readConfig.js';
-import unixToSeconds from '../../../utils/misc/unixToSeconds.js';
+import { unixToSeconds } from '../../../utils/misc/time.js';
 
 export default class Info {
   public name: string;

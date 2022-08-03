@@ -1,5 +1,5 @@
 import { Message, Role } from 'discord.js';
-import GuildData from '../../../mongo/guildData.js';
+import { GuildData } from '../../../mongo/guildData.js';
 import { CommandCategory } from '../../../types/discord.js';
 import { onlyInGuild, requireBotPermission, requirePermission } from '../../../utils/discord/commandDecorators.js';
 import { resolveRole } from '../../../utils/discord/resolveTarget.js';
