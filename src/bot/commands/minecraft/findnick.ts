@@ -29,7 +29,6 @@ export default class FindNick {
   }
 
   async command(message: Message, args: string[]) {
-    message.channel.sendTyping();
     if (!args[0])
       return error('You must provide a player!', message);
 

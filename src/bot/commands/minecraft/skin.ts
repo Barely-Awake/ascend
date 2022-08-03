@@ -26,8 +26,6 @@ export default class Skin {
   }
 
   async command(message: Message, args: string[]) {
-    message.channel.sendTyping();
-
     const mojangData = await resolvePlayer((args[0] || '').toLowerCase(), message);
     if (typeof mojangData === 'string')
       return error(mojangData, message);

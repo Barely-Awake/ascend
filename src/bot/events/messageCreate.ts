@@ -26,6 +26,7 @@ async function commandHandler(message: Message) {
     return;
 
   try {
+    await message.channel.sendTyping();
     commandClass.command(message, args);
     console.log(`${message.author.tag} ran command '${commandName}' in ${message.guild?.name || 'dms'}`);
   } catch (err) {

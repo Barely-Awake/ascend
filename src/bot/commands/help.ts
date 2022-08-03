@@ -32,8 +32,6 @@ export default class Help {
   }
 
   async command(message: Message, _: string[]) {
-    message.channel.sendTyping();
-
     const baseEmbed = new EmbedBuilder()
       .setTitle(`${config.botName} Help`)
       .setDescription(`<> - Required Argument\n[] - Option Argument\n${config.prefix} - Bot Prefix`);

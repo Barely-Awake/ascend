@@ -26,8 +26,6 @@ export default class Invites {
   }
 
   async command(message: Message, args: string[]) {
-    message.channel.sendTyping();
-
     if (!message.guild)
       return error('Please use this command in a guild', message);
 
