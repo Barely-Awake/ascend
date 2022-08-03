@@ -1,5 +1,4 @@
 import { Client } from 'discord.js';
-import mongoosePkg from 'mongoose';
 
 export default class _Example implements TaskClass {
   public name: string;
@@ -13,8 +12,8 @@ export default class _Example implements TaskClass {
     this.interval = interval;
   }
 
-  task(botClient: Client, mongoClient: typeof mongoosePkg) {
-    return [botClient, mongoClient];
+  task(client: Client) {
+    return client;
   }
 }
 
@@ -24,4 +23,4 @@ export interface TaskClass {
   task: TaskFunction;
 }
 
-type TaskFunction = (botClient: Client, mongoClient: typeof mongoosePkg) => any
+type TaskFunction = (client: Client) => any

@@ -1,6 +1,5 @@
 import { Client } from 'discord.js';
 import { readdir } from 'fs/promises';
-import mongoosePkg from 'mongoose';
 import { CommandCollection } from '../types/discord.js';
 
 export async function commandAdder(
@@ -53,9 +52,7 @@ export async function eventHandler(client: Client, pathAdditions = '') {
   }
 }
 
-export async function taskAdder(botClient: Client, mongoClient: Promise<typeof mongoosePkg>) {
-  await mongoClient;
-
+export async function taskAdder(client: Client) {
   const taskFiles = await readdir('./dist/bot/tasks');
   for (const file of taskFiles) {
     if (file.startsWith('_') || !file.endsWith('.js'))
@@ -64,6 +61,6 @@ export async function taskAdder(botClient: Client, mongoClient: Promise<typeof m
     const task = await import(`./tasks/${file}`);
     const taskInstance = new task.default();
     console.log(`Loaded task: ${taskInstance.name}`);
-    setInterval(() => taskInstance.task(botClient, mongoClient), taskInstance.interval);
+    setInterval(() => taskInstance.task(client), taskInstance.interval);
   }
 }

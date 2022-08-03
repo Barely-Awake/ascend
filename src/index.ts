@@ -56,6 +56,6 @@ export const mongoClient = connect(config.mongoUrl);
 commandAdder(client.commands)
   .then(() => makeHelpEmbeds(client.commands));
 eventHandler(client);
-taskAdder(client, mongoClient);
+taskAdder(client);
 
 client.login(config.betaMode ? config.betaToken : config.token);
