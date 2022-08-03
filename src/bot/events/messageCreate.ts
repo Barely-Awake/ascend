@@ -27,8 +27,13 @@ async function commandHandler(message: Message) {
 
   try {
     await message.channel.sendTyping();
-    commandClass.command(message, args);
-    console.log(`${message.author.tag} ran command '${commandName}' in ${message.guild?.name || 'dms'}`);
+    const startTime = +(new Date());
+    await commandClass.command(message, args);
+    const currentTime = +(new Date());
+    console.log(
+      `${message.author.tag} ran command '${commandName}' in ${message.guild?.name || 'dms'} ` +
+      `(${currentTime - startTime}ms elapsed)`,
+    );
   } catch (err) {
     await error(
       `An unknown error occurred with the command: \`${commandName}\`. Logs have been sent to the developers.` +
