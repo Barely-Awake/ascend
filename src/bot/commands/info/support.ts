@@ -11,7 +11,7 @@ export default class Support {
   constructor(
     name = 'support',
     category: CommandCategory = 'info',
-    aliases: string[] | null = ['example_'],
+    aliases: string[] | null = null,
     description = 'Provides the support discord invite link',
     usage = '',
   ) {

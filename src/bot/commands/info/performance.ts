@@ -15,7 +15,7 @@ export default class Performance {
   constructor(
     name = 'performance',
     category: CommandCategory = 'info',
-    aliases: string[] | null = ['example_'],
+    aliases: string[] | null = null,
     description = 'Sends stats about the bot\'s performance',
     usage = '',
   ) {
