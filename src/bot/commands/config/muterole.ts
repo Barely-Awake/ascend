@@ -34,8 +34,9 @@ export default class MuteRole {
     let muteRole: Role;
     if (args[0] === 'make') {
       const role = await createMuteRole(message);
-      if (role == null)
-        return;
+      if (!role)
+        return error('Could not create mute role.', message);
+
       muteRole = role;
     } else if (args[0] === 'set') {
       const role = await resolveRole(message, args[1]);
