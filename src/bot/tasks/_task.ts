@@ -23,4 +23,4 @@ export interface TaskClass {
   task: TaskFunction;
 }
 
-type TaskFunction = (client: Client) => any
+type TaskFunction = (client: Client) => unknown
