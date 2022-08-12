@@ -16,6 +16,20 @@ const GuildSchema = new Schema<IGuild>({
   muteRole: String,
 });
 
-const GuildData = model<IGuild>('Guild', GuildSchema);
+export const GuildData = model<IGuild>('Guild', GuildSchema);
 
-export { GuildData as default };
+interface IMutedUsers {
+  guildId: string;
+  userId: string;
+  muteRoleId: string;
+  expiresAt: number | null;
+}
+
+const MutedUsersSchema = new Schema<IMutedUsers>({
+  guildId: String,
+  userId: String,
+  muteRoleId: String,
+  expiresAt: {type: Number, required: false},
+});
+
+export const MutedUserData = model<IMutedUsers>('MutedUsers', MutedUsersSchema);

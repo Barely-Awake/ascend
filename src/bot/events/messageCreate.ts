@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import GuildData from '../../mongo/guildData.js';
+import { GuildData } from '../../mongo/guildData.js';
 import { error } from '../../utils/discord/responses.js';
 import config from '../../utils/misc/readConfig.js';
 import { Settings } from './_event.js';
