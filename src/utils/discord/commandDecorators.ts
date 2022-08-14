@@ -39,3 +39,17 @@ export function onlyInGuild() {
     };
   };
 }
+
+export function requireArgs(argNumber: number) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originalFunction = descriptor.value;
+    descriptor.value = function () {
+      const message = arguments[0];
+      const args = arguments[1];
+      if (args.length < argNumber)
+        return message.reply('You must provide enough arguments');
+
+      return originalFunction.apply(this, arguments);
+    };
+  };
+}

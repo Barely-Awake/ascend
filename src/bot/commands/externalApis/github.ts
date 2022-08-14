@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 import sharp from 'sharp';
 import { CommandCategory } from '../../../types/discord.js';
 import { botColors } from '../../../utils/discord/botData.js';
+import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { error } from '../../../utils/discord/responses.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
@@ -29,10 +30,8 @@ export default class GitHub {
     this.usage = usage;
   }
 
+  @requireArgs(1)
   async command(message: Message, args: string[]) {
-    if (!args[0])
-      return error('No user provided', message);
-
     const user = args.join('-');
 
     let userData: User;

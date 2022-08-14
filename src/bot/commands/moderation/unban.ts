@@ -1,6 +1,11 @@
 import { Message } from 'discord.js';
 import { CommandCategory } from '../../../types/discord.js';
-import { onlyInGuild, requireBotPermission, requirePermission } from '../../../utils/discord/commandDecorators.js';
+import {
+  onlyInGuild,
+  requireArgs,
+  requireBotPermission,
+  requirePermission,
+} from '../../../utils/discord/commandDecorators.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 
@@ -26,6 +31,7 @@ export default class Unban {
   }
 
   @onlyInGuild()
+  @requireArgs(1)
   @requirePermission('BanMembers')
   @requireBotPermission('BanMembers')
   async command(message: Message, args: string[]) {

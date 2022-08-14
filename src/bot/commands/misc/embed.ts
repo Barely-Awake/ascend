@@ -1,5 +1,6 @@
 import { EmbedBuilder, Message } from 'discord.js';
 import { CommandCategory } from '../../../types/discord.js';
+import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { error } from '../../../utils/discord/responses.js';
 
 export default class Embed {
@@ -25,14 +26,12 @@ export default class Embed {
     this.usage = usage;
   }
 
+  @requireArgs(2)
   async command(message: Message, args: string[]) {
     await message.delete();
 
     if (message.member !== null && !message.member?.permissions.has('ManageGuild'))
       return error('You need to have the manage server permission to use this command', message);
-
-    if (!args[0] || !args[1])
-      return error('Please provided the needed arguments', message);
 
     if (args[0].startsWith('#'))
       args[0] = args[0].slice();

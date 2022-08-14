@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import { DenickEndPoint } from '../../../types/antiSniperResponseTypes.js';
 import { CommandCategory } from '../../../types/discord.js';
+import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { error } from '../../../utils/discord/responses.js';
 import { getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import makeWebRequest from '../../../utils/misc/makeWebRequest.js';
@@ -28,10 +29,8 @@ export default class Denick {
     this.usage = usage;
   }
 
+  @requireArgs(1)
   async command(message: Message, args: string[]) {
-    if (!args[0])
-      return error('You must provide a nick!', message);
-
     const antiSniperData: DenickEndPoint = await makeWebRequest(
       `https://api.antisniper.net/denick?key=${config.antiSniperApiKey}&nick=${args[0]}`,
     );

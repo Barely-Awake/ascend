@@ -1,8 +1,7 @@
 import { Message } from 'discord.js';
 import { GuildData } from '../../../mongo/guildData.js';
 import { CommandCategory } from '../../../types/discord.js';
-import { onlyInGuild, requirePermission } from '../../../utils/discord/commandDecorators.js';
-import { error } from '../../../utils/discord/responses.js';
+import { onlyInGuild, requireArgs, requirePermission } from '../../../utils/discord/commandDecorators.js';
 
 export default class SetPrefix {
   public name: string;
@@ -26,11 +25,9 @@ export default class SetPrefix {
   }
 
   @onlyInGuild()
+  @requireArgs(1)
   @requirePermission('ManageGuild')
   async command(message: Message, args: string[]) {
-    if (!args || args[0] === undefined)
-      return error('You have to provide a prefix', message);
-
     const prefix = args.join(' ');
 
     const fetchedData = await GuildData.find({serverId: message.guild!.id});

@@ -1,6 +1,11 @@
 import { Message } from 'discord.js';
 import { CommandCategory } from '../../../types/discord.js';
-import { onlyInGuild, requireBotPermission, requirePermission } from '../../../utils/discord/commandDecorators.js';
+import {
+  onlyInGuild,
+  requireArgs,
+  requireBotPermission,
+  requirePermission,
+} from '../../../utils/discord/commandDecorators.js';
 import { canModerateUser } from '../../../utils/discord/misc.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
@@ -27,6 +32,7 @@ export default class Kick {
   }
 
   @onlyInGuild()
+  @requireArgs(1)
   @requirePermission('KickMembers')
   @requireBotPermission('KickMembers')
   async command(message: Message, args: string[]) {

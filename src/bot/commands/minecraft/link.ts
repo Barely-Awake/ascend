@@ -1,6 +1,7 @@
 import { Message } from 'discord.js';
 import Player from '../../../mongo/player.js';
 import { CommandCategory } from '../../../types/discord.js';
+import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { error } from '../../../utils/discord/responses.js';
 import { getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import { getPlayerNames, getPlayerUuid } from '../../../utils/minecraft/mojangApi.js';
@@ -27,6 +28,7 @@ export default class Link {
     this.usage = usage;
   }
 
+  @requireArgs(1)
   async command(message: Message, args: string[]) {
     const existingDiscordData = await Player.find({discordId: message.author.id});
 
@@ -34,10 +36,7 @@ export default class Link {
       return error('You have already linked on this discord account. Please use the unlink command and then try ' +
         'linking again.', message);
 
-    if (!args[0])
-      return error('Please provide the account you want to link with', message);
-
-    args[0] = (args[0] || '').replace(/-/g, '');
+    args[0] = args[0].replace(/-/g, '');
 
     let mojangData;
     let playerUuid;
