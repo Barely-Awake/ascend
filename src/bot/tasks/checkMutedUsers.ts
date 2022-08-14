@@ -3,17 +3,10 @@ import { MutedUserData } from '../../mongo/guildData.js';
 import { TaskClass } from './_task.js';
 
 export default class CheckMutedUsers implements TaskClass {
-  public name: string;
-  public interval: number;
-
-  constructor(
-    name = 'CheckMutedUsers',
-    interval = 60 * 1000,
-  ) {
-    this.name = name;
-    this.interval = interval;
-  }
-
+  
+  public name = 'CheckMutedUsers';
+  public interval = 60 * 1000;
+  
   async task(client: Client) {
     const currentTime = +new Date();
     const usersToBeUnMuted = await MutedUserData.find({
