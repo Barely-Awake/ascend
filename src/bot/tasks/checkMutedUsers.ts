@@ -15,11 +15,10 @@ export default class CheckMutedUsers implements TaskClass {
   }
 
   async task(client: Client) {
-    const currentTime = +new Date();
     const usersToBeUnMuted = await MutedUserData.find({
       expiresAt: {
-        $lte: (+new Date()) + 61 * 1000,
-        $gt: currentTime,
+        $lte: Date.now() + 61 * 1000,
+        $gt: Date.now(),
       },
     });
 

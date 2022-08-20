@@ -39,7 +39,7 @@ export default class Info {
 
     let clientUptime;
     if (message.client.uptime !== null)
-      clientUptime = unixToSeconds((+new Date()) - message.client.uptime);
+      clientUptime = unixToSeconds(Date.now() - message.client.uptime);
     else
       clientUptime = 'Unknown';
 
