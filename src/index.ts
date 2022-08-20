@@ -51,7 +51,9 @@ client.cache = {
   prefixes: {},
 };
 
-export const mongoClient = connect(config.mongoUrl);
+connect(config.mongoUrl).then(() => {
+  console.log("Connected to MongoDB")
+});
 
 commandAdder(client.commands)
   .then(() => makeHelpEmbeds(client.commands));
