@@ -18,7 +18,6 @@ export default class CheckMutedUsers implements TaskClass {
     const usersToBeUnMuted = await MutedUserData.find({
       expiresAt: {
         $lte: Date.now() + 61 * 1000,
-        $gt: Date.now(),
       },
     });
 
@@ -37,6 +36,11 @@ export default class CheckMutedUsers implements TaskClass {
 
         try {
           await mutedUser.roles.remove(muteData.muteRoleId);
+          await MutedUserData.deleteOne({
+            guildId: muteData.guildId,
+            userId: muteData.userId,
+            expiresAt: muteData.expiresAt,
+          });
         } catch {
 
         }
