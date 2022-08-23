@@ -60,7 +60,7 @@ export async function drawBedWarsCanvas(playerStats: playerStatsTypes) {
   const canvas = createCanvas(870, 675);
 
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#363636';
+  ctx.fillStyle = '#202225';
   // Draw the general background
 
   drawRoundedRectangle(
@@ -74,14 +74,14 @@ export async function drawBedWarsCanvas(playerStats: playerStatsTypes) {
     false,
   );
 
-  ctx.fillStyle = 'rgba(0,0,0,0.4)';
-  // Draw the players information
+  ctx.fillStyle = '#292d30';
 
+  // Draw the players information
   await drawPlayerProfile(ctx, canvas, playerStats);
 
-  ctx.fillStyle = 'rgba(0,0,0,0.4)';
-  // Draw the stats' background
+  ctx.fillStyle = '#292d30';
 
+  // Draw the stats' background
   drawRoundedRectangle(ctx,
     20,
     120,
@@ -99,14 +99,14 @@ export async function drawBedWarsCanvas(playerStats: playerStatsTypes) {
     canvas,
     firstIncludedOrderedModes,
     [130, canvas.height - 25],
-    150,
+    155,
   );
   ctx.fillStyle = '#999999';
 
   ctx.font = '30px Sonus';
   firstIncludedOrderedModes.forEach((value, index) => {
     const mode = convertMode(value);
-    fillModeStats(mode, playerStats, Number(index), ctx, firstTextPositions, 150);
+    fillModeStats(mode, playerStats, Number(index), ctx, firstTextPositions, 155);
 
   });
 
@@ -117,14 +117,14 @@ export async function drawBedWarsCanvas(playerStats: playerStatsTypes) {
     canvas,
     secondIncludedOrderedModes,
     [130, canvas.height - 25],
-    410,
+    415,
   );
   ctx.fillStyle = '#999999';
 
   ctx.font = '30px Sonus';
   secondIncludedOrderedModes.forEach((value, index) => {
     const mode = convertMode(value);
-    fillModeStats(mode, playerStats, Number(index), ctx, secondTextPositions, 410);
+    fillModeStats(mode, playerStats, Number(index), ctx, secondTextPositions, 415);
 
   });
   return canvas.toBuffer();
