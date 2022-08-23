@@ -25,6 +25,9 @@ export async function getHypixelData(playerUuid: string) {
   try {
     const response = await fetch(`https://api.hypixel.net/player?uuid=${playerUuid}&key=${config.hypixelApiKey}`);
 
+    if (!response.ok)
+      return null;
+
     data = await response.json();
 
     if (!data.success)
