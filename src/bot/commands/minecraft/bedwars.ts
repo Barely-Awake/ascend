@@ -169,7 +169,6 @@ function drawModes(ctx: CanvasRenderingContext2D, canvas: Canvas, modes: string[
 
   ctx.fillText(modes[2], textPositions[2], textYPos);
   return textPositions;
-
 }
 
 function fillModeStats(
@@ -180,7 +179,6 @@ function fillModeStats(
   textPositions: number[],
   initialYPos: number,
 ) {
-
   const textToFill = statsText
     .replace('$winStreakColor', winStreakApiOn ? '#F8A619' : '#EA4645')
     .replace('$winStreakLabel', winStreakApiOn ? '' : '~')
@@ -204,7 +202,6 @@ function fillModeStats(
       'left',
     );
   });
-
 }
 
 async function drawPlayerProfile(ctx: CanvasRenderingContext2D, canvas: Canvas, playerStats: playerStatsTypes) {
@@ -234,14 +231,20 @@ async function drawPlayerProfile(ctx: CanvasRenderingContext2D, canvas: Canvas, 
 
   }
 
-  const playerHead = await loadImage(`https://crafatar.com/avatars/${playerStats.uuid}?overlay&size=80`);
-  ctx.save();
-  // Setting opacity to 0 so no outer edges of base rectangle are visible
-  ctx.fillStyle = 'rgba(0,0,0,0)';
-  drawRoundedRectangle(ctx, 25, 20, 80, 80, 30, true, false);
-  // Fits the player head that is about to be drawn to the previously drawn rectangle
-  ctx.clip();
-  ctx.drawImage(playerHead, 25, 20, 80, 80);
-  ctx.restore();
-
+  try {
+    const playerHead = await loadImage(`https://crafatar.com/avatars/${playerStats.uuid}?overlay&size=80`);
+    ctx.save();
+    // Setting opacity to 0 so no outer edges of base rectangle are visible
+    ctx.fillStyle = 'rgba(0,0,0,0)';
+    drawRoundedRectangle(ctx, 25, 20, 80, 80, 30, true, false);
+    // Fits the player head that is about to be drawn to the previously drawn rectangle
+    ctx.clip();
+    ctx.drawImage(playerHead, 25, 20, 80, 80);
+    ctx.restore();
+  } catch {
+    const originalFont = ctx.font;
+    ctx.font = '27px Minecraft';
+    fillColoredText('§cCrafatar\nError!', ctx, 40, 50, 'left');
+    ctx.font = originalFont;
+  }
 }
