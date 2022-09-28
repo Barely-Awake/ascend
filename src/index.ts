@@ -34,12 +34,10 @@ const client = new Client({
   intents: intents,
   presence: {
     status: 'idle',
-    activities: [
-      {
-        name: `@${config.botName} help`,
-        type: ActivityType.Watching,
-      },
-    ],
+    activities: [{
+      name: `@${config.botName} help`,
+      type: ActivityType.Watching,
+    }],
   },
   failIfNotExists: false,
   allowedMentions: {
@@ -52,7 +50,7 @@ client.cache = {
 };
 
 connect(config.mongoUrl).then(() => {
-  console.log("Connected to MongoDB")
+  console.log('Connected to MongoDB');
 });
 
 commandAdder(client.commands)
