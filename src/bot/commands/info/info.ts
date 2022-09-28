@@ -1,4 +1,4 @@
-import { EmbedBuilder, Message, Team, User, version } from 'discord.js';
+import { Client, EmbedBuilder, Message, Team, User, version } from 'discord.js';
 import { CommandCategory } from '../../../types/discord.js';
 import { botColors } from '../../../utils/discord/botData.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
@@ -27,21 +27,10 @@ export default class Info {
   }
 
   async command(message: Message, _: string[]) {
-    const clientApplication = await message.client.application?.fetch();
-    let applicationOwner;
+    const {client} = message;
 
-    if (clientApplication?.owner instanceof User)
-      applicationOwner = (clientApplication?.owner || 'Unknown').toString();
-    else if (clientApplication?.owner instanceof Team)
-      applicationOwner = (clientApplication?.owner.owner || 'Unknown').toString();
-    else
-      applicationOwner = 'Unknown';
-
-    let clientUptime;
-    if (message.client.uptime !== null)
-      clientUptime = unixToSeconds(Date.now() - message.client.uptime);
-    else
-      clientUptime = 'Unknown';
+    const applicationOwner = await getApplicationOwner(client);
+    const clientUptime = getClientUptime(client);
 
     const infoEmbed = new EmbedBuilder()
       .setTitle(`Information on ${config.botName}`)
@@ -51,21 +40,21 @@ export default class Info {
         url: 'https://github.com/barely-awake',
         iconURL: 'https://avatars.githubusercontent.com/u/80858965?v=4',
       })
+
       .setDescription(`${config.botName} is an open source bot made by Barely Awake. ` +
         `The source code can be found at https://github.com/Barely-Awake/ascend. ` +
         `${config.botName} features a lot of useful moderation commands. Currently the direction is being an open ` +
-        `source replacement for almost every bot in your server. Right now it's still in early development so it isn't ` +
-        `going to be that yet, but the dev team (jk, it's only 1 person) is working hard to reach that goal as soon as ` +
-        `possible.`,
-      )
+        `source replacement for bots in your server. Right now it's still in early development so it isn't ` +
+        `that yet, but the dev team is working hard to reach that goal as soon as possible.`)
+
       .addFields([
         {
-          name: `${config.botName} Version`,
+          name: `Version`,
           value: `\`${process.env.npm_package_version || 'Unknown'}\``,
         },
         {
           name: 'Ping',
-          value: `\`${message.client.ws.ping}\` ms`,
+          value: `\`${client.ws.ping}\` ms`,
         },
         {
           name: 'Up Since',
@@ -79,11 +68,11 @@ export default class Info {
         },
         {
           name: 'Server Count',
-          value: String(message.client.guilds.cache.size),
+          value: client.guilds.cache.size.toString(),
         },
         {
           name: 'User Count',
-          value: String(message.client.users.cache.size),
+          value: client.users.cache.size.toString(),
         },
         {
           name: 'Discord.js Version',
@@ -92,14 +81,37 @@ export default class Info {
       ]);
 
     if ((message.guild || {}).id !== config.supportServerId)
-      message.channel.send({
+      await message.reply({
         content: `Join ${config.botName}'s support server for information on changes to the bot and beta access! ` +
           `https://discord.gg/PpdbKXKgT3`,
         embeds: [infoEmbed],
       });
     else
-      message.channel.send({
+      await message.reply({
         embeds: [infoEmbed],
       });
   }
+}
+
+async function getApplicationOwner(client: Client) {
+  const clientApplication = await client.application?.fetch();
+  let applicationOwner;
+
+  if (clientApplication?.owner instanceof User)
+    applicationOwner = clientApplication?.owner;
+  else if (clientApplication?.owner instanceof Team)
+    applicationOwner = clientApplication?.owner?.owner;
+
+  applicationOwner = applicationOwner || 'Unknown';
+  return applicationOwner.toString();
+}
+
+function getClientUptime(client: Client) {
+  let clientUptime;
+  if (client.uptime !== null)
+    clientUptime = unixToSeconds(Date.now() - client.uptime);
+  else
+    clientUptime = 'Unknown';
+
+  return clientUptime;
 }
