@@ -18,12 +18,12 @@
     "@saber2pr/types-github-api": "^0.0.9",
     "@types/ms": "^0.7.31",
     "canvas": "^2.10.1",
-    "discord.js": "^14.4.0",
-    "dotenv": "^16.0.2",
-    "mongoose": "^6.6.1",
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.3",
+    "mongoose": "^6.6.4",
     "ms": "^2.1.3",
-    "sharp": "^0.31.0",
-    "typescript": "^4.8.3"
+    "sharp": "^0.31.1",
+    "typescript": "^4.8.4"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.6.2",
