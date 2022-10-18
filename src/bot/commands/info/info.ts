@@ -49,7 +49,11 @@ export default class Info {
 
       .addFields([
         {
-          name: `Version`,
+          name: 'Credits',
+          value: 'Antisniper - for providing the denicker used in both the denick and findnick commands',
+        },
+        {
+          name: 'Version',
           value: `\`${process.env.npm_package_version || 'Unknown'}\``,
         },
         {
