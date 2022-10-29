@@ -1,6 +1,6 @@
 import { Client } from 'discord.js';
 import { readdir } from 'fs/promises';
-import { CommandCollection } from '../types/discord.js';
+import { CommandCollection } from './botData.js';
 
 export async function commandAdder(
   commandCollection: CommandCollection,

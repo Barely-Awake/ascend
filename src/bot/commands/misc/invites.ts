@@ -1,9 +1,8 @@
 import { EmbedBuilder, Invite, Message } from 'discord.js';
-import { CommandCategory } from '../../../types/discord.js';
-import { botColors } from '../../../utils/discord/botData.js';
 import { onlyInGuild } from '../../../utils/discord/commandDecorators.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
+import { botColors, CommandCategory } from '../../botData.js';
 
 export default class Invites {
   public name: string;

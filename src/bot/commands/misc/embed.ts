@@ -1,7 +1,7 @@
 import { EmbedBuilder, Message } from 'discord.js';
-import { CommandCategory } from '../../../types/discord.js';
 import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { error } from '../../../utils/discord/responses.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class Embed {
   public name: string;

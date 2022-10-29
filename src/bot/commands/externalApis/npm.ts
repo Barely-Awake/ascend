@@ -1,11 +1,10 @@
 import { EmbedBuilder, Message } from 'discord.js';
 import fetch from 'node-fetch';
-import { CommandCategory } from '../../../types/discord.js';
-import { botColors } from '../../../utils/discord/botData.js';
 import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { error } from '../../../utils/discord/responses.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
+import { botColors, CommandCategory } from '../../botData.js';
 
 export default class Npm {
   public name: string;

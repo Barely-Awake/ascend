@@ -1,10 +1,10 @@
 import { Message } from 'discord.js';
 import Player from '../../../mongo/player.js';
-import { CommandCategory } from '../../../types/discord.js';
 import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { error } from '../../../utils/discord/responses.js';
 import { getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import { getPlayerNames, getPlayerUuid } from '../../../utils/minecraft/mojangApi.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class Link {
   public name: string;

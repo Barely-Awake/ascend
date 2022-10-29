@@ -1,5 +1,4 @@
 import { Message } from 'discord.js';
-import { CommandCategory } from '../../../types/discord.js';
 import {
   onlyInGuild,
   requireArgs,
@@ -9,6 +8,7 @@ import {
 import { canModerateUser } from '../../../utils/discord/misc.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class Kick {
   public name: string;

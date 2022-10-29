@@ -1,6 +1,5 @@
 import { Message, Role } from 'discord.js';
 import { GuildData } from '../../../mongo/guildData.js';
-import { CommandCategory } from '../../../types/discord.js';
 import {
   onlyInGuild,
   requireArgs,
@@ -10,6 +9,7 @@ import {
 import { resolveRole } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import config from '../../../utils/misc/readConfig.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class MuteRole {
   public name: string;

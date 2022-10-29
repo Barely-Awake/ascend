@@ -2,12 +2,11 @@ import { User } from '@saber2pr/types-github-api';
 import { EmbedBuilder, Message } from 'discord.js';
 import fetch from 'node-fetch';
 import sharp from 'sharp';
-import { CommandCategory } from '../../../types/discord.js';
-import { botColors } from '../../../utils/discord/botData.js';
 import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { error } from '../../../utils/discord/responses.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
+import { botColors, CommandCategory } from '../../botData.js';
 
 export default class GitHub {
   public name: string;

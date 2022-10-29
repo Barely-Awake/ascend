@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { GuildData } from '../../../mongo/guildData.js';
-import { CommandCategory } from '../../../types/discord.js';
 import { onlyInGuild, requireArgs, requirePermission } from '../../../utils/discord/commandDecorators.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class SetPrefix {
   public name: string;

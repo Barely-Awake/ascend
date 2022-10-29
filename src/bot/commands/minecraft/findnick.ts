@@ -1,10 +1,10 @@
 import { Message } from 'discord.js';
 import { FindNickEndPoint } from '../../../types/antiSniperResponseTypes.js';
-import { CommandCategory } from '../../../types/discord.js';
 import { error } from '../../../utils/discord/responses.js';
 import { getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import makeWebRequest from '../../../utils/misc/makeWebRequest.js';
 import config from '../../../utils/misc/readConfig.js';
+import { CommandCategory } from '../../botData.js';
 import { drawBedWarsCanvas } from './bedwars.js';
 
 export default class FindNick {

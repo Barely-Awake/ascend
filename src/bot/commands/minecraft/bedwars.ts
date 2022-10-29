@@ -1,6 +1,5 @@
 import canvasPkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
 import { Message } from 'discord.js';
-import { CommandCategory } from '../../../types/discord.js';
 import playerStatsTypes from '../../../types/playerStatsTypes.js';
 import convertMode from '../../../utils/canvas/convertMode.js';
 import drawRoundedRectangle from '../../../utils/canvas/drawRoundedRectangle.js';
@@ -8,6 +7,7 @@ import fillColoredText from '../../../utils/canvas/fillColoredText.js';
 import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import { calculateBedWarsLevel, getFormattedLevel, getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
+import { CommandCategory } from '../../botData.js';
 
 const {createCanvas, loadImage} = canvasPkg;
 

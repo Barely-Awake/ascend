@@ -1,4 +1,5 @@
-import { ColorResolvable, EmbedBuilder, SelectMenuComponentOptionData } from 'discord.js';
+import { Collection, ColorResolvable, EmbedBuilder, SelectMenuComponentOptionData } from 'discord.js';
+import { CommandClass } from '../types/discord.js';
 
 export const botColors: ColorResolvable[] = [
   '#e0006f',
@@ -13,6 +14,21 @@ export const botEmojis = {
   offline: '<:offline:979932845210468362>',
 };
 
+export type CommandCollection = Collection<string, CommandClass>;
+
+export type CommandCategory = 'config' | 'info' | 'moderation' | 'minecraft' | 'externalApis' | 'misc';
+
+/*
+* Object Keys should be filled out following the template below
+* <pre>
+* exampleCategory: {
+*   description: 'This field will show up under the description of the category',
+*     label: 'This will be the user facing name of the category',
+*     value: 'exampleCategory', // Value should be the same as the object key
+*     embed: new EmbedBuilder(),
+* }
+* </pre>
+*/
 export const categoryInfo: { [index: string]: CategoryInfo } = {
   config: {
     description: 'Allows you to configure elements of the bot like the prefix in the current guild',

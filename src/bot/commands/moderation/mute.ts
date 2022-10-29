@@ -1,9 +1,10 @@
 import { Message } from 'discord.js';
 import ms from 'ms';
 import { GuildData, MutedUserData } from '../../../mongo/guildData.js';
-import { CommandCategory, CommandClass } from '../../../types/discord.js';
+import { CommandClass } from '../../../types/discord.js';
 import { onlyInGuild, requireBotPermission, requirePermission } from '../../../utils/discord/commandDecorators.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class Mute implements CommandClass {
   public name: string;

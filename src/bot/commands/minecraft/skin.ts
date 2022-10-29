@@ -1,8 +1,8 @@
 import { EmbedBuilder, Message } from 'discord.js';
-import { CommandCategory } from '../../../types/discord.js';
 import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import { getPlayerNames, getPlayerSkin } from '../../../utils/minecraft/mojangApi.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class Skin {
   public name: string;

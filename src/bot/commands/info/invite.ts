@@ -1,6 +1,6 @@
 import { EmbedBuilder, Message } from 'discord.js';
-import { CommandCategory } from '../../../types/discord.js';
 import config from '../../../utils/misc/readConfig.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class Invite {
   public name: string;

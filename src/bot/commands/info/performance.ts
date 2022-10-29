@@ -1,9 +1,8 @@
 import { EmbedBuilder, Message } from 'discord.js';
-import { CommandCategory } from '../../../types/discord.js';
-import { botColors } from '../../../utils/discord/botData.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import config from '../../../utils/misc/readConfig.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
+import { botColors, CommandCategory } from '../../botData.js';
 
 export default class Performance {
   public name: string;
