@@ -16,6 +16,7 @@
   "license": "AGPL-3.0-only",
   "dependencies": {
     "@saber2pr/types-github-api": "^0.0.9",
+    "@trivago/prettier-plugin-sort-imports": "^3.4.0",
     "@types/ms": "^0.7.31",
     "canvas": "^2.10.1",
     "discord.js": "^14.6.0",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@types/node-fetch": "^2.6.2",
-    "@types/sharp": "^0.31.0"
+    "@types/sharp": "^0.31.0",
+    "prettier": "2.7.1"
   }
 }
