@@ -1,13 +1,14 @@
-import fetch from 'node-fetch';
+import hypixelResponseTypes, {
+  Player,
+} from '../../types/hypixelResponseTypes.js';
 import { WinStreakEndPoint } from '../../types/antiSniperResponseTypes.js';
-import hypixelResponseTypes, { Player } from '../../types/hypixelResponseTypes.js';
-import playerStatsTypes from '../../types/playerStatsTypes.js';
 import config from '../misc/readConfig.js';
+import fetch from 'node-fetch';
+import PlayerStatsTypes from '../../types/playerStatsTypes.js';
 
 export async function getPlayerStats(playerUuid: string) {
   const hypixelData = await getHypixelData(playerUuid);
-  if (hypixelData === null)
-    return null;
+  if (hypixelData === null) return null;
 
   const playerStats = formatPlayerStats(hypixelData);
   if (!playerStats.bedWars.winStreakApiOn()) {
@@ -23,15 +24,15 @@ export async function getPlayerStats(playerUuid: string) {
 export async function getHypixelData(playerUuid: string) {
   let data: hypixelResponseTypes;
   try {
-    const response = await fetch(`https://api.hypixel.net/player?uuid=${playerUuid}&key=${config.hypixelApiKey}`);
+    const response = await fetch(
+      `https://api.hypixel.net/player?uuid=${playerUuid}&key=${config.hypixelApiKey}`
+    );
 
-    if (!response.ok)
-      return null;
+    if (!response.ok) return null;
 
     data = await response.json();
 
-    if (!data.success)
-      return null;
+    if (!data.success) return null;
 
     return data.player || null;
   } catch (error) {
@@ -42,11 +43,10 @@ export async function getHypixelData(playerUuid: string) {
 export async function getWinStreakEstimates(playerUuid: string) {
   try {
     const response = await fetch(
-      `https://api.antisniper.net/winstreak?key=${config.antiSniperApiKey}&uuid=${playerUuid}`,
+      `https://api.antisniper.net/winstreak?key=${config.antiSniperApiKey}&uuid=${playerUuid}`
     );
 
-    if (!response.ok)
-      return null;
+    if (!response.ok) return null;
 
     const data: WinStreakEndPoint = await response.json();
 
@@ -73,20 +73,16 @@ export function calculateBedWarsLevel(experience: number): number {
 
   experience %= 487000;
 
-  if (experience < 500)
-    return level + experience / 500;
+  if (experience < 500) return level + experience / 500;
   level++;
 
-  if (experience < 1500)
-    return level + (experience - 500) / 1000;
+  if (experience < 1500) return level + (experience - 500) / 1000;
   level++;
 
-  if (experience < 3500)
-    return level + (experience - 1500) / 2000;
+  if (experience < 3500) return level + (experience - 1500) / 2000;
   level++;
 
-  if (experience < 7000)
-    return level + (experience - 3500) / 3500;
+  if (experience < 7000) return level + (experience - 3500) / 3500;
   level++;
 
   experience -= 7000;
@@ -106,21 +102,21 @@ export const colors: { [index: string]: string } = {
   '7': '#ababab',
   '8': '#545454',
   '9': '#5757FF',
-  'a': '#57FF57',
-  'b': '#57FFFF',
-  'c': '#FF5757',
-  'd': '#FF57FF',
-  'e': '#FFFF57',
-  'f': '#FFFFFF',
-  'g': '#DCD504',
-  's': '#2AA0F4',
+  a: '#57FF57',
+  b: '#57FFFF',
+  c: '#FF5757',
+  d: '#FF57FF',
+  e: '#FFFF57',
+  f: '#FFFFFF',
+  g: '#DCD504',
+  s: '#2AA0F4',
 
-  'k': 'obfuscated',
-  'l': 'bold',
-  'm': 'strikethrough',
-  'n': 'underlined',
-  'o': 'italic',
-  'r': 'reset',
+  k: 'obfuscated',
+  l: 'bold',
+  m: 'strikethrough',
+  n: 'underlined',
+  o: 'italic',
+  r: 'reset',
   '#': 'hex',
 };
 
@@ -130,16 +126,16 @@ export function getFormattedLevel(star: number): string {
   const stars = ['@', '{', '}'];
 
   const prestigeColors: { req: number; fn: (n: number) => string }[] = [
-    {req: 0, fn: (n) => `§7[${n}${stars[0]}]`},
-    {req: 100, fn: (n) => `§f[${n}${stars[0]}]`},
-    {req: 200, fn: (n) => `§6[${n}${stars[0]}]`},
-    {req: 300, fn: (n) => `§b[${n}${stars[0]}]`},
-    {req: 400, fn: (n) => `§2[${n}${stars[0]}]`},
-    {req: 500, fn: (n) => `§3[${n}${stars[0]}]`},
-    {req: 600, fn: (n) => `§4[${n}${stars[0]}]`},
-    {req: 700, fn: (n) => `§d[${n}${stars[0]}]`},
-    {req: 800, fn: (n) => `§9[${n}${stars[0]}]`},
-    {req: 900, fn: (n) => `§5[${n}${stars[0]}]`},
+    { req: 0, fn: (n) => `§7[${n}${stars[0]}]` },
+    { req: 100, fn: (n) => `§f[${n}${stars[0]}]` },
+    { req: 200, fn: (n) => `§6[${n}${stars[0]}]` },
+    { req: 300, fn: (n) => `§b[${n}${stars[0]}]` },
+    { req: 400, fn: (n) => `§2[${n}${stars[0]}]` },
+    { req: 500, fn: (n) => `§3[${n}${stars[0]}]` },
+    { req: 600, fn: (n) => `§4[${n}${stars[0]}]` },
+    { req: 700, fn: (n) => `§d[${n}${stars[0]}]` },
+    { req: 800, fn: (n) => `§9[${n}${stars[0]}]` },
+    { req: 900, fn: (n) => `§5[${n}${stars[0]}]` },
     {
       req: 1000,
       fn: (n) => {
@@ -147,15 +143,15 @@ export function getFormattedLevel(star: number): string {
         return `§c[§6${nums[0]}§e${nums[1]}§a${nums[2]}§b${nums[3]}§d${stars[0]}§5]`;
       },
     },
-    {req: 1100, fn: (n) => `§7[§f${n}§7${stars[1]}]`},
-    {req: 1200, fn: (n) => `§7[§e${n}§6${stars[1]}§7]`},
-    {req: 1300, fn: (n) => `§7[§b${n}§3${stars[1]}§7]`},
-    {req: 1400, fn: (n) => `§7[§a${n}§2${stars[1]}§7]`},
-    {req: 1500, fn: (n) => `§7[§3${n}§9${stars[1]}§7]`},
-    {req: 1600, fn: (n) => `§7[§c${n}§4${stars[1]}§7]`},
-    {req: 1700, fn: (n) => `§7[§d${n}§5${stars[1]}§7]`},
-    {req: 1800, fn: (n) => `§7[§9${n}§1${stars[1]}§7]`},
-    {req: 1900, fn: (n) => `§7[§5${n}§8${stars[1]}§7]`},
+    { req: 1100, fn: (n) => `§7[§f${n}§7${stars[1]}]` },
+    { req: 1200, fn: (n) => `§7[§e${n}§6${stars[1]}§7]` },
+    { req: 1300, fn: (n) => `§7[§b${n}§3${stars[1]}§7]` },
+    { req: 1400, fn: (n) => `§7[§a${n}§2${stars[1]}§7]` },
+    { req: 1500, fn: (n) => `§7[§3${n}§9${stars[1]}§7]` },
+    { req: 1600, fn: (n) => `§7[§c${n}§4${stars[1]}§7]` },
+    { req: 1700, fn: (n) => `§7[§d${n}§5${stars[1]}§7]` },
+    { req: 1800, fn: (n) => `§7[§9${n}§1${stars[1]}§7]` },
+    { req: 1900, fn: (n) => `§7[§5${n}§8${stars[1]}§7]` },
     {
       req: 2000,
       fn: (n) => {
@@ -236,16 +232,17 @@ export function getFormattedLevel(star: number): string {
   ];
 
   const index = prestigeColors.findIndex(
-    ({req}, index, arr) =>
-      star >= req && ((arr[index + 1] && star < arr[index + 1].req) || !arr[index + 1]),
+    ({ req }, index, arr) =>
+      star >= req &&
+      ((arr[index + 1] && star < arr[index + 1].req) || !arr[index + 1])
   );
   return prestigeColors[index].fn(star);
 }
 
-export function formatPlayerStats(playerStats: Player): playerStatsTypes {
+export function formatPlayerStats(playerStats: Player): PlayerStatsTypes {
   const bedWarsStats = playerStats.stats?.Bedwars;
 
-  return <playerStatsTypes>{
+  return <PlayerStatsTypes>{
     displayName: playerStats.displayname,
     uuid: playerStats.uuid,
     rank: getPlayerRank(playerStats),
@@ -284,20 +281,50 @@ export function formatPlayerStats(playerStats: Player): playerStatsTypes {
       },
 
       winStreak: {
-        overAll: bedWarsStats?.winstreak !== undefined ? bedWarsStats?.winstreak : null,
-        eight_one: bedWarsStats?.eight_one_winstreak !== undefined ? bedWarsStats?.eight_one_winstreak : null,
-        eight_two: bedWarsStats?.eight_two_winstreak !== undefined ? bedWarsStats?.eight_two_winstreak : null,
-        four_three: bedWarsStats?.four_three_winstreak !== undefined ? bedWarsStats?.four_three_winstreak : null,
-        four_four: bedWarsStats?.four_four_winstreak !== undefined ? bedWarsStats?.four_four_winstreak : null,
-        two_four: bedWarsStats?.two_four_winstreak !== undefined ? bedWarsStats?.two_four_winstreak : null,
+        overAll:
+          bedWarsStats?.winstreak !== undefined
+            ? bedWarsStats?.winstreak
+            : null,
+        eight_one:
+          bedWarsStats?.eight_one_winstreak !== undefined
+            ? bedWarsStats?.eight_one_winstreak
+            : null,
+        eight_two:
+          bedWarsStats?.eight_two_winstreak !== undefined
+            ? bedWarsStats?.eight_two_winstreak
+            : null,
+        four_three:
+          bedWarsStats?.four_three_winstreak !== undefined
+            ? bedWarsStats?.four_three_winstreak
+            : null,
+        four_four:
+          bedWarsStats?.four_four_winstreak !== undefined
+            ? bedWarsStats?.four_four_winstreak
+            : null,
+        two_four:
+          bedWarsStats?.two_four_winstreak !== undefined
+            ? bedWarsStats?.two_four_winstreak
+            : null,
       },
       winRate: {
-        overAll: (bedWarsStats?.wins_bedwars || 0) / (bedWarsStats?.games_played_bedwars || 1),
-        eight_one: (bedWarsStats?.eight_one_wins_bedwars || 0) / (bedWarsStats?.eight_one_games_played_bedwars || 1),
-        eight_two: (bedWarsStats?.eight_two_wins_bedwars || 0) / (bedWarsStats?.eight_two_games_played_bedwars || 1),
-        four_three: (bedWarsStats?.four_three_wins_bedwars || 0) / (bedWarsStats?.four_three_games_played_bedwars || 1),
-        four_four: (bedWarsStats?.four_four_wins_bedwars || 0) / (bedWarsStats?.four_four_games_played_bedwars || 1),
-        two_four: (bedWarsStats?.two_four_wins_bedwars || 0) / (bedWarsStats?.two_four_games_played_bedwars || 1),
+        overAll:
+          (bedWarsStats?.wins_bedwars || 0) /
+          (bedWarsStats?.games_played_bedwars || 1),
+        eight_one:
+          (bedWarsStats?.eight_one_wins_bedwars || 0) /
+          (bedWarsStats?.eight_one_games_played_bedwars || 1),
+        eight_two:
+          (bedWarsStats?.eight_two_wins_bedwars || 0) /
+          (bedWarsStats?.eight_two_games_played_bedwars || 1),
+        four_three:
+          (bedWarsStats?.four_three_wins_bedwars || 0) /
+          (bedWarsStats?.four_three_games_played_bedwars || 1),
+        four_four:
+          (bedWarsStats?.four_four_wins_bedwars || 0) /
+          (bedWarsStats?.four_four_games_played_bedwars || 1),
+        two_four:
+          (bedWarsStats?.two_four_wins_bedwars || 0) /
+          (bedWarsStats?.two_four_games_played_bedwars || 1),
       },
 
       finalKills: {
@@ -317,12 +344,24 @@ export function formatPlayerStats(playerStats: Player): playerStatsTypes {
         two_four: bedWarsStats?.two_four_final_deaths_bedwars || 0,
       },
       finalKillDeathRatio: {
-        overAll: (bedWarsStats?.final_kills_bedwars || 0) / (bedWarsStats?.final_deaths_bedwars || 0),
-        eight_one: (bedWarsStats?.eight_one_final_kills_bedwars || 0) / (bedWarsStats?.eight_one_final_deaths_bedwars || 0),
-        eight_two: (bedWarsStats?.eight_two_final_kills_bedwars || 0) / (bedWarsStats?.eight_two_final_deaths_bedwars || 0),
-        four_three: (bedWarsStats?.four_three_final_kills_bedwars || 0) / (bedWarsStats?.four_three_final_deaths_bedwars || 0),
-        four_four: (bedWarsStats?.four_four_final_kills_bedwars || 0) / (bedWarsStats?.four_four_final_deaths_bedwars || 0),
-        two_four: (bedWarsStats?.two_four_final_kills_bedwars || 0) / (bedWarsStats?.two_four_final_deaths_bedwars || 0),
+        overAll:
+          (bedWarsStats?.final_kills_bedwars || 0) /
+          (bedWarsStats?.final_deaths_bedwars || 0),
+        eight_one:
+          (bedWarsStats?.eight_one_final_kills_bedwars || 0) /
+          (bedWarsStats?.eight_one_final_deaths_bedwars || 0),
+        eight_two:
+          (bedWarsStats?.eight_two_final_kills_bedwars || 0) /
+          (bedWarsStats?.eight_two_final_deaths_bedwars || 0),
+        four_three:
+          (bedWarsStats?.four_three_final_kills_bedwars || 0) /
+          (bedWarsStats?.four_three_final_deaths_bedwars || 0),
+        four_four:
+          (bedWarsStats?.four_four_final_kills_bedwars || 0) /
+          (bedWarsStats?.four_four_final_deaths_bedwars || 0),
+        two_four:
+          (bedWarsStats?.two_four_final_kills_bedwars || 0) /
+          (bedWarsStats?.two_four_final_deaths_bedwars || 0),
       },
 
       wins: {
@@ -342,12 +381,24 @@ export function formatPlayerStats(playerStats: Player): playerStatsTypes {
         two_four: bedWarsStats?.two_four_losses_bedwars || 0,
       },
       winLossRatio: {
-        overAll: (bedWarsStats?.wins_bedwars || 0) / (bedWarsStats?.losses_bedwars || 0),
-        eight_one: (bedWarsStats?.eight_one_wins_bedwars || 0) / (bedWarsStats?.eight_one_losses_bedwars || 0),
-        eight_two: (bedWarsStats?.eight_two_wins_bedwars || 0) / (bedWarsStats?.eight_two_losses_bedwars || 0),
-        four_three: (bedWarsStats?.four_three_wins_bedwars || 0) / (bedWarsStats?.four_three_losses_bedwars || 0),
-        four_four: (bedWarsStats?.four_four_wins_bedwars || 0) / (bedWarsStats?.four_four_losses_bedwars || 0),
-        two_four: (bedWarsStats?.two_four_wins_bedwars || 0) / (bedWarsStats?.two_four_losses_bedwars || 0),
+        overAll:
+          (bedWarsStats?.wins_bedwars || 0) /
+          (bedWarsStats?.losses_bedwars || 0),
+        eight_one:
+          (bedWarsStats?.eight_one_wins_bedwars || 0) /
+          (bedWarsStats?.eight_one_losses_bedwars || 0),
+        eight_two:
+          (bedWarsStats?.eight_two_wins_bedwars || 0) /
+          (bedWarsStats?.eight_two_losses_bedwars || 0),
+        four_three:
+          (bedWarsStats?.four_three_wins_bedwars || 0) /
+          (bedWarsStats?.four_three_losses_bedwars || 0),
+        four_four:
+          (bedWarsStats?.four_four_wins_bedwars || 0) /
+          (bedWarsStats?.four_four_losses_bedwars || 0),
+        two_four:
+          (bedWarsStats?.two_four_wins_bedwars || 0) /
+          (bedWarsStats?.two_four_losses_bedwars || 0),
       },
 
       kills: {
@@ -367,12 +418,24 @@ export function formatPlayerStats(playerStats: Player): playerStatsTypes {
         two_four: bedWarsStats?.two_four_deaths_bedwars || 0,
       },
       killDeathRatio: {
-        overAll: (bedWarsStats?.kills_bedwars || 0) / (bedWarsStats?.deaths_bedwars || 0),
-        eight_one: (bedWarsStats?.eight_one_kills_bedwars || 0) / (bedWarsStats?.eight_one_deaths_bedwars || 0),
-        eight_two: (bedWarsStats?.eight_two_kills_bedwars || 0) / (bedWarsStats?.eight_two_deaths_bedwars || 0),
-        four_three: (bedWarsStats?.four_three_kills_bedwars || 0) / (bedWarsStats?.four_three_deaths_bedwars || 0),
-        four_four: (bedWarsStats?.four_four_kills_bedwars || 0) / (bedWarsStats?.four_four_deaths_bedwars || 0),
-        two_four: (bedWarsStats?.two_four_kills_bedwars || 0) / (bedWarsStats?.two_four_deaths_bedwars || 0),
+        overAll:
+          (bedWarsStats?.kills_bedwars || 0) /
+          (bedWarsStats?.deaths_bedwars || 0),
+        eight_one:
+          (bedWarsStats?.eight_one_kills_bedwars || 0) /
+          (bedWarsStats?.eight_one_deaths_bedwars || 0),
+        eight_two:
+          (bedWarsStats?.eight_two_kills_bedwars || 0) /
+          (bedWarsStats?.eight_two_deaths_bedwars || 0),
+        four_three:
+          (bedWarsStats?.four_three_kills_bedwars || 0) /
+          (bedWarsStats?.four_three_deaths_bedwars || 0),
+        four_four:
+          (bedWarsStats?.four_four_kills_bedwars || 0) /
+          (bedWarsStats?.four_four_deaths_bedwars || 0),
+        two_four:
+          (bedWarsStats?.two_four_kills_bedwars || 0) /
+          (bedWarsStats?.two_four_deaths_bedwars || 0),
       },
 
       bedsBroken: {
@@ -392,85 +455,86 @@ export function formatPlayerStats(playerStats: Player): playerStatsTypes {
         two_four: bedWarsStats?.two_four_beds_lost_bedwars || 0,
       },
       bedBreakLossRatio: {
-        overAll: (bedWarsStats?.beds_broken_bedwars || 0) / (bedWarsStats?.beds_lost_bedwars || 0),
-        eight_one: (bedWarsStats?.eight_one_beds_broken_bedwars || 0) / (bedWarsStats?.eight_one_beds_lost_bedwars || 0),
-        eight_two: (bedWarsStats?.eight_two_beds_broken_bedwars || 0) / (bedWarsStats?.eight_two_beds_lost_bedwars || 0),
-        four_three: (bedWarsStats?.four_three_beds_broken_bedwars || 0) / (bedWarsStats?.four_three_beds_lost_bedwars || 0),
-        four_four: (bedWarsStats?.four_four_beds_broken_bedwars || 0) / (bedWarsStats?.four_four_beds_lost_bedwars || 0),
-        two_four: (bedWarsStats?.two_four_beds_broken_bedwars || 0) / (bedWarsStats?.two_four_beds_lost_bedwars || 0),
+        overAll:
+          (bedWarsStats?.beds_broken_bedwars || 0) /
+          (bedWarsStats?.beds_lost_bedwars || 0),
+        eight_one:
+          (bedWarsStats?.eight_one_beds_broken_bedwars || 0) /
+          (bedWarsStats?.eight_one_beds_lost_bedwars || 0),
+        eight_two:
+          (bedWarsStats?.eight_two_beds_broken_bedwars || 0) /
+          (bedWarsStats?.eight_two_beds_lost_bedwars || 0),
+        four_three:
+          (bedWarsStats?.four_three_beds_broken_bedwars || 0) /
+          (bedWarsStats?.four_three_beds_lost_bedwars || 0),
+        four_four:
+          (bedWarsStats?.four_four_beds_broken_bedwars || 0) /
+          (bedWarsStats?.four_four_beds_lost_bedwars || 0),
+        two_four:
+          (bedWarsStats?.two_four_beds_broken_bedwars || 0) /
+          (bedWarsStats?.two_four_beds_lost_bedwars || 0),
       },
     },
   };
 }
 
 const ranks: { [index: string]: any } = {
-  'ADMIN': [
-    ['c', '[ADMIN]'],
-  ],
-  'MODERATOR': [
-    ['2', '[MOD]'],
-  ],
-  'HELPER': [
-    ['9', '[HELPER]'],
-  ],
-  'JR_HELPER': [
-    ['9', '[JR HELPER]'],
-  ],
-  'YOUTUBER': [
+  ADMIN: [['c', '[ADMIN]']],
+  MODERATOR: [['2', '[MOD]']],
+  HELPER: [['9', '[HELPER]']],
+  JR_HELPER: [['9', '[JR HELPER]']],
+  YOUTUBER: [
     ['c', '['],
     ['f', 'YOUTUBE'],
     ['c', ']'],
   ],
-  'SUPERSTAR': [
+  SUPERSTAR: [
     ['%r', '[MVP'],
     ['%p', '++'],
     ['%r', ']'],
   ],
-  'MVP_PLUS': [
+  MVP_PLUS: [
     ['b', '[MVP'],
     ['%p', '+'],
     ['b', ']'],
   ],
-  'MVP': [
-    ['b', '[MVP]'],
-  ],
-  'VIP_PLUS': [
+  MVP: [['b', '[MVP]']],
+  VIP_PLUS: [
     ['a', '[VIP'],
     ['6', '+'],
     ['a', ']'],
   ],
-  'VIP': [
-    ['a', '[VIP]'],
-  ],
-  'DEFAULT': [
-    ['7', ''],
-  ],
+  VIP: [['a', '[VIP]']],
+  DEFAULT: [['7', '']],
 };
 
 // Code up to line 570 is stolen from unborn-hypixel npm package
 function getPlayerRank(playerStats: Player) {
-  return (getString(calcTag(playerStats)) === '&7' ?
-    getString(calcTag(playerStats)) :
-    (getString(calcTag(playerStats)) + ' ')).replace(/&/g, '§');
+  return (
+    getString(calcTag(playerStats)) === '&7'
+      ? getString(calcTag(playerStats))
+      : `${getString(calcTag(playerStats))} `
+  ).replace(/&/g, '§');
 }
 
-const nameBasedColors: { [index: string]: string | undefined } = { // Convert name-based colors to number-based
-  'BLACK': '0',
-  'DARK_BLUE': '1',
-  'DARK_GREEN': '2',
-  'DARK_AQUA': '3',
-  'DARK_RED': '4',
-  'DARK_PURPLE': '5',
-  'GOLD': '6',
-  'GRAY': '7',
-  'DARK_GRAY': '8',
-  'BLUE': '9',
-  'GREEN': 'a',
-  'AQUA': 'b',
-  'RED': 'c',
-  'LIGHT_PURPLE': 'd',
-  'YELLOW': 'e',
-  'WHITE': 'f',
+const nameBasedColors: { [index: string]: string | undefined } = {
+  // Convert name-based colors to number-based
+  BLACK: '0',
+  DARK_BLUE: '1',
+  DARK_GREEN: '2',
+  DARK_AQUA: '3',
+  DARK_RED: '4',
+  DARK_PURPLE: '5',
+  GOLD: '6',
+  GRAY: '7',
+  DARK_GRAY: '8',
+  BLUE: '9',
+  GREEN: 'a',
+  AQUA: 'b',
+  RED: 'c',
+  LIGHT_PURPLE: 'd',
+  YELLOW: 'e',
+  WHITE: 'f',
 };
 
 /**
@@ -483,28 +547,31 @@ function calcTag(player: Player) {
     // In order of the least priority to the highest priority
     let packageRank: string | undefined | null = player.packageRank;
     let newPackageRank: string | undefined | null = player.newPackageRank;
-    let monthlyPackageRank: string | undefined | null = player.monthlyPackageRank;
+    let monthlyPackageRank: string | undefined | null =
+      player.monthlyPackageRank;
     const rankPlusColor = player.rankPlusColor;
     const monthlyRankColor = player.monthlyRankColor;
     let rank: string | undefined | null = player.rank;
     const prefix = player.prefix;
 
-    if (rank === 'NORMAL')
-      rank = null;
-    if (monthlyPackageRank === 'NONE')
-      monthlyPackageRank = null;
-    if (packageRank === 'NONE')
-      packageRank = null;
-    if (newPackageRank === 'NONE')
-      newPackageRank = null;
+    if (rank === 'NORMAL') rank = null;
+    if (monthlyPackageRank === 'NONE') monthlyPackageRank = null;
+    if (packageRank === 'NONE') packageRank = null;
+    if (newPackageRank === 'NONE') newPackageRank = null;
 
-    if (prefix)
-      return parseMinecraftTag(prefix);
+    if (prefix) return parseMinecraftTag(prefix);
     if (rank || monthlyPackageRank || newPackageRank || packageRank)
       return replaceCustomColors(
-        ranks[rank || monthlyPackageRank || newPackageRank || packageRank || 'DEFAULT'],
+        ranks[
+          rank ||
+            monthlyPackageRank ||
+            newPackageRank ||
+            packageRank ||
+            'DEFAULT'
+        ],
         nameBasedColors[rankPlusColor || 'GRAY'],
-        nameBasedColors[monthlyRankColor || 'GRAY']);
+        nameBasedColors[monthlyRankColor || 'GRAY']
+      );
   }
   return replaceCustomColors(ranks.DEFAULT);
 }
@@ -512,7 +579,7 @@ function calcTag(player: Player) {
 function getString(rank: string[][]): string {
   let rankString = '';
   rank.forEach((arr: string[]) => {
-    rankString += '&' + arr[0] + arr[1];
+    rankString += `&${arr[0]}${arr[1]}`;
   });
   return rankString;
 }
@@ -534,10 +601,8 @@ function parseMinecraftTag(tag: string) {
       const j = Math.floor(i / 2); // First index
       const n = i % 2; // Second index
 
-      if (!newRank[j])
-        newRank[j] = [];
-      if (!newRank[j][n])
-        newRank[j][n] = [];
+      if (!newRank[j]) newRank[j] = [];
+      if (!newRank[j][n]) newRank[j][n] = [];
       newRank[j][n] = splitTag[i];
     }
 
@@ -560,27 +625,22 @@ const defaultRankColor = '6'; // %r
 function replaceCustomColors(
   rank: string | string[],
   p?: string | string[],
-  r?: string | string[],
+  r?: string | string[]
 ) {
-  if (!(rank instanceof Array))
-    return rank;
+  if (!(rank instanceof Array)) return rank;
 
   // Deep copy the rank
   const newRank = JSON.parse(JSON.stringify(rank));
 
   // Set defaults
-  if (!p || typeof p !== 'string' || p.length > 1)
-    p = defaultPlusColor;
-  if (!r || typeof r !== 'string' || r.length > 1)
-    r = defaultRankColor;
+  if (!p || typeof p !== 'string' || p.length > 1) p = defaultPlusColor;
+  if (!r || typeof r !== 'string' || r.length > 1) r = defaultRankColor;
 
   // Go through rank and replace wildcards
-  newRank.forEach((component: string | any[]) => {
+  newRank.forEach((component: string | unknown[]) => {
     if (component instanceof Array && component.length >= 2) {
-      if (component[0] === '%p')
-        component[0] = p;
-      else if (component[0] === '%r')
-        component[0] = r;
+      if (component[0] === '%p') component[0] = p;
+      else if (component[0] === '%r') component[0] = r;
     }
   });
 

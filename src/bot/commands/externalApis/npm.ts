@@ -4,7 +4,7 @@ import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { error } from '../../../utils/discord/responses.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
-import { botColors, CommandCategory } from '../../botData.js';
+import { CommandCategory, botColors } from '../../botData.js';
 
 export default class Npm {
   public name: string;
@@ -18,7 +18,7 @@ export default class Npm {
     category: CommandCategory = 'externalApis',
     aliases: string[] | null = null,
     description = 'Fetches information about an npm package',
-    usage = '<package>',
+    usage = '<package>'
   ) {
     this.name = name;
     this.category = category;
@@ -33,16 +33,17 @@ export default class Npm {
 
     let res;
     try {
-      res = await fetch(`https://registry.npmjs.com/${encodeURIComponent(query)}`);
+      res = await fetch(
+        `https://registry.npmjs.com/${encodeURIComponent(query)}`
+      );
     } catch (err) {
-      return error('Couldn\'t fetch npm registry', message);
+      return error("Couldn't fetch npm registry", message);
     }
 
     if (res.status === 404)
       return error(`Couldn't find the npm package \`${query}\``, message);
 
-    if (!res.ok)
-      return error('Couldn\'t fetch npm registry', message);
+    if (!res.ok) return error("Couldn't fetch npm registry", message);
 
     const body = await res.json();
 
@@ -53,8 +54,7 @@ export default class Npm {
     const timeModified = unixToSeconds(Date.parse(body.time.modified));
     let repositoryUrl = body.repository?.url;
 
-    if (typeof repositoryUrl !== 'string')
-      repositoryUrl = 'Unknown';
+    if (typeof repositoryUrl !== 'string') repositoryUrl = 'Unknown';
     else if (repositoryUrl.includes('+') && !repositoryUrl.endsWith('+'))
       repositoryUrl = repositoryUrl?.split('+')[1];
     else if (repositoryUrl.startsWith('git://'))
@@ -66,7 +66,9 @@ export default class Npm {
       .setColor(botColors[1])
       .setTitle(`Information on \`${body.name}\``)
       .setURL(`https://www.npmjs.com/package/${body.name}`)
-      .setDescription(body.description !== undefined ? String(body.description) : '')
+      .setDescription(
+        body.description !== undefined ? String(body.description) : ''
+      )
       .addFields([
         {
           name: 'Version',
@@ -82,26 +84,39 @@ export default class Npm {
         },
         {
           name: 'Created',
-          value: `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`,
+          value: `${messageTimeStamp(timeCreated)} (${messageTimeStamp(
+            timeCreated,
+            'R'
+          )})`,
         },
         {
           name: 'Last Modified',
-          value: body.time.modified ?
-            `${messageTimeStamp(timeModified)} (${messageTimeStamp(timeModified, 'R')})` :
-            `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`,
+          value: body.time.modified
+            ? `${messageTimeStamp(timeModified)} (${messageTimeStamp(
+                timeModified,
+                'R'
+              )})`
+            : `${messageTimeStamp(timeCreated)} (${messageTimeStamp(
+                timeCreated,
+                'R'
+              )})`,
         },
         {
           name: 'Repository',
-          value: repositoryUrl !== 'Unknown' ?
-            `[Click!](${repositoryUrl})` :
-            'Unknown',
+          value:
+            repositoryUrl !== 'Unknown'
+              ? `[Click!](${repositoryUrl})`
+              : 'Unknown',
         },
         {
           name: 'Maintainers',
-          value: body.maintainers?.map((user: { name: string }) => user.name).join(', ') || 'Unknown',
+          value:
+            body.maintainers
+              ?.map((user: { name: string }) => user.name)
+              .join(', ') || 'Unknown',
         },
       ]);
 
-    message.channel.send({embeds: [embed]});
+    message.channel.send({ embeds: [embed] });
   }
 }

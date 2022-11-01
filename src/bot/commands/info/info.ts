@@ -2,7 +2,7 @@ import { Client, EmbedBuilder, Message, Team, User, version } from 'discord.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import config from '../../../utils/misc/readConfig.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
-import { botColors, CommandCategory } from '../../botData.js';
+import { CommandCategory, botColors } from '../../botData.js';
 
 export default class Info {
   public name: string;
@@ -16,7 +16,7 @@ export default class Info {
     category: CommandCategory = 'info',
     aliases: string[] | null = null,
     description = `Displays information about \`${config.botName}\``,
-    usage = '',
+    usage = ''
   ) {
     this.name = name;
     this.category = category;
@@ -26,7 +26,7 @@ export default class Info {
   }
 
   async command(message: Message, _: string[]) {
-    const {client} = message;
+    const { client } = message;
 
     const applicationOwner = await getApplicationOwner(client);
     const clientUptime = getClientUptime(client);
@@ -40,16 +40,19 @@ export default class Info {
         iconURL: 'https://avatars.githubusercontent.com/u/80858965?v=4',
       })
 
-      .setDescription(`${config.botName} is an open source bot made by Barely Awake. ` +
-        `The source code can be found at https://github.com/Barely-Awake/ascend. ` +
-        `${config.botName} features a lot of useful moderation commands. Currently the direction is being an open ` +
-        `source replacement for bots in your server. Right now it's still in early development so it isn't ` +
-        `that yet, but the dev team is working hard to reach that goal as soon as possible.`)
+      .setDescription(
+        `${config.botName} is an open source bot made by Barely Awake. ` +
+          'The source code can be found at https://github.com/Barely-Awake/ascend. ' +
+          `${config.botName} features a lot of useful moderation commands. Currently the direction is being an open ` +
+          "source replacement for bots in your server. Right now it's still in early development so it isn't " +
+          'that yet, but the dev team is working hard to reach that goal as soon as possible.'
+      )
 
       .addFields([
         {
           name: 'Credits',
-          value: 'Antisniper - for providing the denicker used in both the denick and findnick commands',
+          value:
+            'Antisniper - for providing the denicker used in both the denick and findnick commands',
         },
         {
           name: 'Version',
@@ -61,9 +64,10 @@ export default class Info {
         },
         {
           name: 'Up Since',
-          value: typeof clientUptime !== 'string' ?
-            messageTimeStamp(clientUptime, 'R') :
-            'Unknown',
+          value:
+            typeof clientUptime !== 'string'
+              ? messageTimeStamp(clientUptime, 'R')
+              : 'Unknown',
         },
         {
           name: 'Instance Host',
@@ -85,8 +89,9 @@ export default class Info {
 
     if ((message.guild || {}).id !== config.supportServerId)
       await message.reply({
-        content: `Join ${config.botName}'s support server for information on changes to the bot and beta access! ` +
-          `https://discord.gg/PpdbKXKgT3`,
+        content:
+          `Join ${config.botName}'s support server for information on changes to the bot and beta access! ` +
+          'https://discord.gg/PpdbKXKgT3',
         embeds: [infoEmbed],
       });
     else
@@ -113,8 +118,7 @@ function getClientUptime(client: Client) {
   let clientUptime;
   if (client.uptime !== null)
     clientUptime = unixToSeconds(Date.now() - client.uptime);
-  else
-    clientUptime = 'Unknown';
+  else clientUptime = 'Unknown';
 
   return clientUptime;
 }

@@ -1,4 +1,6 @@
-export default function convertMode(mode: 'Overall' | 'Solo' | 'Doubles' | 'Threes' | 'Fours' | '4v4') {
+export default function convertMode(
+  mode: 'Overall' | 'Solo' | 'Doubles' | 'Threes' | 'Fours' | '4v4'
+) {
   switch (mode) {
     case 'Overall':
       return 'overAll';

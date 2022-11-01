@@ -1,14 +1,14 @@
-import { Message } from 'discord.js';
 import {
   onlyInGuild,
   requireArgs,
   requireBotPermission,
   requirePermission,
 } from '../../../utils/discord/commandDecorators.js';
-import { canModerateUser } from '../../../utils/discord/misc.js';
-import { resolveUser } from '../../../utils/discord/resolveTarget.js';
-import { error } from '../../../utils/discord/responses.js';
 import { CommandCategory } from '../../botData.js';
+import { Message } from 'discord.js';
+import { canModerateUser } from '../../../utils/discord/misc.js';
+import { error } from '../../../utils/discord/responses.js';
+import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 
 export default class Ban {
   public name: string;
@@ -22,7 +22,7 @@ export default class Ban {
     category: CommandCategory = 'moderation',
     aliases: string[] | null = null,
     description = 'Bans the target user',
-    usage = '<user> [reason]',
+    usage = '<user> [reason]'
   ) {
     this.name = name;
     this.category = category;
@@ -41,30 +41,41 @@ export default class Ban {
     const reason = args.join(' ');
 
     if (user === null)
-      return error('I couldn\'t find that user, make sure you\'re providing a mention or id', message);
+      return error(
+        "I couldn't find that user, make sure you're providing a mention or id",
+        message
+      );
 
     if (user.id === message.author.id)
-      return error('I\'m going to assume you don\'t want to ban yourself', message);
+      return error(
+        "I'm going to assume you don't want to ban yourself",
+        message
+      );
 
     const target = await message.guild!.members.resolve(user);
 
     if (target === null || target === undefined) {
-      await message.guild!.members.ban(user, {reason: reason || 'None'});
+      await message.guild!.members.ban(user, { reason: reason || 'None' });
     } else {
-
       if (!canModerateUser(message.member!, target, message.guild!.ownerId))
-        return error('You can\'t ban that user, is your role higher than theirs?', message);
+        return error(
+          "You can't ban that user, is your role higher than theirs?",
+          message
+        );
 
       if (!target.bannable)
         return error(
-          'I can\'t ban that user, make sure my role is higher than theirs', message,
+          "I can't ban that user, make sure my role is higher than theirs",
+          message
         );
 
-      await target.ban({reason: reason || 'None'});
+      await target.ban({ reason: reason || 'None' });
     }
 
     return message.channel.send(
-      `Successfully banned ${user.toString()} (\`${user.tag}\`) for ${reason || 'None'}`,
+      `Successfully banned ${user.toString()} (\`${user.tag}\`) for ${
+        reason || 'None'
+      }`
     );
   }
 }

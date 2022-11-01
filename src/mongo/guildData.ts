@@ -1,6 +1,6 @@
 import mongoosePkg from 'mongoose';
 
-const {model, Schema} = mongoosePkg;
+const { model, Schema } = mongoosePkg;
 
 interface IGuild {
   serverId: string;
@@ -29,7 +29,7 @@ const MutedUsersSchema = new Schema<IMutedUsers>({
   guildId: String,
   userId: String,
   muteRoleId: String,
-  expiresAt: {type: Number, required: false},
+  expiresAt: { type: Number, required: false },
 });
 
 export const MutedUserData = model<IMutedUsers>('MutedUsers', MutedUsersSchema);

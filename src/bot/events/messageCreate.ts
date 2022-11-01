@@ -11,8 +11,7 @@ export default function (message: Message) {
 async function commandHandler(message: Message) {
   const prefixUsed = await fetchPrefix(message);
 
-  if (!message.content.startsWith(prefixUsed))
-    return;
+  if (!message.content.startsWith(prefixUsed)) return;
 
   const messageContent = message.content.slice(prefixUsed.length);
   const messageArray = messageContent.split(' ');
@@ -22,25 +21,28 @@ async function commandHandler(message: Message) {
 
   const commandClass = message.client.commands.get(commandName);
 
-  if (commandClass === undefined)
-    return;
+  if (commandClass === undefined) return;
 
   try {
     await message.channel.sendTyping();
-    const startTime = +(new Date());
+    const startTime = +new Date();
     await commandClass.command(message, args);
-    const currentTime = +(new Date());
+    const currentTime = +new Date();
     console.log(
-      `${message.author.tag} ran command '${commandName}' in ${message.guild?.name || 'dms'} ` +
-      `(${currentTime - startTime}ms elapsed)`,
+      `${message.author.tag} ran command '${commandName}' in ${
+        message.guild?.name || 'dms'
+      } ` + `(${currentTime - startTime}ms elapsed)`
     );
   } catch (err) {
     await error(
       `An unknown error occurred with the command: \`${commandName}\`. Logs have been sent to the developers.` +
-      `If this error continues, please join the support discord and let us know in #support.`,
-      message,
+        'If this error continues, please join the support discord and let us know in #support.',
+      message
     );
-    console.error(`An unknown error occurred with the command: ${commandName}. Error:\n`, err);
+    console.error(
+      `An unknown error occurred with the command: ${commandName}. Error:\n`,
+      err
+    );
   }
 }
 
@@ -65,13 +67,11 @@ async function fetchPrefix(message: Message) {
 }
 
 async function fetchMongoPrefix(message: Message) {
-  if (!message.guild)
-    return config.prefix;
+  if (!message.guild) return config.prefix;
 
-  const fetchedData = await GuildData.findOne({serverId: message.guild.id});
+  const fetchedData = await GuildData.findOne({ serverId: message.guild.id });
 
-  if (fetchedData === null)
-    return config.prefix;
+  if (fetchedData === null) return config.prefix;
 
   return fetchedData.prefix;
 }

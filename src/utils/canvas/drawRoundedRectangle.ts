@@ -26,12 +26,17 @@ export default function drawRoundedRectangle(
   height: number,
   radius: radiusParamTypes | number = 5,
   fill = false,
-  stroke = true,
+  stroke = true
 ) {
   if (typeof radius === 'number') {
-    radius = {tl: radius, tr: radius, br: radius, bl: radius};
+    radius = { tl: radius, tr: radius, br: radius, bl: radius };
   } else {
-    const defaultRadius: { [index: string]: number | undefined } = {tl: 0, tr: 0, br: 0, bl: 0};
+    const defaultRadius: { [index: string]: number | undefined } = {
+      tl: 0,
+      tr: 0,
+      br: 0,
+      bl: 0,
+    };
 
     for (const side of Object.keys(defaultRadius)) {
       radius[side] = radius[side] || defaultRadius[side];
@@ -42,7 +47,12 @@ export default function drawRoundedRectangle(
   ctx.lineTo(x + width - radius.tr, y);
   ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
   ctx.lineTo(x + width, y + height - radius.br);
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius.br, y + height);
+  ctx.quadraticCurveTo(
+    x + width,
+    y + height,
+    x + width - radius.br,
+    y + height
+  );
   ctx.lineTo(x + radius.bl, y + height);
   ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
   ctx.lineTo(x, y + radius.tl);

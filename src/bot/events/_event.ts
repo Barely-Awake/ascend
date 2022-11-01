@@ -1,6 +1,6 @@
 // Template Event
 export default function () {
-  return;
+  console.log('Hello world!');
 }
 
 export const settings = {
@@ -8,5 +8,5 @@ export const settings = {
 };
 
 export interface Settings {
-  once: boolean,
+  once: boolean;
 }

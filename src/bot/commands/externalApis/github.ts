@@ -1,12 +1,12 @@
-import { User } from '@saber2pr/types-github-api';
+import { CommandCategory, botColors } from '../../botData.js';
 import { EmbedBuilder, Message } from 'discord.js';
-import fetch from 'node-fetch';
-import sharp from 'sharp';
-import { requireArgs } from '../../../utils/discord/commandDecorators.js';
-import { messageTimeStamp } from '../../../utils/discord/misc.js';
+import { User } from '@saber2pr/types-github-api';
 import { error } from '../../../utils/discord/responses.js';
+import fetch from 'node-fetch';
+import { messageTimeStamp } from '../../../utils/discord/misc.js';
+import { requireArgs } from '../../../utils/discord/commandDecorators.js';
+import sharp from 'sharp';
 import { unixToSeconds } from '../../../utils/misc/time.js';
-import { botColors, CommandCategory } from '../../botData.js';
 
 export default class GitHub {
   public name: string;
@@ -20,7 +20,7 @@ export default class GitHub {
     category: CommandCategory = 'externalApis',
     aliases: string[] | null = null,
     description = 'Provides information on a GitHub user.',
-    usage = '<user>',
+    usage = '<user>'
   ) {
     this.name = name;
     this.category = category;
@@ -37,8 +37,7 @@ export default class GitHub {
     try {
       const response = await fetch(`https://api.github.com/users/${user}`);
 
-      if (!response.ok)
-        return error('User not found', message);
+      if (!response.ok) return error('User not found', message);
 
       userData = await response.json();
     } catch {
@@ -49,7 +48,11 @@ export default class GitHub {
     const timeUpdated = unixToSeconds(Date.parse(userData.updated_at));
 
     let embed = new EmbedBuilder()
-      .setTitle(`GitHub User \`${userData.login}\`${userData.name ? ` (${userData.name})` : ''}`)
+      .setTitle(
+        `GitHub User \`${userData.login}\`${
+          userData.name ? ` (${userData.name})` : ''
+        }`
+      )
       .setColor(botColors[1])
       .setThumbnail(userData.avatar_url)
       .setDescription(userData.bio || 'Unknown')
@@ -57,11 +60,17 @@ export default class GitHub {
       .addFields([
         {
           name: 'Created',
-          value: `${messageTimeStamp(timeCreated)} (${messageTimeStamp(timeCreated, 'R')})`,
+          value: `${messageTimeStamp(timeCreated)} (${messageTimeStamp(
+            timeCreated,
+            'R'
+          )})`,
         },
         {
           name: 'Updated',
-          value: `${messageTimeStamp(timeUpdated)} (${messageTimeStamp(timeUpdated, 'R')})`,
+          value: `${messageTimeStamp(timeUpdated)} (${messageTimeStamp(
+            timeUpdated,
+            'R'
+          )})`,
         },
         {
           name: 'Website',
@@ -91,12 +100,14 @@ export default class GitHub {
 
     let contributionGraph;
     try {
-      const response = await fetch(`https://ghchart.rshah.org/5865F2/${userData.login.toLocaleLowerCase()}`);
+      const response = await fetch(
+        `https://ghchart.rshah.org/5865F2/${userData.login.toLocaleLowerCase()}`
+      );
 
       if (response.ok)
-        contributionGraph = Buffer.from(await response.arrayBuffer()); // Converts response to svg file buffer
-      else
-        contributionGraph = false;
+        contributionGraph = Buffer.from(await response.arrayBuffer());
+      // Converts response to svg file buffer
+      else contributionGraph = false;
     } catch {
       contributionGraph = false;
     }
@@ -106,7 +117,9 @@ export default class GitHub {
       });
 
     // Sets the embed image to the provided attachment on the message.
-    embed = embed.setImage(`attachment://${userData.login.toLocaleLowerCase()}-graph.png`);
+    embed = embed.setImage(
+      `attachment://${userData.login.toLocaleLowerCase()}-graph.png`
+    );
 
     message.channel.send({
       embeds: [embed],

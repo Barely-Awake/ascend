@@ -1,6 +1,6 @@
 // Without this file, assigning client.commands to anything would make typescript throw an error
-import { Message } from 'discord.js';
 import { CommandCategory, CommandCollection } from '../bot/botData.js';
+import { Message } from 'discord.js';
 
 declare module 'discord.js' {
   export interface Client {
@@ -11,7 +11,7 @@ declare module 'discord.js' {
 
 interface Cache {
   prefixes: {
-    [serverId: string]: string
+    [serverId: string]: string;
   };
 }
 
@@ -25,4 +25,3 @@ export interface CommandClass {
 }
 
 export type CommandFunction = (message: Message, args: string[]) => unknown;
-

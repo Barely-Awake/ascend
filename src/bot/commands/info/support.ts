@@ -13,7 +13,7 @@ export default class Support {
     category: CommandCategory = 'info',
     aliases: string[] | null = null,
     description = 'Provides the support discord invite link',
-    usage = '',
+    usage = ''
   ) {
     this.name = name;
     this.category = category;

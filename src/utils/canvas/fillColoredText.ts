@@ -2,8 +2,14 @@ import { CanvasRenderingContext2D } from 'canvas';
 import { colors } from '../minecraft/hypixelApi.js';
 import removeColorCodes from './removeColorCodes.js';
 
-export default function (text: string, ctx: CanvasRenderingContext2D, textPosX: number, textPosY: number, textAlign = 'center'): void {
-  const levelArray = ('§r' + text).split(/§/g);
+export default function (
+  text: string,
+  ctx: CanvasRenderingContext2D,
+  textPosX: number,
+  textPosY: number,
+  textAlign = 'center'
+): void {
+  const levelArray = `§r${text}`.split(/§/g);
 
   const startingTextAlign = ctx.textAlign;
   const startingFont = ctx.font;
@@ -25,7 +31,7 @@ export default function (text: string, ctx: CanvasRenderingContext2D, textPosX: 
 
     switch (fillStyle) {
       case 'hex':
-        ctx.fillStyle = '#' + levelArray[i].substring(0, 6);
+        ctx.fillStyle = `#${levelArray[i].substring(0, 6)}`;
         levelArray[i] = levelArray[i].slice(6);
         break;
       case 'bold':
@@ -56,9 +62,12 @@ export default function (text: string, ctx: CanvasRenderingContext2D, textPosX: 
 
     ctx.fillText(
       levelArray[i],
-      textPosX + ctx.measureText(textCompleted).width -
-      (boldCompensate && !startingFont.toLocaleLowerCase().includes('bold') ? textCompleted.length : 0),
-      textPosY,
+      textPosX +
+        ctx.measureText(textCompleted).width -
+        (boldCompensate && !startingFont.toLocaleLowerCase().includes('bold')
+          ? textCompleted.length
+          : 0),
+      textPosY
     );
 
     textCompleted += levelArray[i];

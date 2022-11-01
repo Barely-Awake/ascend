@@ -1,6 +1,10 @@
 import { Message } from 'discord.js';
 import { GuildData } from '../../../mongo/guildData.js';
-import { onlyInGuild, requireArgs, requirePermission } from '../../../utils/discord/commandDecorators.js';
+import {
+  onlyInGuild,
+  requireArgs,
+  requirePermission,
+} from '../../../utils/discord/commandDecorators.js';
 import { CommandCategory } from '../../botData.js';
 
 export default class SetPrefix {
@@ -15,7 +19,7 @@ export default class SetPrefix {
     category: CommandCategory = 'config',
     aliases: string[] | null = null,
     description = 'Sets prefix in current guild',
-    usage = '<prefix>',
+    usage = '<prefix>'
   ) {
     this.name = name;
     this.category = category;
@@ -30,13 +34,15 @@ export default class SetPrefix {
   async command(message: Message, args: string[]) {
     const prefix = args.join(' ');
 
-    const fetchedData = await GuildData.find({serverId: message.guild!.id});
+    const fetchedData = await GuildData.find({ serverId: message.guild!.id });
 
     let guildInfo;
     if (fetchedData.length === 0)
-      guildInfo = new GuildData({serverId: message.guild!.id, prefix: prefix});
-    else
-      guildInfo = fetchedData[0];
+      guildInfo = new GuildData({
+        serverId: message.guild!.id,
+        prefix: prefix,
+      });
+    else guildInfo = fetchedData[0];
 
     guildInfo.prefix = prefix;
     guildInfo.save();

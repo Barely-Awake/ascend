@@ -2,7 +2,7 @@ import { EmbedBuilder, Invite, Message } from 'discord.js';
 import { onlyInGuild } from '../../../utils/discord/commandDecorators.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
-import { botColors, CommandCategory } from '../../botData.js';
+import { CommandCategory, botColors } from '../../botData.js';
 
 export default class Invites {
   public name: string;
@@ -16,7 +16,7 @@ export default class Invites {
     category: CommandCategory = 'misc',
     aliases: string[] | null = null,
     description = 'Checks the invite information of a user',
-    usage = '<user>',
+    usage = '<user>'
   ) {
     this.name = name;
     this.category = category;
@@ -29,22 +29,23 @@ export default class Invites {
   async command(message: Message, args: string[]) {
     const user = await resolveUser(message, args[0]);
 
-    if (user === null)
-      return error('Couldn\'t fetch that user', message);
+    if (user === null) return error("Couldn't fetch that user", message);
 
     await message.guild!.invites.fetch();
     const allInvites = message.guild!.invites.cache;
 
-    const userInvites = allInvites?.filter((value: Invite) => value.inviter?.id === message.author.id);
+    const userInvites = allInvites?.filter(
+      (value: Invite) => value.inviter?.id === message.author.id
+    );
 
     let userInvitesCount = 0;
     let userInviteCodes;
 
     if (userInvites !== undefined) {
-      userInvites.forEach(invite => {
-        userInvitesCount += (invite.uses || 0);
+      userInvites.forEach((invite) => {
+        userInvitesCount += invite.uses || 0;
       });
-      userInviteCodes = userInvites?.map(i => i.code).join('\n');
+      userInviteCodes = userInvites?.map((i) => i.code).join('\n');
     }
 
     const embed = new EmbedBuilder()
@@ -65,6 +66,6 @@ export default class Invites {
         },
       ]);
 
-    message.channel.send({embeds: [embed]});
+    message.channel.send({ embeds: [embed] });
   }
 }

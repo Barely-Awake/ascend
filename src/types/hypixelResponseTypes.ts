@@ -1,6 +1,6 @@
 // noinspection SpellCheckingInspection
 
-export default interface apiResponse {
+export default interface ApiResponse {
   success: boolean;
   player?: Player;
 }
@@ -10,17 +10,17 @@ export interface Player {
   monthlyRankColor?: string;
   _id: string;
   achievements?: Achievements;
-  achievementsOneTime?: (string | (null)[] | null)[] | null;
+  achievementsOneTime?: (string | null[] | null)[] | null;
   channel?: string;
   disguise?: string;
   displayname: string;
   eulaCoins?: boolean;
-  fireworkStorage?: (FireworkStorageEntity)[] | null;
+  fireworkStorage?: FireworkStorageEntity[] | null;
   firstLogin?: number;
-  friendRequests?: (null)[] | null;
+  friendRequests?: null[] | null;
   karma?: number;
-  knownAliases?: (string)[] | null;
-  knownAliasesLower?: (string)[] | null;
+  knownAliases?: string[] | null;
+  knownAliasesLower?: string[] | null;
   lastLogin?: number;
   mainlobbytutorial?: boolean;
   mostRecentMinecraftVersion?: number;
@@ -51,7 +51,7 @@ export interface Player {
   wardrobe?: string;
   websiteSet?: boolean;
   gadget?: string;
-  friendRequestsUuid?: (null)[] | null;
+  friendRequestsUuid?: null[] | null;
   lastEugeneMessage?: number;
   eugene?: Eugene;
   last_survey?: number;
@@ -72,7 +72,7 @@ export interface Player {
   giftingMeta?: GiftingMeta;
   fortuneBuff?: number;
 
-  //Leveling Rewards
+  // Leveling Rewards
   levelingReward_0?: boolean;
   levelingReward_1?: boolean;
   levelingReward_2?: boolean;
@@ -321,7 +321,7 @@ export interface Player {
   halloween2017Cooldowns?: Summer2017CooldownsOrHalloween2017CooldownsOrChristmas2017Cooldowns;
   currentGadget?: string;
 
-  'achievementTracking?'?: (string)[] | null;
+  'achievementTracking?'?: string[] | null;
   achievementRewardsNew?: AchievementRewardsNew;
   achievementTotem?: AchievementTotem;
   currentCloak?: string;
@@ -566,32 +566,84 @@ export interface FireworkStorageEntity {
 }
 
 export interface ParkourCompletions {
-  ArcadeGames?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  BlitzLobby?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  MegaWalls?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  Paintball?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  QuakeCraft?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  TNT?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  TheWallsLobby?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  christmas?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  main?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  uhc?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  Arena?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  vampirez?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  MainLobby?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  Warlords?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  CopsnCrims?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  Turbo?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  Skywars?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  NewMainLobby?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  Adventure?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  TruePVPParkour?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  SuperSmash?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  SpeedUHC?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  SkyClash?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  Bedwars?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  MurderMystery?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
-  BuildBattle?: (ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity)[] | null;
+  ArcadeGames?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  BlitzLobby?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  MegaWalls?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  Paintball?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  QuakeCraft?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  TNT?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  TheWallsLobby?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  christmas?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  main?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  uhc?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  Arena?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  vampirez?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  MainLobby?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  Warlords?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  CopsnCrims?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  Turbo?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  Skywars?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  NewMainLobby?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  Adventure?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  TruePVPParkour?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  SuperSmash?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  SpeedUHC?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  SkyClash?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  Bedwars?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  MurderMystery?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
+  BuildBattle?:
+    | ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity[]
+    | null;
 }
 
 export interface ArcadeGamesEntityOrBlitzLobbyEntityOrMegaWallsEntityOrPaintballEntityOrQuakeCraftEntityOrTNTEntityOrTheWallsLobbyEntityOrChristmasEntityOrMainEntityOrUhcEntityOrArenaEntityOrVampirezEntityOrMainLobbyEntityOrWarlordsEntityOrCopsnCrimsEntityOrTurboEntityOrSkywarsEntityOrNewMainLobbyEntityOrAdventureEntityOrTruePVPParkourEntityOrSuperSmashEntityOrSpeedUHCEntityOrSkyClashEntityOrBedwarsEntityOrMurderMysteryEntityOrBuildBattleEntity {
@@ -603,7 +655,7 @@ export interface Quests {
   blitzerk?: BlitzerkOrExplosiveGamesOrMegawallerOrNuggetWarriorsOrSerialKillerOrSpaceMissionOrWelcomeToHellOrBlitzKillsOrBlitzWinOrBlitzGameOfTheDayOrMegaWallsPlayOrMegaWallsWinOrMegaWallsWeeklyOrArcadeGamerOrArcadeWinnerOrBedwarsDailyWinOrBedwarsWeeklyBedElimsOrBedwarsWeeklyPumpkinatorOrBedwarsWeeklySantaOrBuildBattlePlayerOrBuildBattleWeekly;
   explosive_games?: BlitzerkOrExplosiveGamesOrMegawallerOrNuggetWarriorsOrSerialKillerOrSpaceMissionOrWelcomeToHellOrBlitzKillsOrBlitzWinOrBlitzGameOfTheDayOrMegaWallsPlayOrMegaWallsWinOrMegaWallsWeeklyOrArcadeGamerOrArcadeWinnerOrBedwarsDailyWinOrBedwarsWeeklyBedElimsOrBedwarsWeeklyPumpkinatorOrBedwarsWeeklySantaOrBuildBattlePlayerOrBuildBattleWeekly;
   gladiator?: GladiatorOrTntAddictOrWarlordsDominationOrWarlordsWinOrWarlordsCtfOrGingerbreadBlingBlingOrUhcDailyOrSkywarsSoloWinOrSkywarsTeamWinOrWarlordsTdmOrQuakeDailyKillOrQuakeDailyPlayOrCrazyWallsDailyPlayOrCrazyWallsDailyKillOrCrazyWallsDailyWinOrVampirezDailyPlayOrVampirezDailyKillOrVampirezDailyWinOrVampirezWeeklyWinOrWallsDailyPlayOrWallsDailyWinOrTntDailyWinOrSupersmashTeamKillsOrSupersmashTeamWinOrSupersmashSoloKillsOrSupersmashSoloWinOrCvcWinDailyNormalOrCvcKillDailyNormalOrCvcKillOrCvcWinDailyDeathmatchOrPaintballerOrNormalBrawlerOrHuntingSeasonOrInsaneBrawlerOrUhcMadnessOrUhcAddictOrUhcTeamOrUhcSoloOrSkyclashPlayGamesOrSkyclashPlayPointsOrSkyclashKillsOrSkyclashWeeklyKillsOrSkyclashVoidOrQuakeDailyWinOrTntTntrunDailyOrTntPvprunDailyOrTntPvprunWeeklyOrTntTntrunWeeklyOrTntTnttagDailyOrMmDailyWinOrMmDailyTargetKillOrMmDailyPowerPlayOrMmWeeklyMurdererKillsOrBlitzSpecialDailyNorthPoleOrSkywarsSpecialNorthPoleOrBuildBattleWinner;
-  halloween2014?: {};
+  halloween2014?: unknown;
   megawaller?: BlitzerkOrExplosiveGamesOrMegawallerOrNuggetWarriorsOrSerialKillerOrSpaceMissionOrWelcomeToHellOrBlitzKillsOrBlitzWinOrBlitzGameOfTheDayOrMegaWallsPlayOrMegaWallsWinOrMegaWallsWeeklyOrArcadeGamerOrArcadeWinnerOrBedwarsDailyWinOrBedwarsWeeklyBedElimsOrBedwarsWeeklyPumpkinatorOrBedwarsWeeklySantaOrBuildBattlePlayerOrBuildBattleWeekly;
   nugget_warriors?: BlitzerkOrExplosiveGamesOrMegawallerOrNuggetWarriorsOrSerialKillerOrSpaceMissionOrWelcomeToHellOrBlitzKillsOrBlitzWinOrBlitzGameOfTheDayOrMegaWallsPlayOrMegaWallsWinOrMegaWallsWeeklyOrArcadeGamerOrArcadeWinnerOrBedwarsDailyWinOrBedwarsWeeklyBedElimsOrBedwarsWeeklyPumpkinatorOrBedwarsWeeklySantaOrBuildBattlePlayerOrBuildBattleWeekly;
   paintball_expert?: PaintballExpert;
@@ -727,7 +779,7 @@ export interface Quests {
 }
 
 export interface BlitzerkOrExplosiveGamesOrMegawallerOrNuggetWarriorsOrSerialKillerOrSpaceMissionOrWelcomeToHellOrBlitzKillsOrBlitzWinOrBlitzGameOfTheDayOrMegaWallsPlayOrMegaWallsWinOrMegaWallsWeeklyOrArcadeGamerOrArcadeWinnerOrBedwarsDailyWinOrBedwarsWeeklyBedElimsOrBedwarsWeeklyPumpkinatorOrBedwarsWeeklySantaOrBuildBattlePlayerOrBuildBattleWeekly {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
 }
 
 export interface CompletionsEntity {
@@ -735,17 +787,17 @@ export interface CompletionsEntity {
 }
 
 export interface GladiatorOrTntAddictOrWarlordsDominationOrWarlordsWinOrWarlordsCtfOrGingerbreadBlingBlingOrUhcDailyOrSkywarsSoloWinOrSkywarsTeamWinOrWarlordsTdmOrQuakeDailyKillOrQuakeDailyPlayOrCrazyWallsDailyPlayOrCrazyWallsDailyKillOrCrazyWallsDailyWinOrVampirezDailyPlayOrVampirezDailyKillOrVampirezDailyWinOrVampirezWeeklyWinOrWallsDailyPlayOrWallsDailyWinOrTntDailyWinOrSupersmashTeamKillsOrSupersmashTeamWinOrSupersmashSoloKillsOrSupersmashSoloWinOrCvcWinDailyNormalOrCvcKillDailyNormalOrCvcKillOrCvcWinDailyDeathmatchOrPaintballerOrNormalBrawlerOrHuntingSeasonOrInsaneBrawlerOrUhcMadnessOrUhcAddictOrUhcTeamOrUhcSoloOrSkyclashPlayGamesOrSkyclashPlayPointsOrSkyclashKillsOrSkyclashWeeklyKillsOrSkyclashVoidOrQuakeDailyWinOrTntTntrunDailyOrTntPvprunDailyOrTntPvprunWeeklyOrTntTntrunWeeklyOrTntTnttagDailyOrMmDailyWinOrMmDailyTargetKillOrMmDailyPowerPlayOrMmWeeklyMurdererKillsOrBlitzSpecialDailyNorthPoleOrSkywarsSpecialNorthPoleOrBuildBattleWinner {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active;
 }
 
 export interface Active {
   started?: number;
-  objectives?: {};
+  objectives?: unknown;
 }
 
 export interface PaintballExpert {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active1;
 }
 
@@ -773,7 +825,7 @@ export interface Objectives1 {
 }
 
 export interface WarriorsJourney {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active3;
 }
 
@@ -795,7 +847,7 @@ export interface Objectives2 {
 }
 
 export interface WarlordsDedication {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active4;
 }
 
@@ -809,7 +861,7 @@ export interface Objectives3 {
 }
 
 export interface GingerbreadMasteryOrGingerbreadMaps {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active5;
 }
 
@@ -823,7 +875,7 @@ export interface Objectives4 {
 }
 
 export interface GingerbreadRacer {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active6;
 }
 
@@ -837,7 +889,7 @@ export interface Objectives5 {
 }
 
 export interface UhcWeeklyOrUhcDm {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active7;
 }
 
@@ -851,7 +903,7 @@ export interface Objectives6 {
 }
 
 export interface SkywarsSoloKills {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active8;
 }
 
@@ -865,7 +917,7 @@ export interface Objectives7 {
 }
 
 export interface SkywarsTeamKills {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active9;
 }
 
@@ -879,7 +931,7 @@ export interface Objectives8 {
 }
 
 export interface SkywarsWeeklyKills {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active10;
 }
 
@@ -893,7 +945,7 @@ export interface Objectives9 {
 }
 
 export interface BlitzWeeklyMaster {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active11;
 }
 
@@ -913,7 +965,7 @@ export interface ArcadeWeeklyArtistOrArcadeWeeklyPlayOrArcadeDailyPlayOrArenaBra
 }
 
 export interface MegaWallsKill {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active12;
 }
 
@@ -927,7 +979,7 @@ export interface Objectives11 {
 }
 
 export interface QuakeWeeklyPlay {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active13;
 }
 
@@ -942,7 +994,7 @@ export interface Objectives12 {
 }
 
 export interface CrazyWallsWeekly {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active14;
 }
 
@@ -956,7 +1008,7 @@ export interface Objectives13 {
 }
 
 export interface VampirezWeeklyKill {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active15;
 }
 
@@ -971,7 +1023,7 @@ export interface Objectives14 {
 }
 
 export interface WallsDailyKill {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active16;
 }
 
@@ -985,7 +1037,7 @@ export interface Objectives15 {
 }
 
 export interface WallsWeekly {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active17;
 }
 
@@ -1000,7 +1052,7 @@ export interface Objectives16 {
 }
 
 export interface TntWeeklyPlay {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active18;
 }
 
@@ -1014,7 +1066,7 @@ export interface Objectives17 {
 }
 
 export interface TntDailyPlay {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active19;
 }
 
@@ -1028,7 +1080,7 @@ export interface Objectives18 {
 }
 
 export interface SupersmashWeeklyKills {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active20;
 }
 
@@ -1042,7 +1094,7 @@ export interface Objectives19 {
 }
 
 export interface CvcKillWeekly {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active21;
 }
 
@@ -1057,7 +1109,7 @@ export interface Objectives20 {
 }
 
 export interface ArenaDailyPlay {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active22;
 }
 
@@ -1071,7 +1123,7 @@ export interface Objectives21 {
 }
 
 export interface ArenaDailyKills {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active23;
 }
 
@@ -1085,7 +1137,7 @@ export interface Objectives22 {
 }
 
 export interface ArenaDailyWins {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active24;
 }
 
@@ -1099,7 +1151,7 @@ export interface Objectives23 {
 }
 
 export interface ArenaWeeklyPlay {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active25;
 }
 
@@ -1113,7 +1165,7 @@ export interface Objectives24 {
 }
 
 export interface ArcadeSpecialist {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active26;
 }
 
@@ -1127,7 +1179,7 @@ export interface Objectives25 {
 }
 
 export interface PaintballKiller {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active27;
 }
 
@@ -1141,7 +1193,7 @@ export interface Objectives26 {
 }
 
 export interface TntWizardsWeekly {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active28;
 }
 
@@ -1156,7 +1208,7 @@ export interface Objectives27 {
 }
 
 export interface TntBowspleefDaily {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active29;
 }
 
@@ -1170,7 +1222,7 @@ export interface Objectives28 {
 }
 
 export interface TntWizardsDaily {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active30;
 }
 
@@ -1185,7 +1237,7 @@ export interface Objectives29 {
 }
 
 export interface TntBowspleefWeekly {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active31;
 }
 
@@ -1199,7 +1251,7 @@ export interface Objectives30 {
 }
 
 export interface TntTnttagWeekly {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active32;
 }
 
@@ -1213,7 +1265,7 @@ export interface Objectives31 {
 }
 
 export interface BedwarsDailyOneMore {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active33;
 }
 
@@ -1227,7 +1279,7 @@ export interface Objectives32 {
 }
 
 export interface MmWeeklyWins {
-  completions?: (CompletionsEntity)[] | null;
+  completions?: CompletionsEntity[] | null;
   active?: Active34;
 }
 
@@ -1375,7 +1427,7 @@ export interface Arena {
   lvl_health?: number;
   magical_chest?: number;
   offensive?: string;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   penalty?: number;
   rating?: number;
   support?: string;
@@ -1445,7 +1497,7 @@ export interface Battleground {
   warrior_plays?: number;
   warrior_skill1?: number;
   warrior_spec?: string;
-  weapon_inventory?: (WeaponInventoryEntity)[] | null;
+  weapon_inventory?: WeaponInventoryEntity[] | null;
   win_streak?: number;
   wins?: number;
   wins_avenger?: number;
@@ -1507,7 +1559,7 @@ export interface Battleground {
   mage_skill5?: number;
   mage_armor_selection?: number;
   salvaged_weapons_epic?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   crafted?: number;
   crafted_epic?: number;
   reroll_epic?: number;
@@ -1653,7 +1705,7 @@ export interface HungerGames {
   knight?: number;
   meatmaster?: number;
   necromancer?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   reddragon?: number;
   rogue?: number;
   scout?: number;
@@ -1667,7 +1719,7 @@ export interface HungerGames {
   'votes_Caelum v2'?: number;
   votes_Citadel?: number;
   votes_City?: number;
-  'votes_Aelin\'s Tower'?: number;
+  "votes_Aelin's Tower"?: number;
   votes_Peaks?: number;
   weekly_kills_b?: number;
   weekly_kills_a?: number;
@@ -1716,7 +1768,7 @@ export interface MCGO {
   round_wins?: number;
   shots_fired?: number;
   selectedKnifeDev?: string;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   mcgo?: Mcgo;
   knife_damage_increase?: number;
   knife_attack_delay?: number;
@@ -1791,7 +1843,7 @@ export interface Paintball {
   hat?: string;
   kills?: number;
   killstreaks?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   shots_fired?: number;
   superluck?: number;
   transfusion?: number;
@@ -1811,7 +1863,7 @@ export interface Quake {
   killsound?: string;
   killstreaks?: number;
   muzzle?: string;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   sight?: string;
   trigger?: string;
   wins?: number;
@@ -1854,7 +1906,7 @@ export interface TNTGames {
   doublejump_tntrun?: number;
   kills_capture?: number;
   kineticwizard_explode?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   spleef_doublejump?: number;
   spleef_repulse?: number;
   spleef_triple?: number;
@@ -1934,7 +1986,7 @@ export interface UHC {
   equippedKit?: string;
   heads_eaten?: number;
   kills?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   perk_alchemy_line_a?: number;
   perk_armorsmith_line_a?: number;
   perk_enchanting_line_a?: number;
@@ -2012,7 +2064,7 @@ export interface VampireZ {
   kill_booster?: number;
   loot_drops?: number;
   most_vampire_kills?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   renfield?: number;
   theology?: number;
   vampire_deaths?: number;
@@ -2068,7 +2120,7 @@ export interface Walls {
   monthly_wins_a?: number;
   monthly_wins_b?: number;
   opportunity?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   ready?: number;
   redstone_expert?: number;
   sage?: number;
@@ -2249,7 +2301,7 @@ export interface Walls3 {
   monthly_finalKills_Zombie_a?: number;
   monthly_finalKills_Zombie_b?: number;
   mutations_visibility?: boolean;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   pigman_a?: number;
   pigman_b?: number;
   pigman_c?: number;
@@ -6262,7 +6314,7 @@ export interface GingerBread {
   booster_active?: string;
   frame_active?: string;
   engine_active?: string;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   skin_active?: string;
   jacket_active?: string;
   pants_active?: string;
@@ -6347,7 +6399,7 @@ export interface SkyWars {
   losses_kit_basic_solo_default?: number;
   kills?: number;
   egg_thrown?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   blocks_broken?: number;
   assists_solo?: number;
   assists_kit_basic_solo_default?: number;
@@ -6997,7 +7049,7 @@ export interface TrueCombat {
   golden_skulls?: number;
   giant_zombie?: number;
   solo_chaos_bounty_hunter?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   crazywalls_kills_solo_chaos?: number;
   crazywalls_wins_solo_chaos?: number;
   solo_chaos_super_luck?: number;
@@ -7192,7 +7244,7 @@ export interface SuperSmash {
   lastLevel_SANIC?: number;
   xp_GREEN_HOOD?: number;
   lastLevel_GREEN_HOOD?: number;
-  packages?: (null)[] | null;
+  packages?: null[] | null;
   pg_CAKE_MONSTER?: number;
   pg_SHOOP_DA_WHOOP?: number;
   pg_SERGEANT_SHIELD?: number;
@@ -8696,7 +8748,7 @@ export interface HeroLevelBoosterActive {
 }
 
 export interface SpeedUHC {
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   tearWellUses?: number;
   found_LEGENDARY?: number;
   tears?: number;
@@ -8916,7 +8968,7 @@ export interface SpeedUHC {
 
 export interface SkyClash {
   card_packs?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   perk_arrow_deflection?: number;
   perk_creeper_new?: boolean;
   perk_arrow_deflection_new?: boolean;
@@ -9502,7 +9554,7 @@ export interface Bedwars {
   four_three_entity_attack_final_kills_bedwars?: number;
   entity_attack_deaths_bedwars?: number;
   four_three_final_kills_bedwars?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   bedwars_box_commons?: number;
   bedwars_box?: number;
   chest_history?: string;
@@ -9596,7 +9648,7 @@ export interface Bedwars {
   shop_sort?: string;
   activeKillEffect?: string;
   four_four_fire_tick_deaths_bedwars?: number;
-  chest_history_new?: (string)[] | null;
+  chest_history_new?: string[] | null;
   bedwars_box_epics?: number;
   quickjoin_uses_Playground?: number;
   eight_one_fall_deaths_bedwars?: number;
@@ -9692,7 +9744,7 @@ export interface Bedwars {
 }
 
 export interface MurderMystery {
-  murdermystery_books?: (string)[] | null;
+  murdermystery_books?: string[] | null;
   quickjoin_uses_total?: number;
   quickjoin_uses_Transport?: number;
   games_archives_MURDER_CLASSIC?: number;
@@ -9706,11 +9758,11 @@ export interface MurderMystery {
   wins_MURDER_CLASSIC?: number;
   granted_chests?: number;
   mm_chests?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   MurderMystery_openedCommons?: number;
   MurderMystery_openedChests?: number;
   MurderMystery_openedRares?: number;
-  mm_chest_history?: (string)[] | null;
+  mm_chest_history?: string[] | null;
   coins_pickedup_MURDER_CLASSIC?: number;
   games_ancient_tomb?: number;
   games_ancient_tomb_MURDER_CLASSIC?: number;
@@ -9996,7 +10048,7 @@ export interface MurderMystery {
   suicides_gold_rush_MURDER_CLASSIC?: number;
   suicides_gold_rush?: number;
   mm_christmas_chests?: number;
-  chest_history_new?: (string)[] | null;
+  chest_history_new?: string[] | null;
   MurderMystery_openedEpics?: number;
   MurderMystery_openedLegendaries?: number;
   active_kill_note?: string;
@@ -10004,7 +10056,7 @@ export interface MurderMystery {
 
 export interface BuildBattle {
   wins_solo_normal?: number;
-  packages?: (string)[] | null;
+  packages?: string[] | null;
   wins?: number;
   games_played?: number;
   score?: number;
@@ -10013,7 +10065,7 @@ export interface BuildBattle {
   correct_guesses?: number;
   weekly_coins_a?: number;
   total_votes?: number;
-  buildbattle_loadout?: (string)[] | null;
+  buildbattle_loadout?: string[] | null;
   weekly_coins_b?: number;
   super_votes?: number;
   new_selected_hat?: string;
@@ -10037,7 +10089,7 @@ export interface Duels {
 }
 
 export interface VanityMeta {
-  packages?: (string)[] | null;
+  packages?: string[] | null;
 }
 
 export interface Eugene {
@@ -10077,8 +10129,8 @@ export interface Voting {
 
 export interface HousingMeta {
   tutorialStep?: string;
-  packages?: (string)[] | null;
-  allowedBlocks?: (string)[] | null;
+  packages?: string[] | null;
+  allowedBlocks?: string[] | null;
   visibilityDisabled?: boolean;
   toggle_BORDER?: boolean;
   playerSettings?: PlayerSettings;
@@ -10160,7 +10212,7 @@ export interface GiftingMeta {
   giftsGiven?: number;
   bundlesGiven?: number;
   realBundlesGiven?: number;
-  milestones?: (string)[] | null;
+  milestones?: string[] | null;
 }
 
 export interface SpecialtyCooldowns {
@@ -10488,9 +10540,9 @@ export interface AchievementRewardsNew {
 export interface AchievementTotem {
   canCustomize?: boolean;
   allowed_max_height?: number;
-  unlockedParts?: (string)[] | null;
+  unlockedParts?: string[] | null;
   selectedParts?: SelectedParts;
-  unlockedColors?: (string)[] | null;
+  unlockedColors?: string[] | null;
   selectedColors?: SelectedColors;
 }
 

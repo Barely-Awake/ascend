@@ -1,7 +1,10 @@
 import { EmbedBuilder, Message } from 'discord.js';
 import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
-import { getPlayerNames, getPlayerSkin } from '../../../utils/minecraft/mojangApi.js';
+import {
+  getPlayerNames,
+  getPlayerSkin,
+} from '../../../utils/minecraft/mojangApi.js';
 import { CommandCategory } from '../../botData.js';
 
 export default class Skin {
@@ -15,8 +18,8 @@ export default class Skin {
     name = 'skin',
     category: CommandCategory = 'minecraft',
     aliases: string[] | null = null,
-    description = 'Shows a player\'s minecraft skin.',
-    usage = '[player]',
+    description = "Shows a player's minecraft skin.",
+    usage = '[player]'
   ) {
     this.name = name;
     this.category = category;
@@ -26,15 +29,16 @@ export default class Skin {
   }
 
   async command(message: Message, args: string[]) {
-    const mojangData = await resolvePlayer((args[0] || '').toLowerCase(), message);
-    if (typeof mojangData === 'string')
-      return error(mojangData, message);
+    const mojangData = await resolvePlayer(
+      (args[0] || '').toLowerCase(),
+      message
+    );
+    if (typeof mojangData === 'string') return error(mojangData, message);
 
     if (mojangData.name === null) {
       const data = await getPlayerNames(mojangData.uuid);
 
-      if (data === null)
-        return error(`Couldn't fetch player's names`, message);
+      if (data === null) return error("Couldn't fetch player's names", message);
 
       mojangData.name = data[data.length - 1].name;
     }
@@ -43,11 +47,13 @@ export default class Skin {
 
     const embed = new EmbedBuilder()
       .setTitle(`${mojangData.name}'s skin`)
-      .setDescription(`[Use this skin](https://www.minecraft.net/en-us/profile/skin/remote?url=${skinUrl})\n` +
-        `[Player's NameMC](https://namemc.com/profile/${mojangData.name})`)
+      .setDescription(
+        `[Use this skin](https://www.minecraft.net/en-us/profile/skin/remote?url=${skinUrl})\n` +
+          `[Player's NameMC](https://namemc.com/profile/${mojangData.name})`
+      )
       .setThumbnail(`https://crafatar.com/avatars/${mojangData.uuid}?overlay`)
       .setImage(skinUrl);
 
-    message.channel.send({embeds: [embed]});
+    message.channel.send({ embeds: [embed] });
   }
 }

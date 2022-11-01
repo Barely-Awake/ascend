@@ -4,10 +4,7 @@ export default class _Example implements TaskClass {
   public name: string;
   public interval: number;
 
-  constructor(
-    name = 'Example',
-    interval = 60 * 1000,
-  ) {
+  constructor(name = 'Example', interval = 60 * 1000) {
     this.name = name;
     this.interval = interval;
   }
@@ -23,4 +20,4 @@ export interface TaskClass {
   task: TaskFunction;
 }
 
-type TaskFunction = (client: Client) => unknown
+type TaskFunction = (client: Client) => unknown;

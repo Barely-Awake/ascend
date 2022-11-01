@@ -2,7 +2,7 @@ import { EmbedBuilder, Message } from 'discord.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import config from '../../../utils/misc/readConfig.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
-import { botColors, CommandCategory } from '../../botData.js';
+import { CommandCategory, botColors } from '../../botData.js';
 
 export default class Performance {
   public name: string;
@@ -15,8 +15,8 @@ export default class Performance {
     name = 'performance',
     category: CommandCategory = 'info',
     aliases: string[] | null = null,
-    description = 'Sends stats about the bot\'s performance',
-    usage = '',
+    description = "Sends stats about the bot's performance",
+    usage = ''
   ) {
     this.name = name;
     this.category = category;
@@ -26,13 +26,14 @@ export default class Performance {
   }
 
   async command(message: Message, _: string[]) {
-    const perfMsg = await message.channel.send('Checking Client Performance...');
+    const perfMsg = await message.channel.send(
+      'Checking Client Performance...'
+    );
 
     let clientUptime;
     if (message.client.uptime !== null)
       clientUptime = unixToSeconds(Date.now() - message.client.uptime);
-    else
-      clientUptime = 'Unknown';
+    else clientUptime = 'Unknown';
 
     const embed = new EmbedBuilder()
       .setTitle(`Performance information on \`${config.botName}\``)
@@ -40,7 +41,9 @@ export default class Performance {
       .addFields([
         {
           name: 'API Ping',
-          value: `\`${Math.trunc(perfMsg.createdTimestamp - message.createdTimestamp)}\` ms`,
+          value: `\`${Math.trunc(
+            perfMsg.createdTimestamp - message.createdTimestamp
+          )}\` ms`,
         },
         {
           name: 'Websocket Ping',
@@ -48,16 +51,19 @@ export default class Performance {
         },
         {
           name: 'Uptime',
-          value: typeof clientUptime !== 'string' ?
-            messageTimeStamp(clientUptime, 'R') :
-            'Unknown',
+          value:
+            typeof clientUptime !== 'string'
+              ? messageTimeStamp(clientUptime, 'R')
+              : 'Unknown',
         },
         {
           name: 'Memory Usage',
-          value: `\`${Math.floor(process.memoryUsage().heapUsed / 1024 / 1024)}\` MB`,
+          value: `\`${Math.floor(
+            process.memoryUsage().heapUsed / 1024 / 1024
+          )}\` MB`,
         },
       ]);
 
-    perfMsg.edit({embeds: [embed]});
+    perfMsg.edit({ embeds: [embed] });
   }
 }

@@ -7,14 +7,14 @@ that aims to be an **open source** alternative to many discord bots.
 
 Some features that are planned:
 
-* Basic Moderation Commands
-* Leveling
-* Auto Mod
-* Logging
-* Reports
-* Twitch & YouTube tracking
-* Reaction Roles
-* Suggestions
+- Basic Moderation Commands
+- Leveling
+- Auto Mod
+- Logging
+- Reports
+- Twitch & YouTube tracking
+- Reaction Roles
+- Suggestions
 
 And that's just some features planned. Keep in mind those features are
 only **planned** and none of them are implemented right now. It's going to

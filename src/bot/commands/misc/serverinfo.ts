@@ -3,7 +3,7 @@ import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { resolveGuild } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
-import { botEmojis, CommandCategory } from '../../botData.js';
+import { CommandCategory, botEmojis } from '../../botData.js';
 
 export default class ServerInfo {
   public name: string;
@@ -17,7 +17,7 @@ export default class ServerInfo {
     category: CommandCategory = 'misc',
     aliases: string[] | null = ['server'],
     description = 'Provides information on the given server',
-    usage = '[server]',
+    usage = '[server]'
   ) {
     this.name = name;
     this.category = category;
@@ -29,18 +29,19 @@ export default class ServerInfo {
   async command(message: Message, args: string[]) {
     const server = await resolveGuild(message, args[0]);
 
-    if (server === null)
-      return error('Couldn\'t find a valid server', message);
+    if (server === null) return error("Couldn't find a valid server", message);
 
     await Promise.all([
       server.fetch(),
-      server.members.fetch({withPresences: true}),
+      server.members.fetch({ withPresences: true }),
       server.channels.fetch(),
       server.roles.fetch(),
       server.emojis.fetch(),
     ]);
 
-    const guildRoles = server.roles.cache.sort((a, b) => b.position - a.position).map(role => role.toString()),
+    const guildRoles = server.roles.cache
+        .sort((a, b) => b.position - a.position)
+        .map((role) => role.toString()),
       guildMembers = server.members.cache,
       guildPresences = server.presences.cache,
       guildChannels = server.channels.cache,
@@ -73,17 +74,19 @@ export default class ServerInfo {
             `Owner: <@${server.ownerId}>`,
             `ID: ${server.id}`,
             `Level: ${server.premiumTier.toLocaleString() || 'Unknown'}`,
-            `Created: ${messageTimeStamp(guildCreationDate)} (${messageTimeStamp(guildCreationDate, 'R')})`,
+            `Created: ${messageTimeStamp(
+              guildCreationDate
+            )} (${messageTimeStamp(guildCreationDate, 'R')})`,
           ].join('\n'),
         },
         {
           name: 'Counts',
           value: [
-            `Users: ${guildMembers.filter(member => !member.user.bot).size}`,
-            `Bots: ${guildMembers.filter(member => member.user.bot).size}`,
+            `Users: ${guildMembers.filter((member) => !member.user.bot).size}`,
+            `Bots: ${guildMembers.filter((member) => member.user.bot).size}`,
             `Boosts: ${server.premiumSubscriptionCount || 0}`,
-            `Channels: ${(guildChannels.size).toLocaleString()}`,
-            `Roles: ${(guildRoles.length).toLocaleString()}`,
+            `Channels: ${guildChannels.size.toLocaleString()}`,
+            `Roles: ${guildRoles.length.toLocaleString()}`,
             `Emojis: ${guildEmojis.size}`,
           ].join('\n'),
         },
@@ -93,17 +96,19 @@ export default class ServerInfo {
             `Online ${botEmojis.online}: ${statusCounts[0]}`,
             `Idle ${botEmojis.idle}: ${statusCounts[1]}`,
             `Do Not Disturb ${botEmojis.dnd}: ${statusCounts[2]}`,
-            `Offline ${botEmojis.offline}: ${server.memberCount - (statusCounts[0] + statusCounts[1] + statusCounts[2])}`,
+            `Offline ${botEmojis.offline}: ${
+              server.memberCount -
+              (statusCounts[0] + statusCounts[1] + statusCounts[2])
+            }`,
           ].join('\n'),
         },
       ]);
 
-    const iconUrl = server.iconURL({size: 4096});
+    const iconUrl = server.iconURL({ size: 4096 });
 
     if (iconUrl !== null && iconUrl !== undefined)
-      embed = embed
-        .setThumbnail(iconUrl);
+      embed = embed.setThumbnail(iconUrl);
 
-    message.channel.send({embeds: [embed]});
+    message.channel.send({ embeds: [embed] });
   }
 }

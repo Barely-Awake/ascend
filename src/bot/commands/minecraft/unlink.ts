@@ -15,7 +15,7 @@ export default class Unlink {
     category: CommandCategory = 'minecraft',
     aliases: string[] | null = null,
     description = 'Unlinks your discord account from your minecraft account',
-    usage = '',
+    usage = ''
   ) {
     this.name = name;
     this.category = category;
@@ -25,18 +25,23 @@ export default class Unlink {
   }
 
   async command(message: Message, _: string[]) {
-    const linkedAccountData = await Player.find({discordId: message.author.id});
+    const linkedAccountData = await Player.find({
+      discordId: message.author.id,
+    });
 
     if (linkedAccountData.length === 0)
-      return error('You haven\'t linked an account yet!', message);
+      return error("You haven't linked an account yet!", message);
     const names: string[] = [];
 
     linkedAccountData.forEach((v) => {
-      if (v.playerName !== undefined)
-        names.push(v.playerName);
+      if (v.playerName !== undefined) names.push(v.playerName);
     });
-    await Player.deleteMany({discordId: message.author.id});
+    await Player.deleteMany({ discordId: message.author.id });
 
-    return message.channel.send(`Successfully unlinked your discord account from \`${names.join(' & ') || 'Unknown'}\``);
+    return message.channel.send(
+      `Successfully unlinked your discord account from \`${
+        names.join(' & ') || 'Unknown'
+      }\``
+    );
   }
 }

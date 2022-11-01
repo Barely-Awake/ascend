@@ -1,4 +1,4 @@
-export type NameHistory = MojangNameHistoryIndex[]
+export type NameHistory = MojangNameHistoryIndex[];
 
 interface MojangNameHistoryIndex {
   name: string;

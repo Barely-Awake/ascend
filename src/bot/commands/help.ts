@@ -6,8 +6,12 @@ import {
   SelectMenuBuilder,
   SelectMenuComponentOptionData,
 } from 'discord.js';
+import {
+  CommandCategory,
+  CommandCollection,
+  categoryInfo,
+} from '../botData.js';
 import config from '../../utils/misc/readConfig.js';
-import { categoryInfo, CommandCategory, CommandCollection } from '../botData.js';
 
 export default class Help {
   public name: string;
@@ -21,7 +25,7 @@ export default class Help {
     category: CommandCategory = 'info',
     aliases: string[] | null = ['h', 'commands'],
     description = 'Shows help message.',
-    usage = '',
+    usage = ''
   ) {
     this.name = name;
     this.category = category;
@@ -33,24 +37,29 @@ export default class Help {
   async command(message: Message, _: string[]) {
     const baseEmbed = new EmbedBuilder()
       .setTitle(`${config.botName} Help`)
-      .setDescription(`<> - Required Argument\n[] - Option Argument\n${config.prefix} - Bot Prefix`);
+      .setDescription(
+        `<> - Required Argument\n[] - Option Argument\n${config.prefix} - Bot Prefix`
+      );
 
     const selectMenuOptions: SelectMenuComponentOptionData[] = [];
     for (const key of Object.keys(categoryInfo)) {
-      baseEmbed.addFields([{
-        name: categoryInfo[key].label,
-        value: categoryInfo[key].description || '',
-      }]);
+      baseEmbed.addFields([
+        {
+          name: categoryInfo[key].label,
+          value: categoryInfo[key].description || '',
+        },
+      ]);
       const categoryDeepCopy = JSON.parse(JSON.stringify(categoryInfo[key]));
       delete categoryDeepCopy.embed;
       selectMenuOptions.push(categoryDeepCopy);
     }
 
-    const actionRow = new ActionRowBuilder<SelectMenuBuilder>()
-      .addComponents(new SelectMenuBuilder()
+    const actionRow = new ActionRowBuilder<SelectMenuBuilder>().addComponents(
+      new SelectMenuBuilder()
         .setCustomId('categorySelector')
         .setPlaceholder('Categories')
-        .addOptions(selectMenuOptions));
+        .addOptions(selectMenuOptions)
+    );
 
     const sentMessage = await message.channel.send({
       embeds: [baseEmbed],
@@ -63,12 +72,11 @@ export default class Help {
     });
 
     interactionCollector.on('collect', (interaction) => {
-      if (!interaction.isSelectMenu())
-        return;
+      if (!interaction.isSelectMenu()) return;
 
       if (interaction.user.id !== message.author.id) {
         interaction.reply({
-          content: 'You can\'t do that to this message!',
+          content: "You can't do that to this message!",
         });
         return;
       }
@@ -91,19 +99,19 @@ export function makeHelpEmbeds(commands: CommandCollection) {
   for (const key of Object.keys(categoryInfo)) {
     categoryInfo[key].embed = new EmbedBuilder()
       .setTitle(`${config.botName} Help`)
-      .setDescription(`<> - Required Argument\n[] - Option Argument`);
+      .setDescription('<> - Required Argument\n[] - Option Argument');
 
     commands.forEach((commandClass, commandName) => {
-      if (categoryInfo[key].value !== commandClass.category)
-        return;
+      if (categoryInfo[key].value !== commandClass.category) return;
 
-      if (commandName !== commandClass.name)
-        return;
+      if (commandName !== commandClass.name) return;
 
-      categoryInfo[key].embed.addFields([{
-        name: `${commandClass.name} ${commandClass.usage}`,
-        value: commandClass.description,
-      }]);
+      categoryInfo[key].embed.addFields([
+        {
+          name: `${commandClass.name} ${commandClass.usage}`,
+          value: commandClass.description,
+        },
+      ]);
     });
   }
 }

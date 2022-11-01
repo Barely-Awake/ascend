@@ -21,7 +21,7 @@ export default class Unban {
     category: CommandCategory = 'moderation',
     aliases: string[] | null = null,
     description = 'Unbans the target user',
-    usage = '<user> [reason]',
+    usage = '<user> [reason]'
   ) {
     this.name = name;
     this.category = category;
@@ -40,12 +40,17 @@ export default class Unban {
     const reason = args.join(' ');
 
     if (user === null)
-      return error('I couldn\'t find that user, make sure you\'re providing a mention or id', message);
+      return error(
+        "I couldn't find that user, make sure you're providing a mention or id",
+        message
+      );
 
     await message.guild!.bans.remove(user, reason || 'None');
 
     return message.channel.send(
-      `Successfully unbanned ${user.toString()} (\`${user.tag}\`) for ${reason || 'None'}`,
+      `Successfully unbanned ${user.toString()} (\`${user.tag}\`) for ${
+        reason || 'None'
+      }`
     );
   }
 }

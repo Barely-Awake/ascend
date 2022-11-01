@@ -6,10 +6,7 @@ export default class CheckMutedUsers implements TaskClass {
   public name: string;
   public interval: number;
 
-  constructor(
-    name = 'CheckMutedUsers',
-    interval = 60 * 1000,
-  ) {
+  constructor(name = 'CheckMutedUsers', interval = 60 * 1000) {
     this.name = name;
     this.interval = interval;
   }
@@ -21,18 +18,19 @@ export default class CheckMutedUsers implements TaskClass {
       },
     });
 
-    if (!usersToBeUnMuted)
-      return;
+    if (!usersToBeUnMuted) return;
 
     usersToBeUnMuted.forEach((muteData) => {
       setTimeout(async () => {
-        const guild = client.guilds.cache.get(muteData.guildId) || await client.guilds.fetch(muteData.guildId);
-        if (!guild)
-          return;
+        const guild =
+          client.guilds.cache.get(muteData.guildId) ||
+          (await client.guilds.fetch(muteData.guildId));
+        if (!guild) return;
 
-        const mutedUser = guild.members.cache.get(muteData.userId) || await guild.members.fetch(muteData.userId);
-        if (!mutedUser || !mutedUser.manageable)
-          return;
+        const mutedUser =
+          guild.members.cache.get(muteData.userId) ||
+          (await guild.members.fetch(muteData.userId));
+        if (!mutedUser || !mutedUser.manageable) return;
 
         try {
           await mutedUser.roles.remove(muteData.muteRoleId);
@@ -42,9 +40,8 @@ export default class CheckMutedUsers implements TaskClass {
             expiresAt: muteData.expiresAt,
           });
         } catch {
-
+          console.log('Failed to unmute user');
         }
-
       }, muteData.expiresAt || 10 * 1000);
     });
   }

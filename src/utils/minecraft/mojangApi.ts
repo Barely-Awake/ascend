@@ -3,10 +3,11 @@ import { NameHistory, PlayerUuid } from '../../types/mojangApiTypes.js';
 
 export async function getPlayerUuid(playerName: string) {
   try {
-    const response = await fetch(`https://api.mojang.com/users/profiles/minecraft/${playerName}`);
+    const response = await fetch(
+      `https://api.mojang.com/users/profiles/minecraft/${playerName}`
+    );
 
-    if (!response.ok)
-      return null;
+    if (!response.ok) return null;
 
     const data: PlayerUuid = await response.json();
 
@@ -18,10 +19,11 @@ export async function getPlayerUuid(playerName: string) {
 
 export async function getPlayerNames(playerUuid: string) {
   try {
-    const response = await fetch(`https://api.mojang.com/user/profiles/${playerUuid}/names`);
+    const response = await fetch(
+      `https://api.mojang.com/user/profiles/${playerUuid}/names`
+    );
 
-    if (!response.ok)
-      return null;
+    if (!response.ok) return null;
 
     const data: NameHistory = await response.json();
 

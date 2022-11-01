@@ -1,20 +1,30 @@
 import canvasPkg from 'canvas';
-import { ActivityType, Client, Collection, GatewayIntentBits, IntentsBitField } from 'discord.js';
+import {
+  ActivityType,
+  Client,
+  Collection,
+  GatewayIntentBits,
+  IntentsBitField,
+} from 'discord.js';
 import mongoosePkg from 'mongoose';
 import { makeHelpEmbeds } from './bot/commands/help.js';
 import { commandAdder, eventHandler, taskAdder } from './bot/startUp.js';
 import config from './utils/misc/readConfig.js';
 
-const {connect} = mongoosePkg;
-const {registerFont} = canvasPkg;
+const { connect } = mongoosePkg;
+const { registerFont } = canvasPkg;
 
-registerFont('assets/fonts/sonus-light.ttf', {family: 'Sonus'});
-registerFont('assets/fonts/sonus-bold.ttf', {family: 'Sonus Bold'});
+registerFont('assets/fonts/sonus-light.ttf', { family: 'Sonus' });
+registerFont('assets/fonts/sonus-bold.ttf', { family: 'Sonus Bold' });
 
-registerFont('assets/fonts/minecraft.otf', {family: 'Minecraft'});
-registerFont('assets/fonts/minecraft-bold.otf', {family: 'Minecraft Bold'});
-registerFont('assets/fonts/minecraft-italic.otf', {family: 'Minecraft Italic'});
-registerFont('assets/fonts/minecraft-bold-italic.otf', {family: 'Minecraft Bold Italic'});
+registerFont('assets/fonts/minecraft.otf', { family: 'Minecraft' });
+registerFont('assets/fonts/minecraft-bold.otf', { family: 'Minecraft Bold' });
+registerFont('assets/fonts/minecraft-italic.otf', {
+  family: 'Minecraft Italic',
+});
+registerFont('assets/fonts/minecraft-bold-italic.otf', {
+  family: 'Minecraft Bold Italic',
+});
 
 const intents = new IntentsBitField().add([
   GatewayIntentBits.Guilds,
@@ -34,10 +44,12 @@ const client = new Client({
   intents: intents,
   presence: {
     status: 'idle',
-    activities: [{
-      name: `@${config.botName} help`,
-      type: ActivityType.Watching,
-    }],
+    activities: [
+      {
+        name: `@${config.botName} help`,
+        type: ActivityType.Watching,
+      },
+    ],
   },
   failIfNotExists: false,
   allowedMentions: {
@@ -53,8 +65,7 @@ connect(config.mongoUrl).then(() => {
   console.log('Connected to MongoDB');
 });
 
-commandAdder(client.commands)
-  .then(() => makeHelpEmbeds(client.commands));
+commandAdder(client.commands).then(() => makeHelpEmbeds(client.commands));
 eventHandler(client);
 taskAdder(client);
 

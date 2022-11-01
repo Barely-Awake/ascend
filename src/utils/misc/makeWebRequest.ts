@@ -2,9 +2,9 @@ import fetch, { Headers } from 'node-fetch';
 
 export default async function makeWebRequest(url: string) {
   const requestHeaders = new Headers({
-    'User-Agent': 'ascend',
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'Content-Type': 'application/json',
+    'User-Agent': 'ascend',
   });
 
   try {
