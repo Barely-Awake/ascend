@@ -1,6 +1,6 @@
+import { CommandCollection } from './botData.js';
 import { Client } from 'discord.js';
 import { readdir } from 'fs/promises';
-import { CommandCollection } from './botData.js';
 
 export async function commandAdder(
   commandCollection: CommandCollection,
@@ -19,12 +19,16 @@ export async function commandAdder(
 
     const commandFile = await import(`./commands${pathAdditions}/${file}`);
     const CommandClass = commandFile.default;
-
     const commandInstance = new CommandClass();
 
     commandCollection.set(commandInstance.name, commandInstance);
+
     console.log(`Loaded command: ${commandInstance.name}`);
-    if (commandInstance.aliases === null) continue;
+
+    if (commandInstance.aliases === null) {
+      continue;
+    }
+
     commandInstance.aliases.forEach((v: string) => {
       commandCollection.set(v, commandInstance);
     });
@@ -38,15 +42,18 @@ export async function eventHandler(client: Client, pathAdditions = '') {
     if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js')))
       continue;
 
-    if (!file.endsWith('.js'))
+    if (!file.endsWith('.js')) {
       await eventHandler(client, `${pathAdditions}/${file}`);
+      continue;
+    }
 
     const event = await import(`./events${pathAdditions}/${file}`);
-
     const eventName = file.split('.')[0];
-    if (event.settings.once)
-      client.once(eventName, (...args: string[]) => event.default(...args));
-    else client.on(eventName, (...args: string[]) => event.default(...args));
+
+    client[event.settings.once ? 'once' : 'on'](
+      eventName,
+      (...args: string[]) => event.default(...args)
+    );
   }
 }
 
@@ -57,9 +64,10 @@ export async function taskAdder(client: Client) {
 
     const task = await import(`./tasks/${file}`);
     const TaskClass = task.default;
-
     const taskInstance = new TaskClass();
+
     console.log(`Loaded task: ${taskInstance.name}`);
+
     setInterval(() => taskInstance.task(client), taskInstance.interval);
   }
 }
