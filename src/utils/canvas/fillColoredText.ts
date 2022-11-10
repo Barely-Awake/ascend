@@ -1,6 +1,6 @@
-import { CanvasRenderingContext2D } from 'canvas';
 import { colors } from '../minecraft/hypixelApi.js';
 import removeColorCodes from './removeColorCodes.js';
+import { CanvasRenderingContext2D } from 'canvas';
 
 export default function (
   text: string,

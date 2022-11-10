@@ -1,9 +1,9 @@
-import { EmbedBuilder, Message } from 'discord.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { resolveGuild } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
 import { CommandCategory, botEmojis } from '../../botData.js';
+import { EmbedBuilder, Message } from 'discord.js';
 
 export default class ServerInfo {
   public name: string;

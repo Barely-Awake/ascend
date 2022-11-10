@@ -1,3 +1,6 @@
+import { makeHelpEmbeds } from './bot/commands/help.js';
+import { commandAdder, eventHandler, taskAdder } from './bot/startUp.js';
+import config from './utils/misc/readConfig.js';
 import canvasPkg from 'canvas';
 import {
   ActivityType,
@@ -7,9 +10,6 @@ import {
   IntentsBitField,
 } from 'discord.js';
 import mongoosePkg from 'mongoose';
-import { makeHelpEmbeds } from './bot/commands/help.js';
-import { commandAdder, eventHandler, taskAdder } from './bot/startUp.js';
-import config from './utils/misc/readConfig.js';
 
 const { connect } = mongoosePkg;
 const { registerFont } = canvasPkg;

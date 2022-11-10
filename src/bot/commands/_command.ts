@@ -1,6 +1,6 @@
 // Template command
-import { CommandCategory } from '../botData.js';
 import { CommandClass } from '../../types/discord.js';
+import { CommandCategory } from '../botData.js';
 import { Message } from 'discord.js';
 
 export default class _Example implements CommandClass {

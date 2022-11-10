@@ -1,3 +1,9 @@
+import config from '../../utils/misc/readConfig.js';
+import {
+  CommandCategory,
+  CommandCollection,
+  categoryInfo,
+} from '../botData.js';
 import {
   ActionRowBuilder,
   EmbedBuilder,
@@ -6,12 +12,6 @@ import {
   SelectMenuBuilder,
   SelectMenuComponentOptionData,
 } from 'discord.js';
-import {
-  CommandCategory,
-  CommandCollection,
-  categoryInfo,
-} from '../botData.js';
-import config from '../../utils/misc/readConfig.js';
 
 export default class Help {
   public name: string;

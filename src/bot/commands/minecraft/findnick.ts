@@ -1,11 +1,11 @@
-import { CommandCategory } from '../../botData.js';
 import { FindNickEndPoint } from '../../../types/antiSniperResponseTypes.js';
-import { Message } from 'discord.js';
-import config from '../../../utils/misc/readConfig.js';
-import { drawBedWarsCanvas } from './bedwars.js';
 import { error } from '../../../utils/discord/responses.js';
 import { getPlayerStats } from '../../../utils/minecraft/hypixelApi.js';
 import makeWebRequest from '../../../utils/misc/makeWebRequest.js';
+import config from '../../../utils/misc/readConfig.js';
+import { CommandCategory } from '../../botData.js';
+import { drawBedWarsCanvas } from './bedwars.js';
+import { Message } from 'discord.js';
 
 export default class FindNick {
   public name: string;

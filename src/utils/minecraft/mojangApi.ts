@@ -1,5 +1,5 @@
-import fetch from 'node-fetch';
 import { NameHistory, PlayerUuid } from '../../types/mojangApiTypes.js';
+import fetch from 'node-fetch';
 
 export async function getPlayerUuid(playerName: string) {
   try {

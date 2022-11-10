@@ -1,6 +1,6 @@
-import { Client } from 'discord.js';
 import { MutedUserData } from '../../mongo/guildData.js';
 import { TaskClass } from './_task.js';
+import { Client } from 'discord.js';
 
 export default class CheckMutedUsers implements TaskClass {
   public name: string;

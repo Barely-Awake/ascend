@@ -1,17 +1,17 @@
+import PlayerStatsTypes from '../../../types/playerStatsTypes.js';
+import convertMode from '../../../utils/canvas/convertMode.js';
+import drawRoundedRectangle from '../../../utils/canvas/drawRoundedRectangle.js';
+import fillColoredText from '../../../utils/canvas/fillColoredText.js';
+import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
+import { error } from '../../../utils/discord/responses.js';
 import {
   calculateBedWarsLevel,
   getFormattedLevel,
   getPlayerStats,
 } from '../../../utils/minecraft/hypixelApi.js';
-import canvasPkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
 import { CommandCategory } from '../../botData.js';
+import canvasPkg, { Canvas, CanvasRenderingContext2D } from 'canvas';
 import { Message } from 'discord.js';
-import convertMode from '../../../utils/canvas/convertMode.js';
-import drawRoundedRectangle from '../../../utils/canvas/drawRoundedRectangle.js';
-import { error } from '../../../utils/discord/responses.js';
-import fillColoredText from '../../../utils/canvas/fillColoredText.js';
-import PlayerStatsTypes from '../../../types/playerStatsTypes.js';
-import { resolvePlayer } from '../../../utils/discord/resolveTarget.js';
 
 const { createCanvas, loadImage } = canvasPkg;
 

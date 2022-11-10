@@ -1,6 +1,6 @@
-import { Message } from 'discord.js';
 import playerModel from '../../mongo/player.js';
 import { getPlayerUuid } from '../minecraft/mojangApi.js';
+import { Message } from 'discord.js';
 
 export async function resolveUser(message: Message, argument: string) {
   let user;

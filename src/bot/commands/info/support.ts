@@ -1,5 +1,5 @@
-import { Message } from 'discord.js';
 import { CommandCategory } from '../../botData.js';
+import { Message } from 'discord.js';
 
 export default class Support {
   public name: string;

@@ -1,10 +1,10 @@
+import { CommandClass } from '../types/discord.js';
 import {
   Collection,
   ColorResolvable,
   EmbedBuilder,
   SelectMenuComponentOptionData,
 } from 'discord.js';
-import { CommandClass } from '../types/discord.js';
 
 export const botColors: ColorResolvable[] = ['#e0006f', '#a14b94', '#002da4'];
 

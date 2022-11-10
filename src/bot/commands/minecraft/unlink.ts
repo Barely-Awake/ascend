@@ -1,7 +1,7 @@
-import { Message } from 'discord.js';
 import Player from '../../../mongo/player.js';
 import { error } from '../../../utils/discord/responses.js';
 import { CommandCategory } from '../../botData.js';
+import { Message } from 'discord.js';
 
 export default class Unlink {
   public name: string;

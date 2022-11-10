@@ -1,8 +1,8 @@
-import { Client, EmbedBuilder, Message, Team, User, version } from 'discord.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import config from '../../../utils/misc/readConfig.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
 import { CommandCategory, botColors } from '../../botData.js';
+import { Client, EmbedBuilder, Message, Team, User, version } from 'discord.js';
 
 export default class Info {
   public name: string;

@@ -1,5 +1,5 @@
-import { EmbedBuilder, Message } from 'discord.js';
 import config from '../misc/readConfig.js';
+import { EmbedBuilder, Message } from 'discord.js';
 
 export function error(description: string, message: Message) {
   const embed = new EmbedBuilder()
