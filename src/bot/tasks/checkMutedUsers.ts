@@ -18,19 +18,25 @@ export default class CheckMutedUsers implements TaskClass {
       },
     });
 
-    if (!usersToBeUnMuted) return;
+    if (!usersToBeUnMuted) {
+      return;
+    }
 
     usersToBeUnMuted.forEach((muteData) => {
       setTimeout(async () => {
         const guild =
           client.guilds.cache.get(muteData.guildId) ||
           (await client.guilds.fetch(muteData.guildId));
-        if (!guild) return;
+        if (!guild) {
+          return;
+        }
 
         const mutedUser =
           guild.members.cache.get(muteData.userId) ||
           (await guild.members.fetch(muteData.userId));
-        if (!mutedUser || !mutedUser.manageable) return;
+        if (!mutedUser || !mutedUser.manageable) {
+          return;
+        }
 
         try {
           await mutedUser.roles.remove(muteData.muteRoleId);

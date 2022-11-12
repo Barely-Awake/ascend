@@ -30,34 +30,34 @@ export default function (
     let boldCompensate = false;
 
     switch (fillStyle) {
-    case 'hex':
-      ctx.fillStyle = `#${levelArray[i].substring(0, 6)}`;
-      levelArray[i] = levelArray[i].slice(6);
-      break;
-    case 'bold':
-      boldCompensate = true;
-      if (!ctx.font.includes('Italic')) {
-        ctx.font = `${startingFont} Bold`;
-      } else {
-        ctx.font = `${startingFont} Bold Italic`;
-      }
-      break;
-    case 'italic':
-      if (!ctx.font.includes('Bold')) {
-        ctx.font = `${startingFont} Italic`;
-      } else {
+      case 'hex':
+        ctx.fillStyle = `#${levelArray[i].substring(0, 6)}`;
+        levelArray[i] = levelArray[i].slice(6);
+        break;
+      case 'bold':
         boldCompensate = true;
-        ctx.font = `${startingFont} Bold Italic`;
-      }
-      break;
-    case 'reset':
-      boldCompensate = false;
-      ctx.font = startingFont;
-      ctx.fillStyle = startingFillStyle;
-      break;
-    default:
-      ctx.fillStyle = fillStyle;
-      break;
+        if (!ctx.font.includes('Italic')) {
+          ctx.font = `${startingFont} Bold`;
+        } else {
+          ctx.font = `${startingFont} Bold Italic`;
+        }
+        break;
+      case 'italic':
+        if (!ctx.font.includes('Bold')) {
+          ctx.font = `${startingFont} Italic`;
+        } else {
+          boldCompensate = true;
+          ctx.font = `${startingFont} Bold Italic`;
+        }
+        break;
+      case 'reset':
+        boldCompensate = false;
+        ctx.font = startingFont;
+        ctx.fillStyle = startingFillStyle;
+        break;
+      default:
+        ctx.fillStyle = fillStyle;
+        break;
     }
 
     ctx.fillText(

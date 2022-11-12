@@ -29,7 +29,9 @@ export default class Invites {
   async command(message: Message<true>, args: string[]) {
     const user = await resolveUser(message, args[0]);
 
-    if (user === null) return error('Couldn\'t fetch that user', message);
+    if (user === null) {
+      return error("Couldn't fetch that user", message);
+    }
 
     await message.guild.invites.fetch();
     const allInvites = message.guild.invites.cache;

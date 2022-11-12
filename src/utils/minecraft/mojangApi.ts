@@ -7,7 +7,9 @@ export async function getPlayerUuid(playerName: string) {
       `https://api.mojang.com/users/profiles/minecraft/${playerName}`
     );
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      return null;
+    }
 
     const data: PlayerUuid = await response.json();
 
@@ -23,7 +25,9 @@ export async function getPlayerNames(playerUuid: string) {
       `https://api.mojang.com/user/profiles/${playerUuid}/names`
     );
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      return null;
+    }
 
     const data: NameHistory = await response.json();
 

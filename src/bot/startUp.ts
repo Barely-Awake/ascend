@@ -9,8 +9,9 @@ export async function commandAdder(
   const commandFiles = await readdir(`./dist/bot/commands${pathAdditions}`);
 
   for (const file of commandFiles) {
-    if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js')))
+    if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js'))) {
       continue;
+    }
 
     if (!file.endsWith('.js')) {
       await commandAdder(commandCollection, `${pathAdditions}/${file}`);
@@ -39,8 +40,9 @@ export async function eventHandler(client: Client, pathAdditions = '') {
   const eventFiles = await readdir(`./dist/bot/events${pathAdditions}`);
 
   for (const file of eventFiles) {
-    if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js')))
+    if (file.startsWith('_') || (file.includes('.') && !file.endsWith('.js'))) {
       continue;
+    }
 
     if (!file.endsWith('.js')) {
       await eventHandler(client, `${pathAdditions}/${file}`);
@@ -60,7 +62,9 @@ export async function eventHandler(client: Client, pathAdditions = '') {
 export async function taskAdder(client: Client) {
   const taskFiles = await readdir('./dist/bot/tasks');
   for (const file of taskFiles) {
-    if (file.startsWith('_') || !file.endsWith('.js')) continue;
+    if (file.startsWith('_') || !file.endsWith('.js')) {
+      continue;
+    }
 
     const task = await import(`./tasks/${file}`);
     const TaskClass = task.default;

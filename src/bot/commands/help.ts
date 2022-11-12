@@ -72,11 +72,13 @@ export default class Help {
     });
 
     interactionCollector.on('collect', (interaction) => {
-      if (!interaction.isSelectMenu()) return;
+      if (!interaction.isSelectMenu()) {
+        return;
+      }
 
       if (interaction.user.id !== message.author.id) {
         interaction.reply({
-          content: 'You can\'t do that to this message!',
+          content: "You can't do that to this message!",
         });
         return;
       }
@@ -102,9 +104,13 @@ export function makeHelpEmbeds(commands: CommandCollection) {
       .setDescription('<> - Required Argument\n[] - Option Argument');
 
     commands.forEach((commandClass, commandName) => {
-      if (categoryInfo[key].value !== commandClass.category) return;
+      if (categoryInfo[key].value !== commandClass.category) {
+        return;
+      }
 
-      if (commandName !== commandClass.name) return;
+      if (commandName !== commandClass.name) {
+        return;
+      }
 
       categoryInfo[key].embed.addFields([
         {

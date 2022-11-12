@@ -39,11 +39,12 @@ export default class Unban {
     args.shift();
     const reason = args.join(' ');
 
-    if (user === null)
+    if (user === null) {
       return error(
-        'I couldn\'t find that user, make sure you\'re providing a mention or id',
+        "I couldn't find that user, make sure you're providing a mention or id",
         message
       );
+    }
 
     await message.guild.bans.remove(user, reason || 'None');
 

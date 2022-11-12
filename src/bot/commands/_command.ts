@@ -14,7 +14,7 @@ export default class _Example {
     category: CommandCategory = 'info',
     aliases: string[] | null = ['example_'], // Set to null for no aliases
     description = 'Example command',
-    usage = '<Required Argument> [Optional Argument]',
+    usage = '<Required Argument> [Optional Argument]'
   ) {
     this.name = name;
     this.category = category;

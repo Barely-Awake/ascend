@@ -33,25 +33,29 @@ export default class Embed {
     if (
       message.member !== null &&
       !message.member?.permissions.has('ManageGuild')
-    )
+    ) {
       return error(
         'You need to have the manage server permission to use this command',
         message
       );
+    }
 
-    if (args[0].startsWith('#')) args[0] = args[0].slice();
-    else if (args[0].length !== 6)
+    if (args[0].startsWith('#')) {
+      args[0] = args[0].slice();
+    } else if (args[0].length !== 6) {
       return error('Please provide a valid color', message);
+    }
 
     let providedEmbedColor = args[0];
 
     // Make sure the length of the provided color is 6 chars
-    if (providedEmbedColor.length > 6)
+    if (providedEmbedColor.length > 6) {
       providedEmbedColor = providedEmbedColor.slice(
         -(providedEmbedColor.length - 6)
       );
-    else if (providedEmbedColor.length < 6)
+    } else if (providedEmbedColor.length < 6) {
       providedEmbedColor += '0'.repeat(6 - providedEmbedColor.length);
+    }
 
     const embedColor = parseInt(providedEmbedColor, 16);
 
@@ -62,13 +66,17 @@ export default class Embed {
     const embedArray = text.includes('|') ? text.split('|') : [text];
 
     let embed = new EmbedBuilder().setColor(embedColor);
-    if (embedArray[0] !== '' && embedArray[0] !== ' ')
+    if (embedArray[0] !== '' && embedArray[0] !== ' ') {
       embed = embed.setTitle(embedArray[0]);
+    }
 
-    if (embedArray[1] && embedArray[1] !== '' && embedArray[1] !== ' ')
+    if (embedArray[1] && embedArray[1] !== '' && embedArray[1] !== ' ') {
       embed = embed.setDescription(embedArray[1]);
+    }
 
     const responseMessage = await message.channel.send({ embeds: [embed] });
-    if (responseMessage.crosspostable) responseMessage.crosspost();
+    if (responseMessage.crosspostable) {
+      responseMessage.crosspost();
+    }
   }
 }

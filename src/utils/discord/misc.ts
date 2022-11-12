@@ -14,7 +14,9 @@ export function canModerateUser(
   target: GuildMember,
   guildOwnerId: string
 ) {
-  if (user.id === guildOwnerId) return true;
+  if (user.id === guildOwnerId) {
+    return true;
+  }
 
   return (
     user.roles.highest.position > target.roles.highest.position &&

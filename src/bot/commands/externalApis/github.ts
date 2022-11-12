@@ -37,7 +37,9 @@ export default class GitHub {
     try {
       const response = await fetch(`https://api.github.com/users/${user}`);
 
-      if (!response.ok) return error('User not found', message);
+      if (!response.ok) {
+        return error('User not found', message);
+      }
 
       userData = await response.json();
     } catch {
@@ -104,17 +106,21 @@ export default class GitHub {
         `https://ghchart.rshah.org/5865F2/${userData.login.toLocaleLowerCase()}`
       );
 
-      if (response.ok)
+      if (response.ok) {
         contributionGraph = Buffer.from(await response.arrayBuffer());
+      }
       // Converts response to svg file buffer
-      else contributionGraph = false;
+      else {
+        contributionGraph = false;
+      }
     } catch {
       contributionGraph = false;
     }
-    if (typeof contributionGraph === 'boolean')
+    if (typeof contributionGraph === 'boolean') {
       return message.channel.send({
         embeds: [embed],
       });
+    }
 
     // Sets the embed image to the provided attachment on the message.
     embed = embed.setImage(

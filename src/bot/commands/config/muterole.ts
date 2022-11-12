@@ -40,13 +40,17 @@ export default class MuteRole {
     let muteRole: Role;
     if (args[0] === 'make') {
       const role = await createMuteRole(message);
-      if (!role) return error('Could not create mute role.', message);
+      if (!role) {
+        return error('Could not create mute role.', message);
+      }
 
       muteRole = role;
     } else if (args[0] === 'set') {
       const role = await resolveRole(message, args[1]);
 
-      if (!role) return error('Please provide a role', message);
+      if (!role) {
+        return error('Please provide a role', message);
+      }
 
       muteRole = role;
     } else {
@@ -55,11 +59,12 @@ export default class MuteRole {
 
     let guild = (await GuildData.find({ serverId: message.guild.id }))[0];
 
-    if (guild === undefined)
+    if (guild === undefined) {
       guild = new GuildData({
         serverId: message.guild.id,
         prefix: config.prefix,
       });
+    }
 
     guild.muteRole = muteRole.id;
     guild.save();
@@ -77,17 +82,21 @@ async function createMuteRole(message: Message<true>) {
 
   if (muteRole === undefined) {
     await error(
-      'I couldn\'t create a mute role, do I have the correct permissions?',
+      "I couldn't create a mute role, do I have the correct permissions?",
       message
     );
     return null;
   }
 
   await message.guild.channels.fetch();
-  if (!message.guild.channels.cache) return muteRole;
+  if (!message.guild.channels.cache) {
+    return muteRole;
+  }
 
   message.guild.channels.cache.forEach((channel) => {
-    if (channel.isThread()) return;
+    if (channel.isThread()) {
+      return;
+    }
 
     if (channel.isTextBased()) {
       channel.permissionOverwrites.create(muteRole, {

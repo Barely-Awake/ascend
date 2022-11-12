@@ -15,7 +15,7 @@ export default class Performance {
     name = 'performance',
     category: CommandCategory = 'info',
     aliases: string[] | null = null,
-    description = 'Sends stats about the bot\'s performance',
+    description = "Sends stats about the bot's performance",
     usage = ''
   ) {
     this.name = name;
@@ -31,9 +31,11 @@ export default class Performance {
     );
 
     let clientUptime;
-    if (message.client.uptime !== null)
+    if (message.client.uptime !== null) {
       clientUptime = unixToSeconds(Date.now() - message.client.uptime);
-    else clientUptime = 'Unknown';
+    } else {
+      clientUptime = 'Unknown';
+    }
 
     const embed = new EmbedBuilder()
       .setTitle(`Performance information on \`${config.botName}\``)

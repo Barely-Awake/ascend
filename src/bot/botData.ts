@@ -73,7 +73,7 @@ export const categoryInfo: { [index: string]: CategoryInfo } = {
   },
   misc: {
     description:
-      'Random useful commands that didn\'t fit well in any other category',
+      "Random useful commands that didn't fit well in any other category",
     label: 'Misc',
     value: 'misc',
     embed: new EmbedBuilder(),

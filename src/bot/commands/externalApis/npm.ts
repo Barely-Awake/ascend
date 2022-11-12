@@ -37,28 +37,34 @@ export default class Npm {
         `https://registry.npmjs.com/${encodeURIComponent(query)}`
       );
     } catch (err) {
-      return error('Couldn\'t fetch npm registry', message);
+      return error("Couldn't fetch npm registry", message);
     }
 
-    if (res.status === 404)
+    if (res.status === 404) {
       return error(`Couldn't find the npm package \`${query}\``, message);
+    }
 
-    if (!res.ok) return error('Couldn\'t fetch npm registry', message);
+    if (!res.ok) {
+      return error("Couldn't fetch npm registry", message);
+    }
 
     const body = await res.json();
 
-    if (body.time.unpublished !== undefined)
+    if (body.time.unpublished !== undefined) {
       return error(`The npm package \`${query}\` was unpublished`, message);
+    }
 
     const timeCreated = unixToSeconds(Date.parse(body.time.created));
     const timeModified = unixToSeconds(Date.parse(body.time.modified));
     let repositoryUrl = body.repository?.url;
 
-    if (typeof repositoryUrl !== 'string') repositoryUrl = 'Unknown';
-    else if (repositoryUrl.includes('+') && !repositoryUrl.endsWith('+'))
+    if (typeof repositoryUrl !== 'string') {
+      repositoryUrl = 'Unknown';
+    } else if (repositoryUrl.includes('+') && !repositoryUrl.endsWith('+')) {
       repositoryUrl = repositoryUrl?.split('+')[1];
-    else if (repositoryUrl.startsWith('git://'))
+    } else if (repositoryUrl.startsWith('git://')) {
       repositoryUrl = repositoryUrl.replace('git://', 'https://');
+    }
 
     repositoryUrl = repositoryUrl.replace('.git', '');
 
@@ -93,13 +99,13 @@ export default class Npm {
           name: 'Last Modified',
           value: body.time.modified
             ? `${messageTimeStamp(timeModified)} (${messageTimeStamp(
-              timeModified,
-              'R'
-            )})`
+                timeModified,
+                'R'
+              )})`
             : `${messageTimeStamp(timeCreated)} (${messageTimeStamp(
-              timeCreated,
-              'R'
-            )})`,
+                timeCreated,
+                'R'
+              )})`,
         },
         {
           name: 'Repository',

@@ -29,12 +29,15 @@ export default class Unlink {
       discordId: message.author.id,
     });
 
-    if (linkedAccountData.length === 0)
-      return error('You haven\'t linked an account yet!', message);
+    if (linkedAccountData.length === 0) {
+      return error("You haven't linked an account yet!", message);
+    }
     const names: string[] = [];
 
     linkedAccountData.forEach((v) => {
-      if (v.playerName !== undefined) names.push(v.playerName);
+      if (v.playerName !== undefined) {
+        names.push(v.playerName);
+      }
     });
     await Player.deleteMany({ discordId: message.author.id });
 

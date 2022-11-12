@@ -8,14 +8,17 @@ import PlayerStatsTypes from '../../types/playerStatsTypes.js';
 
 export async function getPlayerStats(playerUuid: string) {
   const hypixelData = await getHypixelData(playerUuid);
-  if (hypixelData === null) return null;
+  if (hypixelData === null) {
+    return null;
+  }
 
   const playerStats = formatPlayerStats(hypixelData);
   if (!playerStats.bedWars.winStreakApiOn()) {
     const antiSniperWinStreakData = await getWinStreakEstimates(playerUuid);
 
-    if (antiSniperWinStreakData !== null)
+    if (antiSniperWinStreakData !== null) {
       playerStats.bedWars.winStreak = antiSniperWinStreakData;
+    }
   }
 
   return playerStats;
@@ -28,11 +31,15 @@ export async function getHypixelData(playerUuid: string) {
       `https://api.hypixel.net/player?uuid=${playerUuid}&key=${config.hypixelApiKey}`
     );
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      return null;
+    }
 
     data = await response.json();
 
-    if (!data.success) return null;
+    if (!data.success) {
+      return null;
+    }
 
     return data.player || null;
   } catch (error) {
@@ -46,12 +53,15 @@ export async function getWinStreakEstimates(playerUuid: string) {
       `https://api.antisniper.net/winstreak?key=${config.antiSniperApiKey}&uuid=${playerUuid}`
     );
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      return null;
+    }
 
     const data: WinStreakEndPoint = await response.json();
 
-    if (!data.success || data.player === undefined || data.player === null)
+    if (!data.success || data.player === undefined || data.player === null) {
       return null;
+    }
 
     const winStreakData = data.player.data;
 
@@ -73,16 +83,24 @@ export function calculateBedWarsLevel(experience: number): number {
 
   experience %= 487000;
 
-  if (experience < 500) return level + experience / 500;
+  if (experience < 500) {
+    return level + experience / 500;
+  }
   level++;
 
-  if (experience < 1500) return level + (experience - 500) / 1000;
+  if (experience < 1500) {
+    return level + (experience - 500) / 1000;
+  }
   level++;
 
-  if (experience < 3500) return level + (experience - 1500) / 2000;
+  if (experience < 3500) {
+    return level + (experience - 1500) / 2000;
+  }
   level++;
 
-  if (experience < 7000) return level + (experience - 3500) / 3500;
+  if (experience < 7000) {
+    return level + (experience - 3500) / 3500;
+  }
   level++;
 
   experience -= 7000;
@@ -264,8 +282,9 @@ export function formatPlayerStats(playerStats: Player): PlayerStatsTypes {
 
       winStreakApiOn: function (this) {
         for (const mode in this.winStreak) {
-          if (this.winStreak[mode] === null && this.wins[mode] !== 0)
+          if (this.winStreak[mode] === null && this.wins[mode] !== 0) {
             return false;
+          }
         }
 
         return true;
@@ -554,13 +573,23 @@ function calcTag(player: Player) {
     let rank: string | undefined | null = player.rank;
     const prefix = player.prefix;
 
-    if (rank === 'NORMAL') rank = null;
-    if (monthlyPackageRank === 'NONE') monthlyPackageRank = null;
-    if (packageRank === 'NONE') packageRank = null;
-    if (newPackageRank === 'NONE') newPackageRank = null;
+    if (rank === 'NORMAL') {
+      rank = null;
+    }
+    if (monthlyPackageRank === 'NONE') {
+      monthlyPackageRank = null;
+    }
+    if (packageRank === 'NONE') {
+      packageRank = null;
+    }
+    if (newPackageRank === 'NONE') {
+      newPackageRank = null;
+    }
 
-    if (prefix) return parseMinecraftTag(prefix);
-    if (rank || monthlyPackageRank || newPackageRank || packageRank)
+    if (prefix) {
+      return parseMinecraftTag(prefix);
+    }
+    if (rank || monthlyPackageRank || newPackageRank || packageRank) {
       return replaceCustomColors(
         ranks[
           rank ||
@@ -572,6 +601,7 @@ function calcTag(player: Player) {
         nameBasedColors[rankPlusColor || 'GRAY'],
         nameBasedColors[monthlyRankColor || 'GRAY']
       );
+    }
   }
   return replaceCustomColors(ranks.DEFAULT);
 }
@@ -601,8 +631,12 @@ function parseMinecraftTag(tag: string) {
       const j = Math.floor(i / 2); // First index
       const n = i % 2; // Second index
 
-      if (!newRank[j]) newRank[j] = [];
-      if (!newRank[j][n]) newRank[j][n] = [];
+      if (!newRank[j]) {
+        newRank[j] = [];
+      }
+      if (!newRank[j][n]) {
+        newRank[j][n] = [];
+      }
       newRank[j][n] = splitTag[i];
     }
 
@@ -627,20 +661,29 @@ function replaceCustomColors(
   p?: string | string[],
   r?: string | string[]
 ) {
-  if (!(rank instanceof Array)) return rank;
+  if (!(rank instanceof Array)) {
+    return rank;
+  }
 
   // Deep copy the rank
   const newRank = JSON.parse(JSON.stringify(rank));
 
   // Set defaults
-  if (!p || typeof p !== 'string' || p.length > 1) p = defaultPlusColor;
-  if (!r || typeof r !== 'string' || r.length > 1) r = defaultRankColor;
+  if (!p || typeof p !== 'string' || p.length > 1) {
+    p = defaultPlusColor;
+  }
+  if (!r || typeof r !== 'string' || r.length > 1) {
+    r = defaultRankColor;
+  }
 
   // Go through rank and replace wildcards
   newRank.forEach((component: string | unknown[]) => {
     if (component instanceof Array && component.length >= 2) {
-      if (component[0] === '%p') component[0] = p;
-      else if (component[0] === '%r') component[0] = r;
+      if (component[0] === '%p') {
+        component[0] = p;
+      } else if (component[0] === '%r') {
+        component[0] = r;
+      }
     }
   });
 

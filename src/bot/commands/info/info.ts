@@ -44,7 +44,7 @@ export default class Info {
         `${config.botName} is an open source bot made by Barely Awake. ` +
           'The source code can be found at https://github.com/Barely-Awake/ascend. ' +
           `${config.botName} features a lot of useful moderation commands. Currently the direction is being an open ` +
-          'source replacement for bots in your server. Right now it\'s still in early development so it isn\'t ' +
+          "source replacement for bots in your server. Right now it's still in early development so it isn't " +
           'that yet, but the dev team is working hard to reach that goal as soon as possible.'
       )
 
@@ -87,17 +87,18 @@ export default class Info {
         },
       ]);
 
-    if ((message.guild || {}).id !== config.supportServerId)
+    if ((message.guild || {}).id !== config.supportServerId) {
       await message.reply({
         content:
           `Join ${config.botName}'s support server for information on changes to the bot and beta access! ` +
           'https://discord.gg/PpdbKXKgT3',
         embeds: [infoEmbed],
       });
-    else
+    } else {
       await message.reply({
         embeds: [infoEmbed],
       });
+    }
   }
 }
 
@@ -105,10 +106,11 @@ async function getApplicationOwner(client: Client) {
   const clientApplication = await client.application?.fetch();
   let applicationOwner;
 
-  if (clientApplication?.owner instanceof User)
+  if (clientApplication?.owner instanceof User) {
     applicationOwner = clientApplication?.owner;
-  else if (clientApplication?.owner instanceof Team)
+  } else if (clientApplication?.owner instanceof Team) {
     applicationOwner = clientApplication?.owner?.owner;
+  }
 
   applicationOwner = applicationOwner || 'Unknown';
   return applicationOwner.toString();
@@ -116,9 +118,11 @@ async function getApplicationOwner(client: Client) {
 
 function getClientUptime(client: Client) {
   let clientUptime;
-  if (client.uptime !== null)
+  if (client.uptime !== null) {
     clientUptime = unixToSeconds(Date.now() - client.uptime);
-  else clientUptime = 'Unknown';
+  } else {
+    clientUptime = 'Unknown';
+  }
 
   return clientUptime;
 }

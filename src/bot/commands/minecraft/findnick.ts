@@ -18,7 +18,7 @@ export default class FindNick {
     name = 'findnick',
     category: CommandCategory = 'minecraft',
     aliases: string[] | null = null,
-    description = 'Uses antisniper API to find a player\'s nick',
+    description = "Uses antisniper API to find a player's nick",
     usage = '<player>'
   ) {
     this.name = name;
@@ -29,21 +29,26 @@ export default class FindNick {
   }
 
   async command(message: Message, args: string[]) {
-    if (!args[0]) return error('You must provide a player!', message);
+    if (!args[0]) {
+      return error('You must provide a player!', message);
+    }
 
     const antiSniperData: FindNickEndPoint = await makeWebRequest(
       `https://api.antisniper.net/findnick?key=${config.antiSniperApiKey}&name=${args[0]}`
     );
 
-    if (antiSniperData === null || !antiSniperData.success)
+    if (antiSniperData === null || !antiSniperData.success) {
       return error('Failed to reach antisniper API.', message);
+    }
 
-    if (!antiSniperData.player || antiSniperData.data === null)
-      return error('I couldn\'t find that player\'s nick', message);
+    if (!antiSniperData.player || antiSniperData.data === null) {
+      return error("I couldn't find that player's nick", message);
+    }
 
     const playerStats = await getPlayerStats(antiSniperData.player.uuid);
-    if (playerStats === null)
-      return message.reply('Couldn\'t get player stats from Hypixel\'s API');
+    if (playerStats === null) {
+      return message.reply("Couldn't get player stats from Hypixel's API");
+    }
 
     playerStats.nick = antiSniperData.player.nick;
 

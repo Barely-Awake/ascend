@@ -27,7 +27,7 @@ export default class BedWars {
     name = 'bedwars',
     category: CommandCategory = 'minecraft',
     aliases: string[] | null = ['bw'],
-    description = 'Shows a player\'s bedwars stats',
+    description = "Shows a player's bedwars stats",
     usage = '[player]'
   ) {
     this.name = name;
@@ -43,14 +43,17 @@ export default class BedWars {
       message
     );
 
-    if (typeof mojangData === 'string') return error(mojangData, message);
+    if (typeof mojangData === 'string') {
+      return error(mojangData, message);
+    }
 
     const player = mojangData.uuid;
 
     const playerStats = await getPlayerStats(player);
 
-    if (playerStats === null)
-      return message.reply('Couldn\'t get player stats from Hypixel\'s API');
+    if (playerStats === null) {
+      return message.reply("Couldn't get player stats from Hypixel's API");
+    }
 
     const canvas = await drawBedWarsCanvas(playerStats);
 

@@ -37,12 +37,13 @@ export default class Link {
       discordId: message.author.id,
     });
 
-    if (existingDiscordData.length !== 0)
+    if (existingDiscordData.length !== 0) {
       return error(
         'You have already linked on this discord account. Please use the unlink command and then try ' +
           'linking again.',
         message
       );
+    }
 
     args[0] = args[0].replace(/-/g, '');
 
@@ -52,16 +53,18 @@ export default class Link {
     if (args[0].length !== 32) {
       mojangData = await getPlayerUuid(args[0]);
 
-      if (mojangData === null)
-        return error('Couldn\'t fetch that uuid', message);
+      if (mojangData === null) {
+        return error("Couldn't fetch that uuid", message);
+      }
 
       playerUuid = mojangData.id;
     } else {
       playerUuid = args[0];
       const nameHistory = await getPlayerNames(playerUuid);
 
-      if (nameHistory === null)
-        return error('Couldn\'t fetch that players name', message);
+      if (nameHistory === null) {
+        return error("Couldn't fetch that players name", message);
+      }
 
       mojangData = {
         id: playerUuid,
@@ -70,31 +73,35 @@ export default class Link {
     }
     const existingMinecraftData = await Player.find({ playerUuid: playerUuid });
 
-    if (existingMinecraftData.length !== 0)
+    if (existingMinecraftData.length !== 0) {
       return error(
         'That minecraft account has already been linked with another discord account. ' +
           'Please use the unlink command on that account and then try linking again.',
         message
       );
+    }
 
     const playerStats = await getPlayerStats(playerUuid);
 
-    if (playerStats === null)
-      return message.reply('Couldn\'t get player stats from Hypixel\'s API');
+    if (playerStats === null) {
+      return message.reply("Couldn't get player stats from Hypixel's API");
+    }
 
-    if (playerStats.socialMedia.discord === null)
+    if (playerStats.socialMedia.discord === null) {
       return error(
-        'That account doesn\'t have a discord linked to it. If that is your account, you can click ' +
+        "That account doesn't have a discord linked to it. If that is your account, you can click " +
           'the link below to see how to do that.\nhttps://catboymaid.club/Z96boeByYUZd',
         message
       );
+    }
 
-    if (playerStats.socialMedia.discord !== message.author.tag)
+    if (playerStats.socialMedia.discord !== message.author.tag) {
       return error(
         `Your discord (\`${message.author.tag}\`)doesn't match with the linked discord on that ` +
           `account (\`${playerStats.socialMedia.discord}\`)`,
         message
       );
+    }
 
     const playerData = new Player({
       playerUuid: playerUuid,

@@ -35,18 +35,21 @@ export default class Denick {
       `https://api.antisniper.net/denick?key=${config.antiSniperApiKey}&nick=${args[0]}`
     );
 
-    if (antiSniperData === null || !antiSniperData.success)
+    if (antiSniperData === null || !antiSniperData.success) {
       return error('Failed to reach antisniper API.', message);
+    }
 
-    if (!antiSniperData.player || antiSniperData.data === null)
+    if (!antiSniperData.player || antiSniperData.data === null) {
       return error(
         'Player is not denickable, did you mean to use find nick?',
         message
       );
+    }
 
     const playerStats = await getPlayerStats(antiSniperData.player.uuid);
-    if (playerStats === null)
-      return message.reply('Couldn\'t get player stats from Hypixel\'s API');
+    if (playerStats === null) {
+      return message.reply("Couldn't get player stats from Hypixel's API");
+    }
 
     playerStats.nick = antiSniperData.player.nick;
 

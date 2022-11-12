@@ -29,11 +29,15 @@ export default class UserInfo {
   async command(message: Message, args: string[]) {
     let user = await resolveUser(message, args[0]);
 
-    if (user === null) return error('Error finding target user', message);
+    if (user === null) {
+      return error('Error finding target user', message);
+    }
 
     await user.fetch();
 
-    if (!user.hexAccentColor) user = await user.fetch(true);
+    if (!user.hexAccentColor) {
+      user = await user.fetch(true);
+    }
 
     const creationDate = unixToSeconds(user.createdTimestamp);
 
@@ -58,13 +62,14 @@ export default class UserInfo {
         },
       ]);
 
-    if (user.bot)
+    if (user.bot) {
       embed.addFields([
         {
           name: 'Bot',
           value: 'true',
         },
       ]);
+    }
 
     message.channel.send({ embeds: [embed] });
   }

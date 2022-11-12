@@ -11,7 +11,9 @@ export default function (message: Message) {
 async function commandHandler(message: Message) {
   const prefixUsed = await fetchPrefix(message);
 
-  if (!message.content.startsWith(prefixUsed)) return;
+  if (!message.content.startsWith(prefixUsed)) {
+    return;
+  }
 
   const messageContent = message.content.slice(prefixUsed.length);
   const messageArray = messageContent.split(' ');
@@ -21,7 +23,9 @@ async function commandHandler(message: Message) {
 
   const commandClass = message.client.commands.get(commandName);
 
-  if (commandClass === undefined) return;
+  if (commandClass === undefined) {
+    return;
+  }
 
   try {
     await message.channel.sendTyping();
@@ -67,11 +71,15 @@ async function fetchPrefix(message: Message) {
 }
 
 async function fetchMongoPrefix(message: Message) {
-  if (!message.guild) return config.prefix;
+  if (!message.guild) {
+    return config.prefix;
+  }
 
   const fetchedData = await GuildData.findOne({ serverId: message.guild.id });
 
-  if (fetchedData === null) return config.prefix;
+  if (fetchedData === null) {
+    return config.prefix;
+  }
 
   return fetchedData.prefix;
 }

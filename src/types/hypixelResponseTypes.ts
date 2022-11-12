@@ -1721,7 +1721,7 @@ export interface HungerGames {
   'votes_Caelum v2'?: number;
   votes_Citadel?: number;
   votes_City?: number;
-  'votes_Aelin\'s Tower'?: number;
+  "votes_Aelin's Tower"?: number;
   votes_Peaks?: number;
   weekly_kills_b?: number;
   weekly_kills_a?: number;

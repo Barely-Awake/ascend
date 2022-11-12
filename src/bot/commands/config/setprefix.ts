@@ -37,12 +37,14 @@ export default class SetPrefix {
     const fetchedData = await GuildData.find({ serverId: message.guild.id });
 
     let guildInfo;
-    if (fetchedData.length === 0)
+    if (fetchedData.length === 0) {
       guildInfo = new GuildData({
         serverId: message.guild.id,
         prefix: prefix,
       });
-    else guildInfo = fetchedData[0];
+    } else {
+      guildInfo = fetchedData[0];
+    }
 
     guildInfo.prefix = prefix;
     guildInfo.save();
