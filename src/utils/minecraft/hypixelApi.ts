@@ -478,7 +478,7 @@ export function formatPlayerStats(playerStats: Player): PlayerStatsTypes {
   };
 }
 
-const ranks: { [index: string]: any } = {
+const ranks: { [index: string]: string | string[] | string[][] } = {
   ADMIN: [['c', '[ADMIN]']],
   MODERATOR: [['2', '[MOD]']],
   HELPER: [['9', '[HELPER]']],
@@ -623,7 +623,7 @@ const defaultRankColor = '6'; // %r
  * @returns {*} New rank with real colors
  */
 function replaceCustomColors(
-  rank: string | string[],
+  rank: string | string[] | string[][],
   p?: string | string[],
   r?: string | string[]
 ) {
