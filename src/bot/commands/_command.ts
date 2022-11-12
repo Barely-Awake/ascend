@@ -1,9 +1,8 @@
 // Template command
-import { CommandClass } from '../../types/discord.js';
 import { CommandCategory } from '../botData.js';
 import { Message } from 'discord.js';
 
-export default class _Example implements CommandClass {
+export default class _Example {
   public name: string;
   public category: CommandCategory;
   public aliases: string[] | null;
@@ -15,7 +14,7 @@ export default class _Example implements CommandClass {
     category: CommandCategory = 'info',
     aliases: string[] | null = ['example_'], // Set to null for no aliases
     description = 'Example command',
-    usage = '<Required Argument> [Optional Argument]'
+    usage = '<Required Argument> [Optional Argument]',
   ) {
     this.name = name;
     this.category = category;

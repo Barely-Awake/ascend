@@ -31,22 +31,22 @@ export default class SetPrefix {
   @onlyInGuild()
   @requireArgs(1)
   @requirePermission('ManageGuild')
-  async command(message: Message, args: string[]) {
+  async command(message: Message<true>, args: string[]) {
     const prefix = args.join(' ');
 
-    const fetchedData = await GuildData.find({ serverId: message.guild!.id });
+    const fetchedData = await GuildData.find({ serverId: message.guild.id });
 
     let guildInfo;
     if (fetchedData.length === 0)
       guildInfo = new GuildData({
-        serverId: message.guild!.id,
+        serverId: message.guild.id,
         prefix: prefix,
       });
     else guildInfo = fetchedData[0];
 
     guildInfo.prefix = prefix;
     guildInfo.save();
-    message.client.cache.prefixes[message.guild!.id] = prefix;
+    message.client.cache.prefixes[message.guild.id] = prefix;
     message.channel.send(`Successfully set prefix to ${prefix}`);
   }
 }
