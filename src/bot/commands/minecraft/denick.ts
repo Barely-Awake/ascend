@@ -46,7 +46,7 @@ export default class Denick {
 
     const playerStats = await getPlayerStats(antiSniperData.player.uuid);
     if (playerStats === null)
-      return message.reply("Couldn't get player stats from Hypixel's API");
+      return message.reply('Couldn\'t get player stats from Hypixel\'s API');
 
     playerStats.nick = antiSniperData.player.nick;
 

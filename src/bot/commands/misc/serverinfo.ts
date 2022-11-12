@@ -29,7 +29,7 @@ export default class ServerInfo {
   async command(message: Message, args: string[]) {
     const server = await resolveGuild(message, args[0]);
 
-    if (server === null) return error("Couldn't find a valid server", message);
+    if (server === null) return error('Couldn\'t find a valid server', message);
 
     await Promise.all([
       server.fetch(),
@@ -52,15 +52,15 @@ export default class ServerInfo {
     const statusCounts = [0, 0, 0];
     guildPresences.forEach((v) => {
       switch (v.status) {
-        case 'online':
-          statusCounts[0]++;
-          break;
-        case 'idle':
-          statusCounts[1]++;
-          break;
-        case 'dnd':
-          statusCounts[2]++;
-          break;
+      case 'online':
+        statusCounts[0]++;
+        break;
+      case 'idle':
+        statusCounts[1]++;
+        break;
+      case 'dnd':
+        statusCounts[2]++;
+        break;
       }
     });
 

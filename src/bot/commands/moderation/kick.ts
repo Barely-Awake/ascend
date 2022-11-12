@@ -35,38 +35,42 @@ export default class Kick {
   @requireArgs(1)
   @requirePermission('KickMembers')
   @requireBotPermission('KickMembers')
-  async command(message: Message, args: string[]) {
+  async command(message: Message<true>, args: string[]) {
+    if (!message.member) {
+      return;
+    }
+
     const user = await resolveUser(message, args[0]);
     args.shift();
     const reason = args.join(' ');
 
     if (user === null)
       return error(
-        "I couldn't find that user, make sure you're providing a mention or id",
+        'I couldn\'t find that user, make sure you\'re providing a mention or id',
         message
       );
 
     if (user.id === message.author.id)
       return error(
-        "I'm going to assume you don't want to kick yourself " +
-          "(If you did want that, there's a leave server button instead)",
+        'I\'m going to assume you don\'t want to kick yourself ' +
+          '(If you did want that, there\'s a leave server button instead)',
         message
       );
 
-    const target = await message.guild!.members.resolve(user);
+    const target = await message.guild.members.resolve(user);
 
     if (target === null || target === undefined) {
-      await message.guild!.members.kick(user, reason || 'None');
+      await message.guild.members.kick(user, reason || 'None');
     } else {
-      if (!canModerateUser(message.member!, target, message.guild!.ownerId))
+      if (!canModerateUser(message.member, target, message.guild.ownerId))
         return error(
-          "You can't kick that user, is your role higher than theirs?",
+          'You can\'t kick that user, is your role higher than theirs?',
           message
         );
 
       if (!target.kickable)
         return error(
-          "I can't kick that user, make sure my role is higher than theirs",
+          'I can\'t kick that user, make sure my role is higher than theirs',
           message
         );
 

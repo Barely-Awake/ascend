@@ -76,7 +76,7 @@ export default class Help {
 
       if (interaction.user.id !== message.author.id) {
         interaction.reply({
-          content: "You can't do that to this message!",
+          content: 'You can\'t do that to this message!',
         });
         return;
       }

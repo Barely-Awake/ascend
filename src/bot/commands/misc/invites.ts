@@ -26,13 +26,13 @@ export default class Invites {
   }
 
   @onlyInGuild()
-  async command(message: Message, args: string[]) {
+  async command(message: Message<true>, args: string[]) {
     const user = await resolveUser(message, args[0]);
 
-    if (user === null) return error("Couldn't fetch that user", message);
+    if (user === null) return error('Couldn\'t fetch that user', message);
 
-    await message.guild!.invites.fetch();
-    const allInvites = message.guild!.invites.cache;
+    await message.guild.invites.fetch();
+    const allInvites = message.guild.invites.cache;
 
     const userInvites = allInvites?.filter(
       (value: Invite) => value.inviter?.id === message.author.id
@@ -52,8 +52,8 @@ export default class Invites {
       .setTitle(`${user.tag}'s invite count`)
       .setColor(botColors[1])
       .setFooter({
-        text: message.guild!.name,
-        iconURL: message.guild!.iconURL() || undefined,
+        text: message.guild.name,
+        iconURL: message.guild.iconURL() || undefined,
       })
       .addFields([
         {

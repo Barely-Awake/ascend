@@ -34,18 +34,18 @@ export default class Unban {
   @requireArgs(1)
   @requirePermission('BanMembers')
   @requireBotPermission('BanMembers')
-  async command(message: Message, args: string[]) {
+  async command(message: Message<true>, args: string[]) {
     const user = await resolveUser(message, args[0]);
     args.shift();
     const reason = args.join(' ');
 
     if (user === null)
       return error(
-        "I couldn't find that user, make sure you're providing a mention or id",
+        'I couldn\'t find that user, make sure you\'re providing a mention or id',
         message
       );
 
-    await message.guild!.bans.remove(user, reason || 'None');
+    await message.guild.bans.remove(user, reason || 'None');
 
     return message.channel.send(
       `Successfully unbanned ${user.toString()} (\`${user.tag}\`) for ${

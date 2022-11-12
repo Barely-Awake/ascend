@@ -79,7 +79,7 @@ export async function resolvePlayer(argument: string, message: Message) {
   } else if (argument.length !== 32) {
     const data = await getPlayerUuid(player);
 
-    if (data === null) return "Couldn't fetch player's uuid";
+    if (data === null) return 'Couldn\'t fetch player\'s uuid';
 
     mojangData = {
       uuid: data.id,

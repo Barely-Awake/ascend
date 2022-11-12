@@ -53,7 +53,7 @@ export default class Link {
       mojangData = await getPlayerUuid(args[0]);
 
       if (mojangData === null)
-        return error("Couldn't fetch that uuid", message);
+        return error('Couldn\'t fetch that uuid', message);
 
       playerUuid = mojangData.id;
     } else {
@@ -61,7 +61,7 @@ export default class Link {
       const nameHistory = await getPlayerNames(playerUuid);
 
       if (nameHistory === null)
-        return error("Couldn't fetch that players name", message);
+        return error('Couldn\'t fetch that players name', message);
 
       mojangData = {
         id: playerUuid,
@@ -80,11 +80,11 @@ export default class Link {
     const playerStats = await getPlayerStats(playerUuid);
 
     if (playerStats === null)
-      return message.reply("Couldn't get player stats from Hypixel's API");
+      return message.reply('Couldn\'t get player stats from Hypixel\'s API');
 
     if (playerStats.socialMedia.discord === null)
       return error(
-        "That account doesn't have a discord linked to it. If that is your account, you can click " +
+        'That account doesn\'t have a discord linked to it. If that is your account, you can click ' +
           'the link below to see how to do that.\nhttps://catboymaid.club/Z96boeByYUZd',
         message
       );

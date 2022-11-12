@@ -44,7 +44,7 @@ export default class Info {
         `${config.botName} is an open source bot made by Barely Awake. ` +
           'The source code can be found at https://github.com/Barely-Awake/ascend. ' +
           `${config.botName} features a lot of useful moderation commands. Currently the direction is being an open ` +
-          "source replacement for bots in your server. Right now it's still in early development so it isn't " +
+          'source replacement for bots in your server. Right now it\'s still in early development so it isn\'t ' +
           'that yet, but the dev team is working hard to reach that goal as soon as possible.'
       )
 

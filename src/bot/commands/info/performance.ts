@@ -15,7 +15,7 @@ export default class Performance {
     name = 'performance',
     category: CommandCategory = 'info',
     aliases: string[] | null = null,
-    description = "Sends stats about the bot's performance",
+    description = 'Sends stats about the bot\'s performance',
     usage = ''
   ) {
     this.name = name;

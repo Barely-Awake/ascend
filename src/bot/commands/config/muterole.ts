@@ -36,7 +36,7 @@ export default class MuteRole {
   @requireArgs(1)
   @requirePermission('ManageGuild')
   @requireBotPermission('ManageRoles')
-  async command(message: Message, args: string[]) {
+  async command(message: Message<true>, args: string[]) {
     let muteRole: Role;
     if (args[0] === 'make') {
       const role = await createMuteRole(message);
@@ -53,11 +53,11 @@ export default class MuteRole {
       return error('Please provide valid arguments', message);
     }
 
-    let guild = (await GuildData.find({ serverId: message.guild!.id }))[0];
+    let guild = (await GuildData.find({ serverId: message.guild.id }))[0];
 
     if (guild === undefined)
       guild = new GuildData({
-        serverId: message.guild!.id,
+        serverId: message.guild.id,
         prefix: config.prefix,
       });
 
@@ -68,8 +68,8 @@ export default class MuteRole {
   }
 }
 
-async function createMuteRole(message: Message) {
-  const muteRole = await message.guild!.roles.create({
+async function createMuteRole(message: Message<true>) {
+  const muteRole = await message.guild.roles.create({
     name: 'Muted',
     color: '#000000',
     reason: 'Setting up a mute role',
@@ -77,16 +77,16 @@ async function createMuteRole(message: Message) {
 
   if (muteRole === undefined) {
     await error(
-      "I couldn't create a mute role, do I have the correct permissions?",
+      'I couldn\'t create a mute role, do I have the correct permissions?',
       message
     );
     return null;
   }
 
-  await message.guild!.channels.fetch();
-  if (!message.guild!.channels.cache) return muteRole;
+  await message.guild.channels.fetch();
+  if (!message.guild.channels.cache) return muteRole;
 
-  message.guild!.channels.cache.forEach((channel) => {
+  message.guild.channels.cache.forEach((channel) => {
     if (channel.isThread()) return;
 
     if (channel.isTextBased()) {

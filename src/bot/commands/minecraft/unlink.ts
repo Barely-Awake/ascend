@@ -30,7 +30,7 @@ export default class Unlink {
     });
 
     if (linkedAccountData.length === 0)
-      return error("You haven't linked an account yet!", message);
+      return error('You haven\'t linked an account yet!', message);
     const names: string[] = [];
 
     linkedAccountData.forEach((v) => {

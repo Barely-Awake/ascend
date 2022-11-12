@@ -27,7 +27,7 @@ export default class BedWars {
     name = 'bedwars',
     category: CommandCategory = 'minecraft',
     aliases: string[] | null = ['bw'],
-    description = "Shows a player's bedwars stats",
+    description = 'Shows a player\'s bedwars stats',
     usage = '[player]'
   ) {
     this.name = name;
@@ -50,7 +50,7 @@ export default class BedWars {
     const playerStats = await getPlayerStats(player);
 
     if (playerStats === null)
-      return message.reply("Couldn't get player stats from Hypixel's API");
+      return message.reply('Couldn\'t get player stats from Hypixel\'s API');
 
     const canvas = await drawBedWarsCanvas(playerStats);
 

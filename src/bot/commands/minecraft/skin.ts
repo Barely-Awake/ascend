@@ -18,7 +18,7 @@ export default class Skin {
     name = 'skin',
     category: CommandCategory = 'minecraft',
     aliases: string[] | null = null,
-    description = "Shows a player's minecraft skin.",
+    description = 'Shows a player\'s minecraft skin.',
     usage = '[player]'
   ) {
     this.name = name;
@@ -38,7 +38,7 @@ export default class Skin {
     if (mojangData.name === null) {
       const data = await getPlayerNames(mojangData.uuid);
 
-      if (data === null) return error("Couldn't fetch player's names", message);
+      if (data === null) return error('Couldn\'t fetch player\'s names', message);
 
       mojangData.name = data[data.length - 1].name;
     }

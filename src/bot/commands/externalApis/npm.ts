@@ -37,13 +37,13 @@ export default class Npm {
         `https://registry.npmjs.com/${encodeURIComponent(query)}`
       );
     } catch (err) {
-      return error("Couldn't fetch npm registry", message);
+      return error('Couldn\'t fetch npm registry', message);
     }
 
     if (res.status === 404)
       return error(`Couldn't find the npm package \`${query}\``, message);
 
-    if (!res.ok) return error("Couldn't fetch npm registry", message);
+    if (!res.ok) return error('Couldn\'t fetch npm registry', message);
 
     const body = await res.json();
 
@@ -93,13 +93,13 @@ export default class Npm {
           name: 'Last Modified',
           value: body.time.modified
             ? `${messageTimeStamp(timeModified)} (${messageTimeStamp(
-                timeModified,
-                'R'
-              )})`
+              timeModified,
+              'R'
+            )})`
             : `${messageTimeStamp(timeCreated)} (${messageTimeStamp(
-                timeCreated,
-                'R'
-              )})`,
+              timeCreated,
+              'R'
+            )})`,
         },
         {
           name: 'Repository',
