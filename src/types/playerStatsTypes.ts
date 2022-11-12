@@ -1,4 +1,6 @@
-export default interface PlayerStatsTypes {
+export default PlayerStatsTypes;
+
+interface PlayerStatsTypes {
   displayName: string;
   uuid: string;
   rank: string;
