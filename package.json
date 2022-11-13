@@ -7,7 +7,10 @@
   "scripts": {
     "start": "node .",
     "watch": "rm -rf dist && tsc -w",
-    "build": "rm -rf dist && node_modules/.bin/tsc"
+    "build": "rm -rf dist && node_modules/.bin/tsc",
+    "format": "prettier . -w",
+    "lint": "eslint . --fix",
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=16 <17"
@@ -29,6 +32,11 @@
   "devDependencies": {
     "@types/node-fetch": "^2.6.2",
     "@types/sharp": "^0.31.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.0",
     "prettier": "2.7.1"
   }
 }
