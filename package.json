@@ -8,8 +8,8 @@
     "start": "node .",
     "watch": "rm -rf dist && tsc -w",
     "build": "rm -rf dist && node_modules/.bin/tsc",
-    "format": "prettier . -w",
-    "lint": "eslint . --fix",
+    "format": "prettier . -c",
+    "lint": "eslint .",
     "prepare": "husky install"
   },
   "engines": {
