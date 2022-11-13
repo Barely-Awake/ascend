@@ -19,8 +19,10 @@ jobs:
         with:
           url: 'https://${{ secrets.BASE_PTERODACTYL_URL }}/api/client/servers/${{ secrets.PTERODACTYL_SERVER_ID }}/power'
           method: 'POST'
-          customHeaders:
-            Content-Type: application/json
-            Authorization: Bearer ${{ secrets.PTERODACTYL_API_KEY }}
-          data:
-            signal: restart
+          customHeaders: '{
+            "Content-Type": "application/json",
+            "Authorization": "Bearer ${{ secrets.PTERODACTYL_API_KEY }}"
+            }'
+          data: '{
+            "signal":"restart"
+            }'
