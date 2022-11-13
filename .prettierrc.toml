@@ -5,4 +5,3 @@ trailingComma = 'es5'
  files = '*.ts'
 [overrides.options]
 parser = 'babel-ts'
-
