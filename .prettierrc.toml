@@ -1,1 +1,8 @@
 singleQuote = true
+endOfLine = 'lf'
+trailingComma = 'es5'
+[[overrides]]
+ files = '*.ts'
+[overrides.options]
+parser = 'babel-ts'
+
