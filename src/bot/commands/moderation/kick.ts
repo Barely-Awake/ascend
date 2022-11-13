@@ -81,7 +81,7 @@ export default class Kick {
       await target.kick(reason || 'None');
     }
 
-    return message.channel.send(
+    return message.reply(
       `Successfully kicked ${user.toString()} (\`${user.tag}\`) for ${
         reason || 'None'
       }`

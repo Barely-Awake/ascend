@@ -117,7 +117,7 @@ export default class GitHub {
       contributionGraph = false;
     }
     if (typeof contributionGraph === 'boolean') {
-      return message.channel.send({
+      return message.reply({
         embeds: [embed],
       });
     }
@@ -127,7 +127,7 @@ export default class GitHub {
       `attachment://${userData.login.toLocaleLowerCase()}-graph.png`
     );
 
-    message.channel.send({
+    await message.reply({
       embeds: [embed],
       files: [
         {

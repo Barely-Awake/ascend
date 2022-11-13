@@ -30,6 +30,6 @@ export default class Invite {
         `https://discord.com/api/oauth2/authorize?client_id=${message.client.user?.id}&permissions=8&scope=bot%20applications.commands`
       );
 
-    message.channel.send({ embeds: [embed] });
+    message.reply({ embeds: [embed] });
   }
 }

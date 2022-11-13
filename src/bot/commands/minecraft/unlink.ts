@@ -41,7 +41,7 @@ export default class Unlink {
     });
     await Player.deleteMany({ discordId: message.author.id });
 
-    return message.channel.send(
+    return message.reply(
       `Successfully unlinked your discord account from \`${
         names.join(' & ') || 'Unknown'
       }\``

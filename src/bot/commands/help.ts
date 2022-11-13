@@ -61,7 +61,7 @@ export default class Help {
         .addOptions(selectMenuOptions)
     );
 
-    const sentMessage = await message.channel.send({
+    const sentMessage = await message.reply({
       embeds: [baseEmbed],
       components: [actionRow],
     });

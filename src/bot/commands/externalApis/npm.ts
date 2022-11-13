@@ -123,6 +123,6 @@ export default class Npm {
         },
       ]);
 
-    message.channel.send({ embeds: [embed] });
+    await message.reply({ embeds: [embed] });
   }
 }

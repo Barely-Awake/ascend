@@ -79,7 +79,7 @@ export default class Ban {
       await target.ban({ reason: reason || 'None' });
     }
 
-    return message.channel.send(
+    return message.reply(
       `Successfully banned ${user.toString()} (\`${user.tag}\`) for ${
         reason || 'None'
       }`

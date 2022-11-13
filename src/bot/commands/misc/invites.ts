@@ -68,6 +68,6 @@ export default class Invites {
         },
       ]);
 
-    message.channel.send({ embeds: [embed] });
+    await message.reply({ embeds: [embed] });
   }
 }

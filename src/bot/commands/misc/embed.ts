@@ -74,9 +74,9 @@ export default class Embed {
       embed = embed.setDescription(embedArray[1]);
     }
 
-    const responseMessage = await message.channel.send({ embeds: [embed] });
+    const responseMessage = await message.reply({ embeds: [embed] });
     if (responseMessage.crosspostable) {
-      responseMessage.crosspost();
+      await responseMessage.crosspost();
     }
   }
 }

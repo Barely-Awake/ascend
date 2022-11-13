@@ -26,9 +26,7 @@ export default class Performance {
   }
 
   async command(message: Message, _: string[]) {
-    const perfMsg = await message.channel.send(
-      'Checking Client Performance...'
-    );
+    const perfMsg = await message.reply('Checking Client Performance...');
 
     let clientUptime;
     if (message.client.uptime !== null) {
@@ -66,6 +64,6 @@ export default class Performance {
         },
       ]);
 
-    perfMsg.edit({ embeds: [embed] });
+    await perfMsg.edit({ embeds: [embed] });
   }
 }

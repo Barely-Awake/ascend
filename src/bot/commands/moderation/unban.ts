@@ -48,7 +48,7 @@ export default class Unban {
 
     await message.guild.bans.remove(user, reason || 'None');
 
-    return message.channel.send(
+    return message.reply(
       `Successfully unbanned ${user.toString()} (\`${user.tag}\`) for ${
         reason || 'None'
       }`

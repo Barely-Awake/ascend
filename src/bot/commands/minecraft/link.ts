@@ -110,7 +110,7 @@ export default class Link {
     });
     await playerData.save();
 
-    return message.channel.send(
+    return message.reply(
       `Successfully linked \`${message.author.tag}\` to \`${mojangData.name}\``
     );
   }

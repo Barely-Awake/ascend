@@ -49,6 +49,6 @@ export default class SetPrefix {
     guildInfo.prefix = prefix;
     guildInfo.save();
     message.client.cache.prefixes[message.guild.id] = prefix;
-    message.channel.send(`Successfully set prefix to ${prefix}`);
+    await message.reply(`Successfully set prefix to ${prefix}`);
   }
 }

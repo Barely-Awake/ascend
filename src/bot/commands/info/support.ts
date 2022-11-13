@@ -23,6 +23,6 @@ export default class Support {
   }
 
   command(message: Message, _: string[]) {
-    message.channel.send('For support please join discord.gg/PpdbKXKgT3');
+    message.reply('For support please join discord.gg/PpdbKXKgT3');
   }
 }

@@ -112,6 +112,6 @@ export default class ServerInfo {
       embed = embed.setThumbnail(iconUrl);
     }
 
-    message.channel.send({ embeds: [embed] });
+    await message.reply({ embeds: [embed] });
   }
 }

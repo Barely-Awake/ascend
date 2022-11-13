@@ -58,6 +58,6 @@ export default class Skin {
       .setThumbnail(`https://crafatar.com/avatars/${mojangData.uuid}?overlay`)
       .setImage(skinUrl);
 
-    message.channel.send({ embeds: [embed] });
+    await message.reply({ embeds: [embed] });
   }
 }
