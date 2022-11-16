@@ -8,8 +8,8 @@
     "start": "node .",
     "watch": "rm -rf dist && tsc -w",
     "build": "rm -rf dist && node_modules/.bin/tsc",
-    "format": "prettier . -c",
-    "lint": "eslint .",
+    "format": "prettier . -c --ignore-path .gitignore",
+    "lint": "eslint . --ignore-path .gitignore",
     "prepare": "husky install"
   },
   "engines": {
