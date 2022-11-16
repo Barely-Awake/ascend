@@ -20,7 +20,7 @@ export default class MuteRole {
 
   constructor(
     name = 'muterole',
-    category: CommandCategory = 'config',
+    category: CommandCategory = 'guildConfig',
     aliases: string[] | null = null,
     description = 'Lets you set a custom mute role or makes one for you.',
     usage = '<set|make> [role]'

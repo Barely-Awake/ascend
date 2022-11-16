@@ -1,7 +1,7 @@
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import config from '../../../utils/misc/readConfig.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
-import { CommandCategory, botColors } from '../../botData.js';
+import { CommandCategory } from '../../botData.js';
 import { EmbedBuilder, Message } from 'discord.js';
 
 export default class Performance {
@@ -37,7 +37,6 @@ export default class Performance {
 
     const embed = new EmbedBuilder()
       .setTitle(`Performance information on \`${config.botName}\``)
-      .setColor(botColors[1])
       .addFields([
         {
           name: 'API Ping',

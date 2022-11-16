@@ -1,10 +1,5 @@
 import { CommandClass } from '../types/discord.js';
-import {
-  Collection,
-  ColorResolvable,
-  EmbedBuilder,
-  SelectMenuComponentOptionData,
-} from 'discord.js';
+import { Collection, ColorResolvable, EmbedBuilder } from 'discord.js';
 
 export const botColors: ColorResolvable[] = ['#e0006f', '#a14b94', '#002da4'];
 
@@ -18,7 +13,7 @@ export const botEmojis = {
 export type CommandCollection = Collection<string, CommandClass>;
 
 export type CommandCategory =
-  | 'config'
+  | 'guildConfig'
   | 'info'
   | 'moderation'
   | 'minecraft'
@@ -37,11 +32,11 @@ export type CommandCategory =
  * </pre>
  */
 export const categoryInfo: { [index: string]: CategoryInfo } = {
-  config: {
+  guildConfig: {
     description:
       'Allows you to configure elements of the bot like the prefix in the current guild',
-    label: 'Config',
-    value: 'config',
+    label: 'Guild Config',
+    value: 'guildConfig',
     embed: new EmbedBuilder(),
   },
   info: {
@@ -80,6 +75,9 @@ export const categoryInfo: { [index: string]: CategoryInfo } = {
   },
 };
 
-export interface CategoryInfo extends SelectMenuComponentOptionData {
+export interface CategoryInfo {
+  description: string;
+  label: string;
+  value: string;
   embed: EmbedBuilder;
 }

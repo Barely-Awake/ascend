@@ -42,6 +42,13 @@ export default class Help {
       );
 
     const selectMenuOptions: SelectMenuComponentOptionData[] = [];
+
+    selectMenuOptions.push({
+      label: 'Command Categories',
+      value: 'commandCategories',
+      description: 'Lists command categories as well as their description',
+    });
+
     for (const key of Object.keys(categoryInfo)) {
       baseEmbed.addFields([
         {
@@ -49,15 +56,18 @@ export default class Help {
           value: categoryInfo[key].description || '',
         },
       ]);
-      const categoryDeepCopy = JSON.parse(JSON.stringify(categoryInfo[key]));
-      delete categoryDeepCopy.embed;
-      selectMenuOptions.push(categoryDeepCopy);
+
+      selectMenuOptions.push({
+        label: categoryInfo[key].label,
+        value: categoryInfo[key].value,
+        description: categoryInfo[key].description,
+      });
     }
 
     const actionRow = new ActionRowBuilder<SelectMenuBuilder>().addComponents(
       new SelectMenuBuilder()
         .setCustomId('categorySelector')
-        .setPlaceholder('Categories')
+        .setPlaceholder('Select an Option!')
         .addOptions(selectMenuOptions)
     );
 
@@ -82,10 +92,18 @@ export default class Help {
         });
         return;
       }
-      interaction.update({
-        embeds: [categoryInfo[interaction.values[0]].embed],
-        components: [actionRow],
-      });
+
+      if (interaction.values[0] === 'commandCategories') {
+        interaction.update({
+          embeds: [baseEmbed],
+          components: [actionRow],
+        });
+      } else {
+        interaction.update({
+          embeds: [categoryInfo[interaction.values[0]].embed],
+          components: [actionRow],
+        });
+      }
     });
 
     interactionCollector.on('end', () => {

@@ -16,7 +16,7 @@ export default class SetPrefix {
 
   constructor(
     name = 'setprefix',
-    category: CommandCategory = 'config',
+    category: CommandCategory = 'guildConfig',
     aliases: string[] | null = null,
     description = 'Sets prefix in current guild',
     usage = '<prefix>'
