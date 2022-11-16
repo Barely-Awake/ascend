@@ -1,7 +1,7 @@
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import config from '../../../utils/misc/readConfig.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
-import { CommandCategory, botColors } from '../../botData.js';
+import { CommandCategory } from '../../botData.js';
 import { Client, EmbedBuilder, Message, Team, User, version } from 'discord.js';
 
 export default class Info {
@@ -33,7 +33,6 @@ export default class Info {
 
     const infoEmbed = new EmbedBuilder()
       .setTitle(`Information on ${config.botName}`)
-      .setColor(botColors[1])
       .setAuthor({
         name: 'Barely Awake',
         url: 'https://github.com/barely-awake',

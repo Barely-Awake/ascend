@@ -4,7 +4,7 @@ import { requireArgs } from '../../../utils/discord/commandDecorators.js';
 import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { error } from '../../../utils/discord/responses.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
-import { CommandCategory, botColors } from '../../botData.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class Npm {
   public name: string;
@@ -69,7 +69,6 @@ export default class Npm {
     repositoryUrl = repositoryUrl.replace('.git', '');
 
     const embed = new EmbedBuilder()
-      .setColor(botColors[1])
       .setTitle(`Information on \`${body.name}\``)
       .setURL(`https://www.npmjs.com/package/${body.name}`)
       .setDescription(

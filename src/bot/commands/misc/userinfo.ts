@@ -2,7 +2,7 @@ import { messageTimeStamp } from '../../../utils/discord/misc.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
 import { unixToSeconds } from '../../../utils/misc/time.js';
-import { CommandCategory, botColors } from '../../botData.js';
+import { CommandCategory } from '../../botData.js';
 import { EmbedBuilder, Message } from 'discord.js';
 
 export default class UserInfo {
@@ -44,7 +44,6 @@ export default class UserInfo {
     const embed = new EmbedBuilder()
       .setTitle(`Information on \`${user.username}\``)
       .setThumbnail(user.displayAvatarURL({ size: 4096 }))
-      .setColor(user.hexAccentColor || botColors[1])
       .addFields([
         {
           name: 'Tag',
@@ -61,6 +60,10 @@ export default class UserInfo {
           )})`,
         },
       ]);
+
+    if (user.hexAccentColor) {
+      embed.setColor(user.hexAccentColor);
+    }
 
     if (user.bot) {
       embed.addFields([

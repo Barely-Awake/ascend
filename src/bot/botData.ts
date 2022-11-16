@@ -1,7 +1,5 @@
 import { CommandClass } from '../types/discord.js';
-import { Collection, ColorResolvable, EmbedBuilder } from 'discord.js';
-
-export const botColors: ColorResolvable[] = ['#e0006f', '#a14b94', '#002da4'];
+import { Collection, EmbedBuilder } from 'discord.js';
 
 export const botEmojis = {
   online: '<:online:979932796162293822>',

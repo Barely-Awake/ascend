@@ -1,4 +1,4 @@
-import { CommandCategory, botColors } from '../../botData.js';
+import { CommandCategory } from '../../botData.js';
 import { EmbedBuilder, Message } from 'discord.js';
 import { User } from '@saber2pr/types-github-api';
 import { error } from '../../../utils/discord/responses.js';
@@ -55,7 +55,6 @@ export default class GitHub {
           userData.name ? ` (${userData.name})` : ''
         }`
       )
-      .setColor(botColors[1])
       .setThumbnail(userData.avatar_url)
       .setDescription(userData.bio || 'Unknown')
       .setURL(userData.html_url)

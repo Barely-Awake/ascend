@@ -2,7 +2,7 @@ import { EmbedBuilder, Invite, Message } from 'discord.js';
 import { onlyInGuild } from '../../../utils/discord/commandDecorators.js';
 import { resolveUser } from '../../../utils/discord/resolveTarget.js';
 import { error } from '../../../utils/discord/responses.js';
-import { CommandCategory, botColors } from '../../botData.js';
+import { CommandCategory } from '../../botData.js';
 
 export default class Invites {
   public name: string;
@@ -52,7 +52,6 @@ export default class Invites {
 
     const embed = new EmbedBuilder()
       .setTitle(`${user.tag}'s invite count`)
-      .setColor(botColors[1])
       .setFooter({
         text: message.guild.name,
         iconURL: message.guild.iconURL() || undefined,
