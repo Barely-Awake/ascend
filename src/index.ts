@@ -1,15 +1,8 @@
-import { makeHelpEmbeds } from './bot/commands/help.js';
-import { commandAdder, eventHandler, taskAdder } from './bot/startUp.js';
 import config from './utils/misc/readConfig.js';
 import canvasPkg from 'canvas';
-import {
-  ActivityType,
-  Client,
-  Collection,
-  GatewayIntentBits,
-  IntentsBitField,
-} from 'discord.js';
+import { ActivityType, GatewayIntentBits } from 'discord.js';
 import mongoosePkg from 'mongoose';
+import { startDiscordBot } from './bot/startUp.js';
 
 const { connect } = mongoosePkg;
 const { registerFont } = canvasPkg;
@@ -26,47 +19,9 @@ registerFont('assets/fonts/minecraft-bold-italic.otf', {
   family: 'Minecraft Bold Italic',
 });
 
-const intents = new IntentsBitField().add([
-  GatewayIntentBits.Guilds,
-  GatewayIntentBits.GuildMessages,
-  GatewayIntentBits.GuildPresences,
-  GatewayIntentBits.GuildMembers,
-  GatewayIntentBits.GuildMembers,
-  GatewayIntentBits.GuildEmojisAndStickers,
-  GatewayIntentBits.GuildEmojisAndStickers,
-  GatewayIntentBits.DirectMessages,
-  GatewayIntentBits.DirectMessageReactions,
-  GatewayIntentBits.GuildMessageReactions,
-  GatewayIntentBits.MessageContent,
-]);
-
-const client = new Client({
-  intents: intents,
-  presence: {
-    status: 'idle',
-    activities: [
-      {
-        name: `@${config.botName} help`,
-        type: ActivityType.Watching,
-      },
-    ],
-  },
-  failIfNotExists: false,
-  allowedMentions: {
-    repliedUser: false,
-  },
-});
-client.commands = new Collection();
-client.cache = {
-  prefixes: {},
-};
-
 connect(config.mongoUrl).then(() => {
   console.log('Connected to MongoDB');
 });
-
-commandAdder(client.commands).then(() => makeHelpEmbeds(client.commands));
-eventHandler(client);
-taskAdder(client);
+const client = startDiscordBot();
 
 client.login(config.betaMode ? config.betaToken : config.token);

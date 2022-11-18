@@ -1,6 +1,57 @@
 import { CommandCollection } from './botData.js';
-import { Client } from 'discord.js';
+import {
+  Client,
+  IntentsBitField,
+  GatewayIntentBits,
+  ActivityType,
+  Collection,
+} from 'discord.js';
 import { readdir } from 'fs/promises';
+import config from '../utils/misc/readConfig.js';
+import { makeHelpEmbeds } from './commands/help.js';
+
+export function startDiscordBot() {
+  const intents = new IntentsBitField().add([
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildPresences,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildEmojisAndStickers,
+    GatewayIntentBits.GuildEmojisAndStickers,
+    GatewayIntentBits.DirectMessages,
+    GatewayIntentBits.DirectMessageReactions,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.MessageContent,
+  ]);
+
+  const client = new Client({
+    intents: intents,
+    presence: {
+      status: 'idle',
+      activities: [
+        {
+          name: `@${config.botName} help`,
+          type: ActivityType.Watching,
+        },
+      ],
+    },
+    failIfNotExists: false,
+    allowedMentions: {
+      repliedUser: false,
+    },
+  });
+  client.commands = new Collection();
+  client.cache = {
+    prefixes: {},
+  };
+
+  commandAdder(client.commands).then(() => makeHelpEmbeds(client.commands));
+  eventHandler(client);
+  taskAdder(client);
+
+  return client;
+}
 
 export async function commandAdder(
   commandCollection: CommandCollection,
