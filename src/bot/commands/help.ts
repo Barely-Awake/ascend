@@ -9,8 +9,8 @@ import {
   EmbedBuilder,
   InteractionCollector,
   Message,
-  SelectMenuBuilder,
   SelectMenuComponentOptionData,
+  StringSelectMenuBuilder,
 } from 'discord.js';
 
 export default class Help {
@@ -64,12 +64,13 @@ export default class Help {
       });
     }
 
-    const actionRow = new ActionRowBuilder<SelectMenuBuilder>().addComponents(
-      new SelectMenuBuilder()
-        .setCustomId('categorySelector')
-        .setPlaceholder('Select an Option!')
-        .addOptions(selectMenuOptions)
-    );
+    const actionRow =
+      new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+        new StringSelectMenuBuilder()
+          .setCustomId('categorySelector')
+          .setPlaceholder('Select an Option!')
+          .addOptions(selectMenuOptions)
+      );
 
     const sentMessage = await message.reply({
       embeds: [baseEmbed],
@@ -82,7 +83,7 @@ export default class Help {
     });
 
     interactionCollector.on('collect', (interaction) => {
-      if (!interaction.isSelectMenu()) {
+      if (!interaction.isStringSelectMenu()) {
         return;
       }
 
