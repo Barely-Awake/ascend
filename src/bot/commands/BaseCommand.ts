@@ -4,15 +4,19 @@ import {
   CommandInteraction,
   SlashCommandBuilder,
   PermissionResolvable,
+  GuildMember,
+  PermissionsBitField,
 } from 'discord.js';
+import { findRequiredPermission } from '../../utils/discord/misc.js';
 
 export default class BaseCommand {
   public Name: string;
   public Category: CommandCategory;
   public Description: string;
   public Parameters: CommandParameters;
+  public RequiredParameters: CommandParameters;
   /**
-   * Aliases are only used for message-based commands. If a command doesn't need any aliases, null is also valid.
+   * Aliases are only used for message-based commands.
    **/
   public Aliases: string[];
 
@@ -25,12 +29,24 @@ export default class BaseCommand {
     this.Category = baseInfo.category;
     this.Description = baseInfo.description;
     this.Parameters = baseInfo.parameters;
+    this.RequiredParameters = this.Parameters.filter(
+      (parameter) => parameter.required
+    );
 
     this.Aliases = baseInfo.aliases;
 
     this.RequireGuild = baseInfo.requireGuild;
     this.ClientPermissions = baseInfo.clientPermissions;
     this.UserPermissions = baseInfo.userPermissions;
+
+    if (
+      !this.RequireGuild &&
+      (this.ClientPermissions.length !== 0 || this.UserPermissions.length !== 0)
+    ) {
+      throw Error(
+        `Command ${this.Name} does not require a guild but also requires client or user permissions`
+      );
+    }
   }
 
   interactionMeta() {
@@ -46,20 +62,64 @@ export default class BaseCommand {
           .setRequired(parameter.required)
       );
     });
+
+    if (this.RequireGuild) {
+      interactionBuilder.setDMPermission(false);
+
+      if (this.UserPermissions) {
+        // TODO: Refactor to have permissions bit field be default field
+        const requiredPermissions = new PermissionsBitField();
+        this.UserPermissions.forEach((permission) => {
+          requiredPermissions.add(permission);
+        });
+        interactionBuilder.setDefaultMemberPermissions(
+          requiredPermissions.bitfield
+        );
+      }
+    }
+
+    return interactionBuilder;
   }
 
   /**
-   * Used for validating context such as permissions, arguments, etc.
+   * Used for generic validation in every command, mainly permissions
    */
-  messageValidation(message: Message, args: string[]): boolean {
-    return true;
+  messageValidation(message: Message, args: string[]) {
+    if (this.RequireGuild && !message.inGuild()) {
+      message.reply('That command can only be run in a guild!');
+      return;
+    }
+
+    if (!message.member && (this.UserPermissions || this.ClientPermissions)) {
+      return;
+    }
+
+    if (message.member && message.guild?.members.me) {
+      const permissionResponse = this.checkPermissions(
+        message.guild.members.me,
+        message.member
+      );
+
+      if (permissionResponse !== null) {
+        message.reply(permissionResponse);
+        return;
+      }
+    }
+
+    return this.messageHandler(message, args);
   }
 
   /**
-   * Used for validating context such as permissions, arguments, etc.
+   * Used for generic validation in every command, mainly permissions
    */
-  interactionValidation(interaction: CommandInteraction): boolean {
-    return true;
+  interactionValidation(interaction: CommandInteraction) {
+    if (interaction.appPermissions?.has(this.ClientPermissions)) {
+      return interaction.reply(
+        `Sorry I don't have the required permissions to execute this command`
+      );
+    }
+
+    return this.interactionHandler(interaction);
   }
 
   /**
@@ -80,6 +140,30 @@ export default class BaseCommand {
 
   command(): unknown {
     throw new Error('Method not implemented');
+  }
+
+  checkPermissions(client: GuildMember, user: GuildMember) {
+    const clientRequiredPermission = findRequiredPermission(
+      client,
+      this.ClientPermissions
+    );
+    if (clientRequiredPermission !== null) {
+      return `Sorry I don't have the required permissions to execute this command (Missing ${clientRequiredPermission.join(
+        ', '
+      )})`;
+    }
+
+    const userRequiredPermissions = findRequiredPermission(
+      user,
+      this.UserPermissions
+    );
+    if (userRequiredPermissions !== null) {
+      return `Sorry you don't have the required permissions to run this command (Missing ${userRequiredPermissions.join(
+        ', '
+      )})`;
+    }
+
+    return null;
   }
 }
 
