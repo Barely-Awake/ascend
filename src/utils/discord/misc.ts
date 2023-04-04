@@ -1,4 +1,5 @@
-import { GuildMember, PermissionResolvable } from 'discord.js';
+import { GuildMember, PermissionsBitField } from 'discord.js';
+import { ParsedPermissionsStrings } from './ParsedPermissionsStrings.js';
 
 type ValidTimeStampStyles = 't' | 'T' | 'd' | 'D' | 'f' | 'F' | 'R';
 
@@ -25,19 +26,20 @@ export function canModerateUser(
 }
 
 /**
- * Checks if the given user has all permissions in provided array.
- * If they don't the missing permissions otherwise returns null
+ * Checks if the given user has all permissions in the provided array.
+ * If they don't, it returns the missing permissions (formatted) otherwise returns null.
  */
-export function findRequiredPermission(
+export function getMissingPermissions(
   user: GuildMember,
-  permissions: PermissionResolvable[]
-): PermissionResolvable[] | null {
-  const requiredPermissions: PermissionResolvable[] = [];
-  for (const permission of permissions) {
-    if (!user.permissions.has(permission)) {
-      requiredPermissions.push(permission);
-    }
+  permissions: PermissionsBitField
+): string[] | null {
+  const missingPermissions = user.permissions.missing(permissions);
+
+  if (missingPermissions.length === 0) {
+    return null;
   }
 
-  return requiredPermissions || null;
+  return missingPermissions.map(
+    (permission) => ParsedPermissionsStrings[permission]
+  );
 }
