@@ -1,23 +1,24 @@
 import { CommandCategory } from '../botData.js';
 import {
   Message,
-  CommandInteraction,
   SlashCommandBuilder,
   PermissionResolvable,
   PermissionsBitField,
+  ChatInputCommandInteraction,
 } from 'discord.js';
 import { getMissingPermissions } from '../../utils/discord/misc.js';
 
 export default class BaseCommand {
   public Name: string;
-  public Category: CommandCategory;
-  public Description: string;
-  public Parameters: CommandParameters;
-  public RequiredParameters: CommandParameters;
   /**
    * Aliases are only used for message-based commands.
    **/
   public Aliases: string[];
+  public Category: CommandCategory;
+  public Description: string;
+
+  public Parameters: CommandParameters;
+  public RequiredParameters: CommandParameters;
 
   public RequireGuild: boolean;
   public ClientPermissions: PermissionsBitField;
@@ -25,14 +26,15 @@ export default class BaseCommand {
 
   constructor(baseInfo: BaseInfo) {
     this.Name = baseInfo.name;
+    this.Aliases = baseInfo.aliases;
     this.Category = baseInfo.category;
     this.Description = baseInfo.description;
+
     this.Parameters = baseInfo.parameters;
+
     this.RequiredParameters = this.Parameters.filter(
       (parameter) => parameter.required
     );
-
-    this.Aliases = baseInfo.aliases;
 
     this.RequireGuild = baseInfo.requireGuild;
     if (
@@ -125,7 +127,7 @@ export default class BaseCommand {
   /**
    * Used for generic validation in every command, mainly permissions
    */
-  interactionValidation(interaction: CommandInteraction) {
+  interactionValidation(interaction: ChatInputCommandInteraction) {
     if (interaction.appPermissions?.has(this.ClientPermissions)) {
       return interaction.reply(
         `Sorry I don't have the required permissions to execute this command`
@@ -147,7 +149,7 @@ export default class BaseCommand {
    * Should only be used for things like getting required context or channels and sending response.
    * The main logic should be handled in the command method.
    **/
-  interactionHandler(interaction: CommandInteraction): unknown {
+  interactionHandler(interaction: ChatInputCommandInteraction): unknown {
     throw new Error('Method not implemented');
   }
 
@@ -158,10 +160,11 @@ export default class BaseCommand {
 
 interface BaseInfo {
   name: string;
+  aliases: string[];
   category: CommandCategory;
   description: string;
+
   parameters: CommandParameters;
-  aliases: string[];
 
   requireGuild: boolean;
   clientPermissions: PermissionResolvable[];
