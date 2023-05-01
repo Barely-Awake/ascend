@@ -5,10 +5,11 @@ import {
   PermissionResolvable,
   PermissionsBitField,
   ChatInputCommandInteraction,
+  EmbedBuilder,
 } from 'discord.js';
 import { getMissingPermissions } from '../../utils/discord/misc.js';
 
-export default class BaseCommand {
+export default abstract class BaseCommand {
   public Name: string;
   /**
    * Aliases are only used for message-based commands.
@@ -24,7 +25,7 @@ export default class BaseCommand {
   public ClientPermissions: PermissionsBitField;
   public UserPermissions: PermissionsBitField;
 
-  constructor(baseInfo: BaseInfo) {
+  protected constructor(baseInfo: BaseInfo) {
     this.Name = baseInfo.name;
     this.Aliases = baseInfo.aliases;
     this.Category = baseInfo.category;
@@ -57,6 +58,7 @@ export default class BaseCommand {
     const interactionBuilder = new SlashCommandBuilder()
       .setName(this.Name)
       .setDescription(this.Description);
+
     this.Parameters.forEach((parameter) => {
       /* Couldn't find a type that worked to specify option parameter, it should just be a generic option type*/
       interactionBuilder[`add${parameter.type}Option`]((option: any) =>
@@ -76,6 +78,19 @@ export default class BaseCommand {
     }
 
     return interactionBuilder;
+  }
+
+  generateErrorEmbed(title: string, description: string) {
+    return new EmbedBuilder()
+      .setTitle(title)
+      .setDescription(description)
+      .setColor('#ff0000');
+  }
+
+  generateErrorResponse(title: string, description: string) {
+    return {
+      embeds: [this.generateErrorEmbed(title, description)],
+    };
   }
 
   /**
@@ -141,21 +156,13 @@ export default class BaseCommand {
    * Should only be used for things like getting required context or channels and sending response.
    * The main logic should be handled in the command method.
    **/
-  messageHandler(message: Message, args: string[]): unknown {
-    throw new Error('Method not implemented');
-  }
+  abstract messageHandler(message: Message, args: string[]): void;
 
   /**
    * Should only be used for things like getting required context or channels and sending response.
    * The main logic should be handled in the command method.
    **/
-  interactionHandler(interaction: ChatInputCommandInteraction): unknown {
-    throw new Error('Method not implemented');
-  }
-
-  command(): unknown {
-    throw new Error('Method not implemented');
-  }
+  abstract interactionHandler(interaction: ChatInputCommandInteraction): void;
 }
 
 interface BaseInfo {
