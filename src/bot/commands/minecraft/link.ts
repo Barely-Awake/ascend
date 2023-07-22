@@ -40,7 +40,7 @@ export default class Link {
     if (existingDiscordData.length !== 0) {
       return error(
         'You have already linked on this discord account. Please use the unlink command and then try ' +
-          'linking again.',
+        'linking again.',
         message
       );
     }
@@ -76,7 +76,7 @@ export default class Link {
     if (existingMinecraftData.length !== 0) {
       return error(
         'That minecraft account has already been linked with another discord account. ' +
-          'Please use the unlink command on that account and then try linking again.',
+        'Please use the unlink command on that account and then try linking again.',
         message
       );
     }
@@ -90,15 +90,29 @@ export default class Link {
     if (playerStats.socialMedia.discord === null) {
       return error(
         "That account doesn't have a discord linked to it. If that is your account, you can click " +
-          'the link below to see how to do that.\nhttps://catboymaid.club/Z96boeByYUZd',
+        'the link below to see how to do that.\nhttps://catboymaid.club/Z96boeByYUZd',
         message
       );
     }
 
-    if (playerStats.socialMedia.discord !== message.author.tag) {
+    const usesUsername = message.author.discriminator === '0';
+
+    if (usesUsername &&
+      (playerStats.socialMedia.discord || '').toLocaleLowerCase() !==
+      (message.author.username).toLocaleLowerCase()) {
+      return error(
+        `Your discord (\`${message.author.username}\`)doesn't match with the linked discord on that ` +
+        `account (\`${playerStats.socialMedia.discord}\`)`,
+        message
+      )
+    }
+
+    if (!usesUsername &&
+      playerStats.socialMedia.discord !==
+      message.author.tag) {
       return error(
         `Your discord (\`${message.author.tag}\`)doesn't match with the linked discord on that ` +
-          `account (\`${playerStats.socialMedia.discord}\`)`,
+        `account (\`${playerStats.socialMedia.discord}\`)`,
         message
       );
     }
@@ -108,6 +122,7 @@ export default class Link {
       discordId: message.author.id,
       playerName: mojangData.name,
     });
+
     await playerData.save();
 
     return message.reply(
